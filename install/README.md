@@ -6,10 +6,10 @@ Ce dossier contient de quoi installer une instance vierge de cette GMAO (aucune 
 
 ## Prérequis
 
-- PHP 8.x avec l'extension PDO MySQL activée
+- PHP 8.x avec les extensions PDO MySQL, `mbstring`, `xml`, `curl`, `gd` et **`zip`** activées (ex. Debian/Ubuntu : `apt install php php-mysql php-mbstring php-xml php-curl php-gd php-zip`)
 - MariaDB ou MySQL
-- Un serveur web (Apache/Nginx) pointant son DocumentRoot sur le dossier `html/` (la racine de ce dépôt)
-- `composer install` à la racine du dépôt pour installer les dépendances (dossier `vendor/`, non versionné)
+- Un serveur web (Apache/Nginx) pointant son DocumentRoot sur le dossier `html/` (la racine de ce dépôt) — sur Apache, pense à activer `mod_rewrite` (`a2enmod rewrite`) et `AllowOverride All` sur ce dossier (le `.htaccess` du projet en a besoin)
+- `composer install` à la racine du dépôt pour installer les dépendances (dossier `vendor/`, non versionné) — nécessite l'extension `zip` ci-dessus, sinon l'installation de `phpoffice/phpspreadsheet` échoue
 
 ## 1. Créer la base de données
 

@@ -6,10 +6,10 @@ This folder contains everything needed to install a blank instance of this GMAO 
 
 ## Requirements
 
-- PHP 8.x with the PDO MySQL extension enabled
+- PHP 8.x with the PDO MySQL, `mbstring`, `xml`, `curl`, `gd` and **`zip`** extensions enabled (e.g. Debian/Ubuntu: `apt install php php-mysql php-mbstring php-xml php-curl php-gd php-zip`)
 - MariaDB or MySQL
-- A web server (Apache/Nginx) with its DocumentRoot pointing at the `html/` folder (the root of this repository)
-- `composer install` at the repository root to install dependencies (creates the `vendor/` folder, not versioned)
+- A web server (Apache/Nginx) with its DocumentRoot pointing at the `html/` folder (the root of this repository) — on Apache, remember to enable `mod_rewrite` (`a2enmod rewrite`) and `AllowOverride All` on that folder (the project's `.htaccess` needs it)
+- `composer install` at the repository root to install dependencies (creates the `vendor/` folder, not versioned) — needs the `zip` extension above, otherwise installing `phpoffice/phpspreadsheet` fails
 
 ## 1. Create the database
 

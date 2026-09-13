@@ -6,10 +6,10 @@ Deze map bevat alles om een lege instantie van deze GMAO (onderhoudsbeheersystee
 
 ## Vereisten
 
-- PHP 8.x met de PDO MySQL-extensie ingeschakeld
+- PHP 8.x met de extensies PDO MySQL, `mbstring`, `xml`, `curl`, `gd` en **`zip`** ingeschakeld (bv. Debian/Ubuntu: `apt install php php-mysql php-mbstring php-xml php-curl php-gd php-zip`)
 - MariaDB of MySQL
-- Een webserver (Apache/Nginx) waarvan de DocumentRoot naar de map `html/` wijst (de root van deze repository)
-- `composer install` in de root van de repository om de dependencies te installeren (maakt de map `vendor/` aan, niet geversioneerd)
+- Een webserver (Apache/Nginx) waarvan de DocumentRoot naar de map `html/` wijst (de root van deze repository) — schakel bij Apache ook `mod_rewrite` in (`a2enmod rewrite`) en zet `AllowOverride All` op die map (nodig voor het `.htaccess`-bestand van het project)
+- `composer install` in de root van de repository om de dependencies te installeren (maakt de map `vendor/` aan, niet geversioneerd) — vereist de `zip`-extensie hierboven, anders mislukt de installatie van `phpoffice/phpspreadsheet`
 
 ## 1. Database aanmaken
 
