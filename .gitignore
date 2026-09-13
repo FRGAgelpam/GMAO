@@ -1,0 +1,12 @@
+# Dépendances Composer (réinstallables via `composer install`)
+/vendor/
+
+# Documents générés par l'appli (plans de prévention, imports...) — données, pas du code
+/uploads/
+
+# Anciennes copies de sauvegarde
+*.bak
+*.bak_*
+
+# Outils de capture d'écran pour les pages d'aide (scratch, pas de code applicatif)
+/_shots_staging/

@@ -1,0 +1,10 @@
+DirectoryIndex login.php
+
+# SÉCURITÉ : ces fichiers ne doivent jamais être téléchargés directement
+# (dépendances exactes utilisées, données internes, éventuelle sauvegarde oubliée).
+<FilesMatch "^(composer\.(json|lock)|preventifs\.json)$">
+    Require all denied
+</FilesMatch>
+<FilesMatch "\.bak(_.*)?$">
+    Require all denied
+</FilesMatch>
