@@ -61,6 +61,14 @@ VALUES ('admin', 'Admin', 'Administrator', 'HASH_FROM_ABOVE', 'admin', 1);
 
 3. Log in at `login.php` with the username `admin` and the password chosen in step 1.
 
-## 4. Going further
+## 4. Personalize the GMAO's identity
 
-Once logged in as admin, the **Settings** page lets you configure everything without touching the code: preventive-maintenance categories, services, equipment types, the company name and logo, and creating the other user accounts (technicians, service keys for the request portal).
+The code ships deliberately generic (name "GMAO", neutral logo, no external links). Once logged in as admin, go to **Settings > General** to replace that with your own identity, without touching the code:
+
+- **Displayed company / GMAO name** — replaces "GMAO" everywhere in the app (page titles, the PDP document...).
+- **Logo** — replaces the generic badge with your own (PNG, JPG, SVG or WEBP).
+- **Public portal URL** and **Public demo URL** — two optional links shown on the login page ("Back to portal", "Try the demo"). Leave them empty if you don't have that kind of page: the links simply stay hidden.
+
+## 5. Going further
+
+Everything else is also configured entirely from **Settings**, without touching the code: preventive-maintenance categories, services, equipment types, and creating the other user accounts (technicians, service keys for the request portal).

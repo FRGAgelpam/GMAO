@@ -61,6 +61,14 @@ VALUES ('admin', 'Admin', 'Beheerder', 'HASH_HIERBOVEN', 'admin', 1);
 
 3. Log in op `login.php` met gebruikersnaam `admin` en het wachtwoord gekozen in stap 1.
 
-## 4. Verder gaan
+## 4. De identiteit van de GMAO aanpassen
 
-Eenmaal ingelogd als beheerder kun je via de pagina **Instellingen** alles configureren zonder de code aan te raken: categorieën voor preventief onderhoud, diensten, apparatuurtypes, bedrijfsnaam en logo, en het aanmaken van de andere gebruikersaccounts (technici, dienstsleutels voor het aanvraagportaal).
+De meegeleverde code is bewust generiek (naam "GMAO", neutraal logo, geen externe links). Eenmaal ingelogd als beheerder ga je naar **Instellingen > Algemeen** om dit te vervangen door je eigen identiteit, zonder de code aan te raken:
+
+- **Weergegeven bedrijfs-/GMAO-naam** — vervangt "GMAO" overal in de applicatie (paginatitels, het PDP-document...).
+- **Logo** — vervangt het generieke logo door je eigen logo (PNG, JPG, SVG of WEBP).
+- **URL van het openbare portaal** en **URL van de openbare demo** — twee optionele links op de inlogpagina ("Terug naar portaal", "Demo testen"). Laat ze leeg als je dit soort pagina's niet hebt: de links blijven dan gewoon verborgen.
+
+## 5. Verder gaan
+
+De rest configureer je ook volledig via **Instellingen**, zonder de code aan te raken: categorieën voor preventief onderhoud, diensten, apparatuurtypes, en het aanmaken van de andere gebruikersaccounts (technici, dienstsleutels voor het aanvraagportaal).

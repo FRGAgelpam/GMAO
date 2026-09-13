@@ -61,6 +61,14 @@ VALUES ('admin', 'Admin', 'Administrateur', 'HASH_OBTENU_CI_DESSUS', 'admin', 1)
 
 3. Connecte-toi sur `login.php` avec l'identifiant `admin` et le mot de passe choisi à l'étape 1.
 
-## 4. Aller plus loin
+## 4. Personnaliser l'identité de la GMAO
 
-Une fois connecté en admin, la page **Paramètres** permet de configurer sans toucher au code : catégories de préventif, services, types d'équipement, et de créer les autres comptes utilisateurs (techniciens, clés de service pour le portail de demandes).
+Le code livré est volontairement générique (nom "GMAO", logo neutre, aucun lien externe). Une fois connecté en admin, va dans **Paramètres > Général** pour remplacer ça par ta propre identité, sans toucher au code :
+
+- **Nom affiché de l'entreprise / de la GMAO** — remplace "GMAO" partout dans l'application (titres de pages, document PDP...).
+- **Logo** — remplace le badge générique par le tien (PNG, JPG, SVG ou WEBP).
+- **URL du portail public** et **URL de la démo publique** — deux liens optionnels affichés sur la page de connexion ("Retour au portail", "Tester la démo"). Laisse-les vides si tu n'as pas ce genre de pages : les liens restent simplement masqués.
+
+## 5. Aller plus loin
+
+Le reste se configure aussi entièrement depuis **Paramètres**, sans toucher au code : catégories de préventif, services, types d'équipement, et création des autres comptes utilisateurs (techniciens, clés de service pour le portail de demandes).
