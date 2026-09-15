@@ -53,6 +53,7 @@ $breadcrumb_label = $cat ? $CATEGORIES_LISTE[$cat]['label'] : t('preventifliste.
 $machines_db = [];
 $team_maintenance = [];
 $services_liste = [];
+$entreprises_ext = [];
 
 try {
     require_once 'db.php';
@@ -82,6 +83,13 @@ try {
         try {
             $resServices = $db->query("SELECT label FROM services ORDER BY ordre ASC");
             if ($resServices) { while ($row = $resServices->fetch(PDO::FETCH_ASSOC)) { $services_liste[] = $row['label']; } }
+        } catch (Exception $e) {}
+
+        // --- Entreprises extérieures (table sous_traitants.php) : pour marquer une tâche de la
+        // checklist saisonnière comme sous-traitée, même logique que le formulaire d'OT. ---
+        try {
+            $resEE = $db->query("SELECT id, nom FROM entreprises_ext ORDER BY nom");
+            if ($resEE) { $entreprises_ext = $resEE->fetchAll(PDO::FETCH_ASSOC); }
         } catch (Exception $e) {}
 
         // --- Table des règles de maintenance préventive (remplace preventifs.json) ---
@@ -141,6 +149,11 @@ try {
         // colonne B = machine/lieu) — pour pouvoir filtrer par usine sans dépendre d'un préfixe répété
         // dans le texte de l'équipement.
         $db->exec("ALTER TABLE preventif_checklist ADD COLUMN IF NOT EXISTS usine VARCHAR(150) DEFAULT NULL");
+        // Sous-traitance (même principe que taches.is_sous_traitant / entreprise_ext_id sur les OT) :
+        // une tâche de checklist saisonnière peut être confiée à une entreprise extérieure plutôt qu'à
+        // l'équipe interne.
+        $db->exec("ALTER TABLE preventif_checklist ADD COLUMN IF NOT EXISTS is_sous_traitant TINYINT(1) NOT NULL DEFAULT 0");
+        $db->exec("ALTER TABLE preventif_checklist ADD COLUMN IF NOT EXISTS entreprise_ext_id INT DEFAULT NULL");
 
         // Liste gérée des usines/zones (créer + renommer depuis le formulaire de tâche) — évite que
         // chacun tape ses propres variantes en saisie libre (ex. "Usine B" vs "USINE B").
@@ -201,6 +214,7 @@ try {
 $json_machines = json_encode($machines_db ?: []);
 $json_team = json_encode($team_maintenance ?: []);
 $json_services = json_encode($services_liste ?: []);
+$json_entreprises_ext = json_encode($entreprises_ext ?: []);
 
 
 // ============================================================================
@@ -259,12 +273,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
                 $saisonDemandee = $stmtSaison->fetchColumn() ?: $saisonCourante;
             }
         }
-        $stmt = $db->prepare("SELECT id, categorie, saison, usine, equip, descr AS `desc`, signale_par,
-            intervenant, DATE_FORMAT(date_prevue,'%Y-%m-%d') AS date_prevue, prio,
-            COALESCE(NULLIF(statut,''),'a_faire') AS statut,
-            DATE_FORMAT(date_ajout,'%Y-%m-%d') AS date_ajout, fait, fait_par,
-            DATE_FORMAT(date_fait,'%Y-%m-%d') AS date_fait
-            FROM preventif_checklist WHERE categorie = ? AND saison = ? ORDER BY date_ajout ASC");
+        $stmt = $db->prepare("SELECT c.id, c.categorie, c.saison, c.usine, c.equip, c.descr AS `desc`, c.signale_par,
+            c.intervenant, DATE_FORMAT(c.date_prevue,'%Y-%m-%d') AS date_prevue, c.prio,
+            COALESCE(NULLIF(c.statut,''),'a_faire') AS statut,
+            DATE_FORMAT(c.date_ajout,'%Y-%m-%d') AS date_ajout, c.fait, c.fait_par,
+            DATE_FORMAT(c.date_fait,'%Y-%m-%d') AS date_fait,
+            c.is_sous_traitant, c.entreprise_ext_id, e.nom AS nom_entreprise
+            FROM preventif_checklist c LEFT JOIN entreprises_ext e ON c.entreprise_ext_id = e.id
+            WHERE c.categorie = ? AND c.saison = ? ORDER BY c.date_ajout ASC");
         $stmt->execute([$categorieDemandee, $saisonDemandee]);
         // Liste des saisons existantes pour cette catégorie, pour le sélecteur côté client
         $stmtToutesSaisons = $db->prepare("SELECT DISTINCT saison FROM preventif_checklist WHERE categorie = ? ORDER BY saison DESC");
@@ -367,11 +383,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $maxOrdre = $db->prepare("SELECT COALESCE(MAX(ordre), -1) FROM preventif_checklist WHERE categorie = ? AND saison = ?");
             $maxOrdre->execute([$data['categorie'] ?? 'process', $saison]);
             $stmt = $db->prepare("INSERT INTO preventif_checklist
-                (id, categorie, saison, usine, equip, descr, signale_par, intervenant, date_prevue, prio, ordre)
-                VALUES (?,?,?,?,?,?,?,?,?,?,?)
+                (id, categorie, saison, usine, equip, descr, signale_par, intervenant, date_prevue, prio, ordre, is_sous_traitant, entreprise_ext_id)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)
                 ON DUPLICATE KEY UPDATE
                  usine=VALUES(usine), equip=VALUES(equip), descr=VALUES(descr), signale_par=VALUES(signale_par),
-                 intervenant=VALUES(intervenant), date_prevue=VALUES(date_prevue), prio=VALUES(prio)");
+                 intervenant=VALUES(intervenant), date_prevue=VALUES(date_prevue), prio=VALUES(prio),
+                 is_sous_traitant=VALUES(is_sous_traitant), entreprise_ext_id=VALUES(entreprise_ext_id)");
+            $estSousTraite = !empty($data['is_sous_traitant']);
             $stmt->execute([
                 $data['id'] ?: ('CKL-' . round(microtime(true) * 1000)),
                 $data['categorie'] ?? 'process', $saison,
@@ -380,7 +398,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ($data['intervenant'] ?? '') !== '' ? $data['intervenant'] : null,
                 !empty($data['date_prevue']) ? $data['date_prevue'] : null,
                 $data['prio'] ?? '',
-                (int)$maxOrdre->fetchColumn() + 1
+                (int)$maxOrdre->fetchColumn() + 1,
+                $estSousTraite ? 1 : 0,
+                $estSousTraite && !empty($data['entreprise_ext_id']) ? $data['entreprise_ext_id'] : null
             ]);
         } elseif (isset($data['action']) && $data['action'] === 'checklist_zone_add') {
             $label = trim($data['label'] ?? '');
@@ -1247,6 +1267,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label style="display:block; font-size:0.7rem; font-weight:700; color:#555; text-transform:uppercase; margin-bottom:6px;"><?php echo t('preventifliste.label_intervenants'); ?> <span style="font-weight:400; text-transform:none; color:var(--accent);"><?php echo t('preventifliste.hint_plusieurs_personnes'); ?></span></label>
             <div id="ckl-intervenant-checkboxes" style="max-height:100px; overflow-y:auto; border:1px solid #ddd; border-radius:8px; padding:8px 10px; margin-bottom:10px; display:flex; flex-direction:column; gap:4px;"></div>
 
+            <div style="display:flex; align-items:center; gap:10px; background:#f8fafc; padding:10px; border-radius:6px; border:1px dashed #cbd5e1; margin-bottom:10px;">
+                <input type="checkbox" id="ckl-is-st" onchange="toggleSTChecklist()" style="width:18px; height:18px; margin:0;">
+                <label for="ckl-is-st" style="color:var(--primary); font-size:0.85rem; cursor:pointer; font-weight:bold;"><?php echo t('preventifliste.check_sous_traite'); ?></label>
+            </div>
+            <div class="field" id="ckl-container-ee" style="display:none; background:#fff5e6; padding:10px; border-radius:6px; border-left:4px solid var(--gelpam-orange); margin-bottom:18px;">
+                <label style="display:block; font-size:0.7rem; font-weight:700; color:var(--gelpam-orange); text-transform:uppercase; margin-bottom:6px;"><?php echo t('preventifliste.label_entreprise_ext'); ?></label>
+                <select id="ckl-entreprise" style="width:100%; padding:9px 10px; border:1px solid #ddd; border-radius:8px; font-family:inherit; font-size:0.88rem; box-sizing:border-box;">
+                    <option value=""><?php echo t('preventifliste.opt_choisir_entreprise'); ?></option>
+                    <?php foreach ($entreprises_ext as $ee): ?>
+                        <option value="<?php echo htmlspecialchars($ee['id']); ?>"><?php echo htmlspecialchars($ee['nom']); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
             <div class="ckl-modal-grid" style="display:grid; grid-template-columns:1.6fr 1fr 1fr; gap:20px;">
                 <div>
                     <label style="display:block; font-size:0.7rem; font-weight:700; color:#555; text-transform:uppercase; margin-bottom:6px;"><?php echo t('preventifliste.label_autre_intervenant'); ?> <span style="font-weight:400; text-transform:none; color:var(--accent);"><?php echo t('preventifliste.hint_renfort_saisonnier'); ?></span></label>
@@ -1756,6 +1790,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     const dbMachines = <?php echo $json_machines; ?>;
     const team = <?php echo $json_team; ?>;
     const servicesListe = <?php echo $json_services; ?>;
+    const entreprisesExt = <?php echo $json_entreprises_ext; ?>;
     const urlCat = <?php echo json_encode($cat); ?>;
     const currentUser = <?php echo json_encode($_SESSION['user']); ?>;
     const CATEGORIES = <?php echo json_encode($CATEGORIES_LISTE); ?>;
@@ -1779,6 +1814,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'th_equipement' => t('preventifliste.th_equipement'),
         'th_intervenant' => t('preventifliste.th_intervenant'),
         'th_date' => t('preventifliste.th_date'),
+        'entreprise_ext_fallback' => t('rapport.entreprise_ext_fallback'),
         'tooltip_activer' => t('preventifliste.tooltip_activer'),
         'tooltip_pause_hiver' => t('preventifliste.tooltip_pause_hiver'),
         'tooltip_voir_bi' => t('preventifliste.tooltip_voir_bi'),
@@ -3133,6 +3169,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         loadChecklist(saison);
     }
 
+    function toggleSTChecklist() {
+        document.getElementById('ckl-container-ee').style.display = document.getElementById('ckl-is-st').checked ? 'block' : 'none';
+    }
+
     function setChecklistFilter(statut) {
         checklistFiltreStatut = statut;
         document.querySelectorAll('#checklistStatutChips .chip').forEach(b => b.classList.toggle('active', b.dataset.filter === statut));
@@ -3264,6 +3304,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         renderZonesGestion();
     }
 
+    // Colonne "Intervenant" : nom de l'entreprise sous-traitante (avec pictogramme) si la tâche lui
+    // est confiée, sinon les intervenants internes cochés/saisis à la main.
+    function texteIntervenantChecklist(i) {
+        const estSousTraite = i.is_sous_traitant == 1 || i.is_sous_traitant === true || i.is_sous_traitant === "1";
+        if (estSousTraite) {
+            const nom = (i.nom_entreprise || I18N_PREVLISTE.entreprise_ext_fallback).toString().replace(/</g, '&lt;');
+            return `<i class="fa-solid fa-building" style="color:var(--gelpam-orange); margin-right:4px;"></i>${nom}`;
+        }
+        return (i.intervenant || '—').toString().replace(/</g, '&lt;');
+    }
+
     let checklistItemsCourants = [];
 
     function renderChecklistTable(items) {
@@ -3287,6 +3338,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const subLabel = i.statut === 'termine'
                 ? I18N_PREVLISTE.fait_le.replace('{date}', i.date_fait || '?') + (i.fait_par ? ' ' + I18N_PREVLISTE.par + ' ' + i.fait_par : '')
                 : (i.signale_par ? I18N_PREVLISTE.signale_par.replace('{n}', i.signale_par.toString().replace(/</g, '&lt;')) : '');
+            const intervenantAffiche = texteIntervenantChecklist(i);
             return `
                 <div class="prev-ckl-card ${i.statut === 'termine' ? 'is-fait' : ''}">
                     <div class="pcc-top">
@@ -3297,7 +3349,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="pcc-meta">
                         <span><b>${I18N_PREVLISTE.th_usine}:</b> ${(i.usine || '—').toString().replace(/</g, '&lt;')}</span>
                         <span><b>${I18N_PREVLISTE.th_equipement}:</b> ${(i.equip || '—').toString().replace(/</g, '&lt;')}</span>
-                        <span><b>${I18N_PREVLISTE.th_intervenant}:</b> ${(i.intervenant || '—').toString().replace(/</g, '&lt;')}</span>
+                        <span><b>${I18N_PREVLISTE.th_intervenant}:</b> ${intervenantAffiche}</span>
                         <span><b>${I18N_PREVLISTE.th_date}:</b> ${i.date_prevue ? i.date_prevue.split('-').reverse().join('/') : '—'}</span>
                     </div>
                     <div class="pcc-bottom">
@@ -3318,7 +3370,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <td class="ckl-td-tronque" title="${(i.usine || '').toString().replace(/</g, '&lt;').replace(/"/g, '&quot;')}">${(i.usine || '—').toString().replace(/</g, '&lt;')}</td>
                 <td class="ckl-td-tronque" title="${(i.equip || '').toString().replace(/</g, '&lt;').replace(/"/g, '&quot;')}">${(i.equip || '—').toString().replace(/</g, '&lt;')}</td>
                 <td><span class="ckl-desc-text" title="${(i.desc || '').toString().replace(/</g, '&lt;').replace(/"/g, '&quot;')}">${(i.desc || '').toString().replace(/</g, '&lt;')}</span><div style="font-size:0.68rem; color:#94a3b8; margin-top:2px;">${i.statut === 'termine' ? I18N_PREVLISTE.fait_le.replace('{date}', i.date_fait || '?') + (i.fait_par ? ' ' + I18N_PREVLISTE.par + ' ' + i.fait_par : '') : (i.signale_par ? I18N_PREVLISTE.signale_par.replace('{n}', i.signale_par.toString().replace(/</g, '&lt;')) : '')}</div></td>
-                <td class="ckl-td-tronque" title="${(i.intervenant || '').toString().replace(/</g, '&lt;').replace(/"/g, '&quot;')}">${(i.intervenant || '—').toString().replace(/</g, '&lt;')}</td>
+                <td class="ckl-td-tronque" title="${(i.intervenant || '').toString().replace(/</g, '&lt;').replace(/"/g, '&quot;')}">${texteIntervenantChecklist(i)}</td>
                 <td>${i.date_prevue ? i.date_prevue.split('-').reverse().join('/') : '—'}</td>
                 <td>${i.prio ? `<span style="font-weight:700; color:${i.prio === '1' ? 'var(--danger)' : i.prio === '2' ? 'var(--gelpam-orange)' : 'var(--primary)'};">${i.prio}</span>` : '—'}</td>
                 <td>
@@ -3379,6 +3431,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         document.querySelectorAll('.ckl-intervenant-cb').forEach(cb => { cb.checked = intervenantsActuels.includes(cb.value); });
         document.getElementById('ckl-intervenant-libre').value = intervenantsActuels.filter(n => !nomsEquipe.has(n)).join(', ');
 
+        const estSousTraite = item ? (item.is_sous_traitant == 1 || item.is_sous_traitant === true || item.is_sous_traitant === "1") : false;
+        document.getElementById('ckl-is-st').checked = estSousTraite;
+        document.getElementById('ckl-entreprise').value = item && item.entreprise_ext_id ? item.entreprise_ext_id : '';
+        toggleSTChecklist();
+
         document.getElementById('ckl-error').textContent = '';
         document.getElementById('ckl-modal-title').innerHTML = item
             ? `<i class="fa-solid fa-pen" style="color:var(--accent);"></i> ${I18N_PREVLISTE.ckl_modal_modifier}`
@@ -3397,6 +3454,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const intervenantsCoches = [...document.querySelectorAll('.ckl-intervenant-cb:checked')].map(cb => cb.value);
         const intervenantsLibres = document.getElementById('ckl-intervenant-libre').value.split(',').map(n => n.trim()).filter(Boolean);
         const intervenant = [...intervenantsCoches, ...intervenantsLibres].join(', ');
+        const estSousTraite = document.getElementById('ckl-is-st').checked;
 
         await fetch('preventif_liste.php', {
             method: 'POST',
@@ -3408,7 +3466,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 signale_par: document.getElementById('ckl-signale-par').value.trim(),
                 intervenant: intervenant,
                 date_prevue: document.getElementById('ckl-date-prevue').value,
-                prio: document.getElementById('ckl-prio').value
+                prio: document.getElementById('ckl-prio').value,
+                is_sous_traitant: estSousTraite ? 1 : 0,
+                entreprise_ext_id: estSousTraite ? document.getElementById('ckl-entreprise').value : null
             })
         });
         fermerAjoutChecklistItem();
@@ -3483,6 +3543,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 const largeurs = JSON.parse(localStorage.getItem(cleStockage) || 'null');
                 if (!Array.isArray(largeurs)) return;
                 const cols = ths();
+                // Un tableau sauvegardé avec un nombre de colonnes différent de celui d'aujourd'hui (ex.
+                // ajout/suppression d'une colonne dans une mise à jour depuis la dernière visite) ne
+                // correspond plus colonne à colonne : l'appliquer tel quel décale "Intervenant/Date/
+                // Priorité/Statut/Actions" sur les mauvaises largeurs. On l'ignore plutôt que de désaligner
+                // le tableau — un prochain redimensionnement le réenregistrera à la bonne taille.
+                if (largeurs.length !== cols.length) { localStorage.removeItem(cleStockage); return; }
                 largeurs.forEach((px, i) => { if (cols[i] && px) cols[i].style.width = px + 'px'; });
             } catch (e) {}
         }
