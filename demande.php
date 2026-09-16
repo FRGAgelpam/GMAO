@@ -40,6 +40,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 $user_session = trim($_SESSION['user']);
 
+// --- LOGO (configurable depuis Paramètres > Général, même pattern que navbar.php) ---
+$logo_path_demande = "img/logo.png";
+try {
+    $general_demande = $db->query("SELECT cle, valeur FROM parametres_general")->fetchAll(PDO::FETCH_KEY_PAIR);
+    if (!empty($general_demande['logo_path'])) { $logo_path_demande = $general_demande['logo_path']; }
+} catch (Exception $e) {}
+
 // --- 2. RÉCUPÉRATION DYNAMIQUE DU PERSONNEL ET MACHINES ---
 $personnel = [];
 $fonctions = [];
@@ -320,7 +327,7 @@ $json_user_session = safe_json($_SESSION['user']);
 
 <div class="window-card">
     <div class="window-titlebar">
-        <h1><img src="img/logo.png" alt="Logo"> <?php echo htmlspecialchars(t('demande.window_title')); ?></h1>
+        <h1><img src="<?php echo htmlspecialchars($logo_path_demande); ?>" alt="Logo"> <?php echo htmlspecialchars(t('demande.window_title')); ?></h1>
         <a class="window-close" href="accueil.php" title="<?php echo htmlspecialchars(t('demande.window_close_tooltip')); ?>">&times;</a>
     </div>
 

@@ -8,6 +8,13 @@ $vient_de_gmao = in_array($_SESSION['role'] ?? '', ['admin', 'technicien']);
 
 $user_session = trim($_SESSION['user']);
 
+// --- LOGO (configurable depuis Paramètres > Général, même pattern que navbar.php) ---
+$logo_path_accueil = "img/logo.png";
+try {
+    $general_accueil = $db->query("SELECT cle, valeur FROM parametres_general")->fetchAll(PDO::FETCH_KEY_PAIR);
+    if (!empty($general_accueil['logo_path'])) { $logo_path_accueil = $general_accueil['logo_path']; }
+} catch (Exception $e) {}
+
 // --- Récupération des IDs de tickets du service (pour le badge de notifications) ---
 $mes_ticket_ids = [];
 try {
@@ -174,7 +181,7 @@ $json_ticket_ids = safe_json($mes_ticket_ids);
     </div>
     <div class="topbar">
         <div class="brand">
-            <img src="img/logo.png" alt="Logo">
+            <img src="<?php echo htmlspecialchars($logo_path_accueil); ?>" alt="Logo">
             <h1><?php echo htmlspecialchars(t('accueil.heading')); ?></h1>
         </div>
         <div class="who">
