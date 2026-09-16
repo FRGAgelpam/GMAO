@@ -72,3 +72,23 @@ The code ships deliberately generic (name "GMAO", neutral logo, no external link
 ## 5. Going further
 
 Everything else is also configured entirely from **Settings**, without touching the code: preventive-maintenance categories, services, equipment types, and creating the other user accounts (technicians, service keys for the request portal).
+
+## 6. Updating
+
+**There is no automatic update mechanism.** This repository never contacts the Internet from your server, and that's intentional — many installations run on isolated networks with no outbound access at all. So it's up to you to check for new versions and apply them manually.
+
+### How to know if an update is available
+
+- The `VERSION` file at the root of your installation shows your current version.
+- Compare it with the one on GitHub, and check [`CHANGELOG.md`](../CHANGELOG.md) to see what changed.
+- If the server hosting the GMAO has no Internet access, someone needs to check from another machine that does. Consider clicking **Watch → Custom → Releases** at the top of the repository's GitHub page to get an email whenever a new version is published.
+
+### How to apply it (including with no Internet access on the server)
+
+1. From a machine with Internet access, download the latest version: the green **Code → Download ZIP** button on GitHub (`main` branch), or the ZIP attached to the repository's latest "Release".
+2. Transfer that ZIP to the server through whatever method your IT policy allows (USB drive, jump host...) — this step depends entirely on your own network's security rules and can't be done for you.
+3. Replace the installation's files with the ones from the ZIP, **except**:
+   - the `uploads/` folder (your real attachments: photos, PDFs, avatars...);
+   - `db_credentials.php` (located outside this folder, so it isn't in the ZIP anyway).
+4. Check `install/updates/` for any `.sql` file(s) numbered between your old version and the new one. If there are any, run them in order (see the instructions in that folder). **Never re-import `install/schema.sql`** on an existing database: it's meant for a first installation only and would wipe your data.
+5. Update the `VERSION` file to the new number (it's included in the ZIP, so this is normally already done by step 3).

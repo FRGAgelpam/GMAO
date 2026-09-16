@@ -72,3 +72,23 @@ De meegeleverde code is bewust generiek (naam "GMAO", neutraal logo, geen extern
 ## 5. Verder gaan
 
 De rest configureer je ook volledig via **Instellingen**, zonder de code aan te raken: categorieën voor preventief onderhoud, diensten, apparatuurtypes, en het aanmaken van de andere gebruikersaccounts (technici, dienstsleutels voor het aanvraagportaal).
+
+## 6. Bijwerken
+
+**Er bestaat geen automatische update.** Deze repository neemt vanaf jouw server nooit contact op met het internet, en dat is bewust zo — veel installaties draaien op geïsoleerde netwerken zonder enige uitgaande toegang. Het is dus aan jou om regelmatig te controleren of er een nieuwe versie is, en die dan handmatig toe te passen.
+
+### Hoe weet je of er een update is
+
+- Het bestand `VERSION` in de root van jouw installatie toont je huidige versie.
+- Vergelijk dit met dat van de repository op GitHub, en bekijk [`CHANGELOG.md`](../CHANGELOG.md) om te zien wat er veranderd is.
+- Als de server waarop de GMAO draait geen internettoegang heeft, moet iemand dit controleren vanaf een ander toestel dat dat wel heeft. Klik op **Watch → Custom → Releases** bovenaan de GitHub-pagina van de repository om automatisch een e-mail te krijgen zodra er een nieuwe versie verschijnt.
+
+### Hoe je een update toepast (ook zonder internettoegang op de server)
+
+1. Download vanaf een toestel met internettoegang de laatste versie: de groene knop **Code → Download ZIP** op GitHub (branch `main`), of de ZIP die bij de laatste "Release" van de repository hoort.
+2. Breng deze ZIP over naar de server via de methode die je IT-beleid toelaat (USB-stick, tussenliggende server...) — deze stap hangt volledig af van de beveiligingsregels van je eigen netwerk en kan niet in jouw plaats gedaan worden.
+3. Vervang de bestanden van de installatie door die uit de ZIP, **behalve**:
+   - de map `uploads/` (je echte bijlagen: foto's, PDF's, avatars...);
+   - `db_credentials.php` (staat buiten deze map, en zit sowieso niet in de ZIP).
+4. Kijk in `install/updates/` of er een of meerdere `.sql`-bestanden staan genummerd tussen jouw oude en de nieuwe versie. Voer ze zo ja in volgorde uit (zie de instructies in die map). **Importeer nooit opnieuw `install/schema.sql`** op een bestaande database: dit bestand is enkel bedoeld voor een allereerste installatie en zou je gegevens wissen.
+5. Werk het bestand `VERSION` bij met het nieuwe nummer (dit zit in de ZIP, dus is bij stap 3 normaal al gebeurd).

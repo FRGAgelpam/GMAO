@@ -72,3 +72,23 @@ Le code livré est volontairement générique (nom "GMAO", logo neutre, aucun li
 ## 5. Aller plus loin
 
 Le reste se configure aussi entièrement depuis **Paramètres**, sans toucher au code : catégories de préventif, services, types d'équipement, et création des autres comptes utilisateurs (techniciens, clés de service pour le portail de demandes).
+
+## 6. Mettre à jour
+
+**Il n'existe aucune mise à jour automatique.** Ce dépôt ne contacte jamais Internet depuis ton serveur, et c'est volontaire — beaucoup d'installations tournent sur des réseaux isolés, sans aucun accès sortant. C'est donc à toi de vérifier régulièrement s'il existe une nouvelle version, puis de l'appliquer manuellement.
+
+### Comment savoir si une mise à jour existe
+
+- Le fichier `VERSION` à la racine de ton installation indique ta version actuelle.
+- Compare-le à celui du dépôt sur GitHub, et regarde [`CHANGELOG.md`](../CHANGELOG.md) pour voir ce qui a changé.
+- Si le serveur qui héberge la GMAO n'a pas accès à Internet, quelqu'un doit vérifier depuis un autre poste qui y a accès. Pense à cliquer sur **Watch → Custom → Releases** en haut de la page GitHub du dépôt pour être prévenu par email dès qu'une nouvelle version sort.
+
+### Comment l'appliquer (y compris sans accès Internet sur le serveur)
+
+1. Depuis un poste qui a accès à Internet, télécharge la dernière version : bouton vert **Code → Download ZIP** sur GitHub (branche `main`), ou le ZIP joint à la dernière "Release" du dépôt.
+2. Transfère ce ZIP jusqu'au serveur par le moyen que ton service informatique autorise (clé USB, poste passerelle...) — cette étape dépend entièrement des règles de sécurité de ton propre réseau, on ne peut pas la faire à ta place.
+3. Remplace les fichiers de l'installation par ceux du ZIP, **sauf** :
+   - le dossier `uploads/` (tes vraies pièces jointes : photos, PDF, avatars...) ;
+   - `db_credentials.php` (situé hors de ce dossier, il n'est de toute façon pas dans le ZIP).
+4. Regarde dans `install/updates/` s'il existe un ou plusieurs fichiers `.sql` numérotés entre ton ancienne version et la nouvelle. Si oui, exécute-les dans l'ordre (voir les instructions dans ce dossier). **Ne réimporte jamais `install/schema.sql`** sur une base existante : il est réservé à une toute première installation et effacerait tes données.
+5. Mets à jour le fichier `VERSION` avec le nouveau numéro (il est inclus dans le ZIP, donc normalement déjà fait à l'étape 3).
