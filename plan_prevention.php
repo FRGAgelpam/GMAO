@@ -1171,7 +1171,7 @@ if (!empty($id_ee_prefill)) {
 
     <div class="html2pdf__page-break"></div>
     <div class="green-title anti-coupe">ANNEXE 2 : Points de rassemblements</div>
-    <img src="img/plan_rassemblement.png" class="img-center anti-coupe" style="display: block; width: 100%; max-height: 20cm; object-fit: contain; margin-top: 20px;" alt="Points de rassemblement">
+    <p style="text-align:center; font-style:italic; color:#666; margin-top:20px;">[Insérer ici le plan de votre site avec les points de rassemblement]</p>
 
 </div>
 
