@@ -1080,17 +1080,17 @@ if (!empty($id_ee_prefill)) {
         </tr>
         <tr>
             <th style="background:#e7e6e6;">Appel d’urgence</th><td style="font-weight:900;">112</td>
-            <th style="background:#e7e6e6;">Centre Antipoison</th><td style="font-weight:900;">04.75.53.40.00</td>
+            <th style="background:#e7e6e6;">Centre Antipoison</th><td style="font-weight:900;">[Numéro local]</td>
             <th style="background:#e7e6e6;">Urgence électricité</th><td style="font-weight:900;">09.69.32.15.15</td>
         </tr>
         <tr>
             <th style="background:#e7e6e6;">Sourds et malentendants</th><td style="font-weight:900;">114</td>
-            <th style="background:#e7e6e6;">SOS mains et doigts</th><td style="font-weight:900;">04.75.00.35.00</td>
-            <th style="background:#e7e6e6;">Médecine du travail</th><td style="font-weight:900;">04.75.92.21.88</td>
+            <th style="background:#e7e6e6;">SOS mains et doigts</th><td style="font-weight:900;">[Numéro local]</td>
+            <th style="background:#e7e6e6;">Médecine du travail</th><td style="font-weight:900;">[Numéro local]</td>
         </tr>
         <tr>
             <th style="background:#e7e6e6;">Défenseur des droits</th><td style="font-weight:900;">09.69.39.00.00</td>
-            <th style="background:#e7e6e6;">Inspection du travail</th><td style="font-weight:900;" colspan="3">04.26.52.68.00</td>
+            <th style="background:#e7e6e6;">Inspection du travail</th><td style="font-weight:900;" colspan="3">[Numéro local]</td>
         </tr>
     </table>
 

@@ -3697,7 +3697,7 @@ async function executerSuppressionRéelle() {
 
 
 // ============================================================================
-// SAUVEGARDE DU RAPPORT INTERMÉDIAIRE ET MODALES GEL'PAM
+// SAUVEGARDE DU RAPPORT INTERMÉDIAIRE ET MODALES
 // ============================================================================
 async function sauvegarderNoteIntermediaire(id) {
     const textareaNote = document.getElementById('note-intermediaire-' + id);

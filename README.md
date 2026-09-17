@@ -1,6 +1,6 @@
-# GMAO Gel'pam
+# GMAO
 
-Application de GMAO (Gestion de Maintenance Assistée par Ordinateur) développée pour Gel'pam, permettant de gérer la maintenance curative et préventive d'un parc de machines industrielles.
+Application de GMAO (Gestion de Maintenance Assistée par Ordinateur) permettant de gérer la maintenance curative et préventive d'un parc de machines industrielles.
 
 ## Fonctionnalités
 

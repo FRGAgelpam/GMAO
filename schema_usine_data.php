@@ -243,8 +243,8 @@ function schema_usine_slug($texte) {
 // Migration ponctuelle (idempotente, marqueur sur disque) : les dossiers de documentation créés
 // avant l'ajout du nom lisible s'appelaient juste "{zone_id}/" — illisible en parcourant le
 // serveur par SFTP. On les renomme en "{zone_id}_{nom-lisible}/" et on répare au passage les
-// permissions (0755 par défaut sur les dossiers créés par mkdir() empêchait le groupe www-data,
-// donc l'utilisateur gelpam, d'y écrire/supprimer — on force 0775/0664).
+// permissions (0755 par défaut sur les dossiers créés par mkdir() empêchait le groupe www-data
+// d'y écrire/supprimer — on force 0775/0664).
 function schema_usine_migrer_dossiers_documents($db) {
     $baseDir = __DIR__ . '/uploads/documentation_machines/';
     $marqueur = $baseDir . '.migre_noms_dossiers';
