@@ -640,8 +640,8 @@ HTML,
     'maint.aide_sous_traitant_body' => <<<'HTML'
 <p>Vink dit vakje aan als de interventie wordt toevertrouwd aan een externe dienstverlener in plaats van het interne team.</p>
             <ul class="aide-list">
-                <li><i class="fa-solid fa-list-check" style="color:var(--gelpam-orange);"></i> Kies vervolgens het bedrijf uit de lijst die net daaronder verschijnt.</li>
-                <li><i class="fa-solid fa-file-pdf" style="color:var(--gelpam-orange);"></i> Zodra de order is aangemaakt, verschijnt een knop "PVP genereren" (Preventieplan) op het dossier.</li>
+                <li><i class="fa-solid fa-list-check" style="color:var(--brand-orange);"></i> Kies vervolgens het bedrijf uit de lijst die net daaronder verschijnt.</li>
+                <li><i class="fa-solid fa-file-pdf" style="color:var(--brand-orange);"></i> Zodra de order is aangemaakt, verschijnt een knop "PVP genereren" (Preventieplan) op het dossier.</li>
             </ul>
 HTML,
 
@@ -3329,7 +3329,7 @@ HTML,
     'aide_planning.vue_ensemble_p2' => "In elk vakje kunt u tot drie dingen zien:",
     'aide_planning.vue_li1' => "<b>Een dienst-/gebeurtenisbadge</b> — kleur + label (bv. \"Ochtend · 7u\", \"Verlof\", \"ADV\").",
     'aide_planning.vue_li2' => "<b>Een of meer interventiebonnen (BI)</b> — de kleine genummerde etiketten, als de technicus die dag tijd op een interventie heeft geregistreerd.",
-    'aide_planning.vue_li3' => "<b>Een notitie-icoon</b> <i class=\"fa-solid fa-note-sticky\" style=\"color:var(--gelpam-orange);\"></i> — als er een opmerking is achtergelaten (bv. \"om 9u aangekomen, om 15u30 vertrokken\").",
+    'aide_planning.vue_li3' => "<b>Een notitie-icoon</b> <i class=\"fa-solid fa-note-sticky\" style=\"color:var(--brand-orange);\"></i> — als er een opmerking is achtergelaten (bv. \"om 9u aangekomen, om 15u30 vertrokken\").",
     'aide_planning.callout_annuel' => "Klikken op de naam, avatar of het totaal van een technicus (het blok links) opent rechtstreeks zijn <a href=\"#planning-annuel\"><b>Jaarplanning</b></a> — de volledige kalender van het jaar, niet enkel de getoonde week.",
     'aide_planning.naviguer_lede' => "Drie manieren om van week te veranderen, allemaal gelijkwaardig:",
     'aide_planning.case_fleches_titre' => "De pijlen aan de randen",

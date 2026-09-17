@@ -156,7 +156,7 @@ function formatDateHeureIdee($dateStr, $jourSemaineMap) {
     <style>
         :root {
             --primary: #2c3e50; --accent: #3498db; --success: #2ecc71; --danger: #e74c3c;
-            --gelpam-green: #2ecc71; --gelpam-orange: #f39c12; --purple: #9b59b6;
+            --brand-green: #2ecc71; --brand-orange: #f39c12; --purple: #9b59b6;
         }
         * { box-sizing: border-box; }
         body {
@@ -198,11 +198,11 @@ function formatDateHeureIdee($dateStr, $jourSemaineMap) {
         .container { max-width: 900px; margin: 0 auto; padding: 20px; }
 
         .page-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; color: #fff; }
-        .page-head i { font-size: 1.8rem; color: var(--gelpam-orange); text-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+        .page-head i { font-size: 1.8rem; color: var(--brand-orange); text-shadow: 0 2px 10px rgba(0,0,0,0.4); }
         .page-head h1 { font-family: 'Caveat', cursive; font-size: 2.1rem; margin: 0; text-shadow: 0 2px 10px rgba(0,0,0,0.4); min-width: 0; }
 
         .alert { padding: 12px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; margin-bottom: 16px; background: #fff; box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
-        .alert.success { color: #1e8449; border-left: 4px solid var(--gelpam-green); }
+        .alert.success { color: #1e8449; border-left: 4px solid var(--brand-green); }
         .alert.danger { color: #922b21; border-left: 4px solid var(--danger); }
 
         .filtres { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
@@ -216,7 +216,7 @@ function formatDateHeureIdee($dateStr, $jourSemaineMap) {
         .filtre-btn .cnt { background: rgba(0,0,0,0.12); padding: 1px 7px; border-radius: 10px; font-size: 0.68rem; }
         .filtre-btn.is-active .cnt { background: rgba(255,255,255,0.25); }
 
-        .idee-card { background: rgba(255,255,255,0.97); border-radius: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); padding: 18px 20px; margin-bottom: 14px; border-left: 5px solid var(--gelpam-orange); transition: box-shadow 0.2s; }
+        .idee-card { background: rgba(255,255,255,0.97); border-radius: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); padding: 18px 20px; margin-bottom: 14px; border-left: 5px solid var(--brand-orange); transition: box-shadow 0.2s; }
         .idee-card-nouveau { border-left-color: #e84393; box-shadow: 0 10px 25px rgba(232,67,147,0.3); }
         .idee-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; cursor: pointer; }
         .idee-titre { font-weight: 700; color: var(--primary); font-size: 1.05rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
@@ -235,7 +235,7 @@ function formatDateHeureIdee($dateStr, $jourSemaineMap) {
         .statut-pill { font-size: 0.62rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; color: #fff; white-space: nowrap; text-transform: uppercase; flex-shrink: 0; }
         .statut-nouvelle { background: var(--accent); }
         .statut-etude { background: #16a085; }
-        .statut-acceptee { background: var(--gelpam-green); }
+        .statut-acceptee { background: var(--brand-green); }
         .statut-realisee { background: var(--purple); }
         .statut-rejetee { background: var(--danger); }
 
@@ -255,7 +255,7 @@ function formatDateHeureIdee($dateStr, $jourSemaineMap) {
         .idee-admin-form select, .idee-admin-form textarea { padding: 8px 10px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; font-size: 0.82rem; }
         .idee-admin-form select { min-width: 140px; }
         .idee-admin-form textarea { flex: 1; min-width: 220px; resize: vertical; min-height: 38px; }
-        .idee-admin-form button { padding: 9px 16px; border: none; border-radius: 8px; background: linear-gradient(135deg, #3ddc84, var(--gelpam-green)); color: #fff; font-weight: 700; cursor: pointer; font-size: 0.78rem; white-space: nowrap; transition: 0.2s; box-shadow: 0 3px 8px rgba(46,204,113,0.35); }
+        .idee-admin-form button { padding: 9px 16px; border: none; border-radius: 8px; background: linear-gradient(135deg, #3ddc84, var(--brand-green)); color: #fff; font-weight: 700; cursor: pointer; font-size: 0.78rem; white-space: nowrap; transition: 0.2s; box-shadow: 0 3px 8px rgba(46,204,113,0.35); }
         .idee-admin-form button:hover { background: #27ae60; transform: translateY(-1px); box-shadow: 0 5px 12px rgba(46,204,113,0.45); }
 
         .empty-state { text-align: center; padding: 40px 20px; color: #fff; background: rgba(255,255,255,0.08); border-radius: 14px; }

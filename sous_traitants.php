@@ -153,8 +153,8 @@ $json_historique = json_encode($st_historique);
     <style>
         :root {
             --primary: #2c3e50; --accent: #3498db; --success: #2ecc71; 
-            --danger: #e74c3c; --gelpam-green: #2ecc71; --gelpam-orange: #f39c12;
-            --ardo-blue: #005696; --stat-red: #c0392b; --purple: #9b59b6; --dark-blue: #2980b9;
+            --danger: #e74c3c; --brand-green: #2ecc71; --brand-orange: #f39c12;
+            --brand-blue: #005696; --stat-red: #c0392b; --purple: #9b59b6; --dark-blue: #2980b9;
             --soft-blue: #ebf5fb; --soft-orange: #fff5e6; --soft-green: #e8f8f5;
             --text-main: #455a64; --text-light: #90a4ae; --border-color: #eef2f5;
         }
@@ -266,8 +266,8 @@ $json_historique = json_encode($st_historique);
     <?php endif; ?>
 
     <div class="kpi-grid">
-        <div class="kpi-card" style="border-color: var(--gelpam-green);">
-            <div class="kpi-icon" style="background: #e8f5e9; color: var(--gelpam-green);"><i class="fa-solid fa-industry"></i></div>
+        <div class="kpi-card" style="border-color: var(--brand-green);">
+            <div class="kpi-icon" style="background: #e8f5e9; color: var(--brand-green);"><i class="fa-solid fa-industry"></i></div>
             <div>
                 <div class="kpi-value">0</div>
                 <div class="kpi-label"><?php echo htmlspecialchars(t('st.kpi_entreprises_site')); ?></div>
@@ -430,7 +430,7 @@ $json_historique = json_encode($st_historique);
         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #f1f5f9; padding-bottom:15px; margin-bottom:20px; gap: 20px; flex-wrap: wrap;">
             <div style="display: flex; align-items: center; gap: 15px;">
                 <h2 style="font-family:'Caveat', cursive; font-size:2.2rem; margin:0; color:var(--primary);"><i class="fa-solid fa-address-book"></i> <?php echo htmlspecialchars(t('st.modal_entreprises_title')); ?></h2>
-                <button onclick="resetFormEntreprise()" style="background:var(--gelpam-green); color:white; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; font-weight:bold; font-size:0.85rem; display:flex; align-items:center; gap:6px; box-shadow: 0 2px 5px rgba(46, 204, 113, 0.2);">
+                <button onclick="resetFormEntreprise()" style="background:var(--brand-green); color:white; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; font-weight:bold; font-size:0.85rem; display:flex; align-items:center; gap:6px; box-shadow: 0 2px 5px rgba(46, 204, 113, 0.2);">
                     <i class="fa-solid fa-plus-circle"></i> <?php echo htmlspecialchars(t('st.btn_ajouter_entreprise')); ?>
                 </button>
             </div>
@@ -500,7 +500,7 @@ $json_historique = json_encode($st_historique);
             </div>
         </div>
 
-        <button onclick="sauvegarderEntreprise()" style="width:100%; margin-top:20px; background:var(--gelpam-green); color:white; border:none; padding:12px; border-radius:6px; font-weight:bold; cursor:pointer; font-size: 1rem; box-shadow: 0 4px 6px rgba(46, 204, 113, 0.2);"><i class="fa-solid fa-save"></i> <?php echo htmlspecialchars(t('st.btn_enregistrer')); ?></button>
+        <button onclick="sauvegarderEntreprise()" style="width:100%; margin-top:20px; background:var(--brand-green); color:white; border:none; padding:12px; border-radius:6px; font-weight:bold; cursor:pointer; font-size: 1rem; box-shadow: 0 4px 6px rgba(46, 204, 113, 0.2);"><i class="fa-solid fa-save"></i> <?php echo htmlspecialchars(t('st.btn_enregistrer')); ?></button>
     </div>
 </div>
 
@@ -540,7 +540,7 @@ $json_historique = json_encode($st_historique);
 
         <div>
             <h3 style="margin-top:0; margin-bottom:10px; font-size:0.95rem; color:var(--primary); font-weight:700; display:flex; align-items:center; gap:8px;">
-                <i class="fa-solid fa-clock-rotate-left" style="color:var(--gelpam-orange);"></i> <?php echo htmlspecialchars(t('st.historique_societe')); ?>
+                <i class="fa-solid fa-clock-rotate-left" style="color:var(--brand-orange);"></i> <?php echo htmlspecialchars(t('st.historique_societe')); ?>
             </h3>
             <div style="max-height: 220px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 8px;">
                 <table style="width:100%; border-collapse:collapse; font-size:0.8rem; table-layout: fixed;">
@@ -579,7 +579,7 @@ $json_historique = json_encode($st_historique);
         <div style="padding: 25px; background: #f8fafc;">
             <div style="margin-bottom: 15px;">
                 <label style="display:block; color: var(--primary); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
-                    <i class="fa-solid fa-pen-nib" style="color: var(--gelpam-green);"></i> <?php echo htmlspecialchars(t('st.label_compte_rendu')); ?>
+                    <i class="fa-solid fa-pen-nib" style="color: var(--brand-green);"></i> <?php echo htmlspecialchars(t('st.label_compte_rendu')); ?>
                 </label>
                 <textarea id="st-cloture-cr" placeholder="<?php echo htmlspecialchars(t('st.placeholder_compte_rendu')); ?>" style="width:100%; height:120px; border:1px solid #cbd5e1; border-radius:8px; padding:12px; font-size:0.9rem; outline:none; resize: none; box-sizing: border-box; font-family: inherit; color: #334155; transition: border 0.2s;" onfocus="this.style.border='1px solid var(--accent)'" onblur="this.style.border='1px solid #cbd5e1'"></textarea>
             </div>
@@ -587,7 +587,7 @@ $json_historique = json_encode($st_historique);
 
         <div style="padding: 15px 25px; background: white; display: flex; justify-content: flex-end; gap: 12px; border-top: 1px solid #f1f5f9;">
             <button onclick="document.getElementById('modalClotureST').style.display='none'" style="padding: 8px 20px; border-radius: 6px; border: 1px solid #e2e8f0; background: white; color: #64748b; cursor: pointer; font-weight: 600; font-size: 0.85rem;"><?php echo htmlspecialchars(t('st.btn_annuler')); ?></button>
-            <button onclick="validerClotureST()" style="padding: 8px 25px; border-radius: 6px; border: none; background: var(--gelpam-green); color: white; cursor: pointer; font-weight: 700; font-size: 0.85rem; transition: 0.2s;"><?php echo htmlspecialchars(t('st.btn_confirmer_cloture')); ?></button>
+            <button onclick="validerClotureST()" style="padding: 8px 25px; border-radius: 6px; border: none; background: var(--brand-green); color: white; cursor: pointer; font-weight: 700; font-size: 0.85rem; transition: 0.2s;"><?php echo htmlspecialchars(t('st.btn_confirmer_cloture')); ?></button>
         </div>
     </div>
 </div>
@@ -854,7 +854,7 @@ function renderListeEntreprises() {
     container.innerHTML = listeTriee.map(e => {
         let isPonctuel = (e.type_pdp === 'Ponctuel');
         let pdpStat = isPonctuel ? 'ok' : getPdpStatus(e.date_fin_pdp); // On force 'ok' pour le ponctuel pour éviter la bordure rouge
-        let borderRowColor = isPonctuel ? 'var(--gelpam-orange)' : (pdpStat === 'ok' ? 'var(--success)' : (pdpStat === 'nok' ? 'var(--danger)' : 'var(--gelpam-orange)'));
+        let borderRowColor = isPonctuel ? 'var(--brand-orange)' : (pdpStat === 'ok' ? 'var(--success)' : (pdpStat === 'nok' ? 'var(--danger)' : 'var(--brand-orange)'));
 
         let badgeType = isPonctuel
             ? `<span style="background: #f39c12; color: white; padding: 3px 8px; border-radius: 20px; font-weight: bold; font-size:0.7rem; white-space:nowrap;"><i class="fa-solid fa-clipboard-check"></i> ${I18N_ST.badge_pdp_ponctuel}</span>`

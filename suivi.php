@@ -170,7 +170,7 @@ $stats_total = count($historique_demandes);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Segoe+UI:wght@400;500;600;700&family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #2c3e50; --accent: #3498db; --gelpam-orange: #f39c12; --gelpam-green: #2ecc71; --danger: #e74c3c; --violet: #8e44ad; --attente: #95a5a6; }
+        :root { --primary: #2c3e50; --accent: #3498db; --brand-orange: #f39c12; --brand-green: #2ecc71; --danger: #e74c3c; --violet: #8e44ad; --attente: #95a5a6; }
         * { box-sizing: border-box; }
 
         body {
@@ -234,9 +234,9 @@ $stats_total = count($historique_demandes);
         .stat-card .stat-num { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.6rem; line-height: 1; }
         .stat-card .stat-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; color: rgba(255,255,255,0.85); margin-top: 4px; }
         .stat-card.stat-attente .stat-num { color: #f1c40f; }
-        .stat-card.stat-afaire .stat-num { color: var(--gelpam-orange); }
+        .stat-card.stat-afaire .stat-num { color: var(--brand-orange); }
         .stat-card.stat-encours .stat-num { color: #5dade2; }
-        .stat-card.stat-termine .stat-num { color: var(--gelpam-green); }
+        .stat-card.stat-termine .stat-num { color: var(--brand-green); }
         .stat-card.stat-refuse .stat-num { color: #e57373; }
 
         /* ============ CARTE SUIVI / FILTRES ============ */
@@ -272,9 +272,9 @@ $stats_total = count($historique_demandes);
 
         .badge-text { font-size: 0.56rem; font-weight: 500; letter-spacing: 0.02em; padding: 3px 8px; border-radius: 20px; color: white; white-space: nowrap; }
         .bg-pending { background: #f1c40f; color: #000; }
-        .bg-todo { background: var(--gelpam-orange); }
+        .bg-todo { background: var(--brand-orange); }
         .bg-progress { background: var(--accent); }
-        .bg-done { background: var(--gelpam-green); }
+        .bg-done { background: var(--brand-green); }
         .bg-refuse { background: #7f1d1d; }
         .badge-unread { display:none; background:var(--danger); color:white; border-radius:20px; padding:2px 8px; font-size:0.62rem; font-weight:600; box-shadow: 0 1px 3px rgba(231,76,60,0.5); text-transform:uppercase; white-space:nowrap; }
 
@@ -304,7 +304,7 @@ $stats_total = count($historique_demandes);
             font-family: 'Inter', 'Segoe UI', sans-serif;
         }
         .detail-header { position: sticky; top:0; z-index:2; background: rgba(255,255,255,0.98); backdrop-filter: blur(6px); padding: 22px 32px; border-bottom: 1px solid #eef1f5; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
-        .detail-header-bi { font-size: 1.05rem; font-weight: 500; letter-spacing: -0.005em; color: var(--gelpam-orange); }
+        .detail-header-bi { font-size: 1.05rem; font-weight: 500; letter-spacing: -0.005em; color: var(--brand-orange); }
         .btn-close { font-size: 22px; font-weight: 300; cursor: pointer; color: #94a3b8; line-height: 1; transition: 0.2s;}
         .btn-close:hover { color: var(--danger); }
         .detail-body { padding: 28px 32px 34px; }
@@ -315,14 +315,14 @@ $stats_total = count($historique_demandes);
         .st-line { position: absolute; top: 15px; left: -50%; width: 100%; height: 2px; background: #eef1f5; z-index: 0; }
         .st-step:first-child .st-line { display: none; }
         .st-label { font-size: 0.58rem; font-weight: 500; text-transform: uppercase; color: #94a3b8; margin-top: 8px; letter-spacing: 0.04em; }
-        .st-step.done .st-dot { background: var(--gelpam-green); color: #fff; box-shadow: 0 0 0 2px var(--gelpam-green); }
-        .st-step.done .st-line { background: var(--gelpam-green); }
+        .st-step.done .st-dot { background: var(--brand-green); color: #fff; box-shadow: 0 0 0 2px var(--brand-green); }
+        .st-step.done .st-line { background: var(--brand-green); }
         .st-step.current .st-dot { background: var(--accent); color: #fff; box-shadow: 0 0 0 4px rgba(52,152,219,0.2); }
         .st-step.current .st-label { color: var(--accent); font-weight: 500; }
         /* Le trait qui mène à l'étape active doit être "rempli" comme les étapes déjà validées :
            seul le point reste bleu pour signaler "vous êtes ici", sinon le trait semblait non dessiné. */
-        .st-step.current .st-line { background: var(--gelpam-green); }
-        .st-step.done .st-label { color: var(--gelpam-green); }
+        .st-step.current .st-line { background: var(--brand-green); }
+        .st-step.done .st-label { color: var(--brand-green); }
         /* Refusée : seule l'étape réellement atteinte (marquée "current" par le JS, toujours la
            1ère) doit s'afficher en rouge — l'ancien sélecteur non ciblé (.st-dot tout court)
            colorait à tort les 4 points, laissant croire que les 4 étapes avaient eu lieu. */
@@ -486,7 +486,7 @@ $stats_total = count($historique_demandes);
 
                     $isPending = empty($t['num_bi']) && !$estRefusee;
                     $biDisplay = $estRefusee ? t('suivi.bi_refusee') : ($isPending ? t('suivi.bi_attente') : "#" . htmlspecialchars($t['num_bi']));
-                    $biColor = ($isPending || $estRefusee) ? "var(--danger)" : "var(--gelpam-orange)";
+                    $biColor = ($isPending || $estRefusee) ? "var(--danger)" : "var(--brand-orange)";
 
                     $cleanDesc = preg_replace('/\s*\[REF:.*?\]\s*$/', '', $t['description']);
                     $fullLoc = trim(implode(' > ', array_filter([$t['usine'], $t['secteur'], $t['ligne'], $t['zone']])));
@@ -519,10 +519,10 @@ $stats_total = count($historique_demandes);
                     if (stripos($typeInterv, 'prevent') !== false) $typeIcon = 'fa-calendar-check';
                     elseif (stripos($typeInterv, 'chantier') !== false) $typeIcon = 'fa-person-digging';
 
-                    $accentColor = 'var(--gelpam-orange)';
+                    $accentColor = 'var(--brand-orange)';
                     if ($bgClass === 'bg-pending') $accentColor = '#f1c40f';
                     elseif ($bgClass === 'bg-progress') $accentColor = 'var(--accent)';
-                    elseif ($bgClass === 'bg-done') $accentColor = 'var(--gelpam-green)';
+                    elseif ($bgClass === 'bg-done') $accentColor = 'var(--brand-green)';
                     elseif ($bgClass === 'bg-refuse') $accentColor = '#7f1d1d';
 
                     $searchBlob = mb_strtolower($cleanDesc . ' ' . ($t['equip'] ?? '') . ' ' . $biDisplay . ' ' . $fullLoc . ' ' . $demandePar, 'UTF-8');
@@ -598,7 +598,7 @@ $stats_total = count($historique_demandes);
                 <span id="dt-statut" class="badge-text"></span>
             </div>
             <div style="display:flex; gap: 15px; align-items:center;">
-                <button id="btn-relancer-demande" style="background:var(--gelpam-orange); color:white; border:none; padding:7px 14px; border-radius:6px; font-weight:600; cursor:pointer; font-size:0.75rem; transition:0.2s; text-transform:uppercase; box-shadow: 0 2px 4px rgba(243,156,18,0.35); display:none;" onmouseover="this.style.filter='brightness(0.92)';" onmouseout="this.style.filter='';">
+                <button id="btn-relancer-demande" style="background:var(--brand-orange); color:white; border:none; padding:7px 14px; border-radius:6px; font-weight:600; cursor:pointer; font-size:0.75rem; transition:0.2s; text-transform:uppercase; box-shadow: 0 2px 4px rgba(243,156,18,0.35); display:none;" onmouseover="this.style.filter='brightness(0.92)';" onmouseout="this.style.filter='';">
                     <i class="fa-solid fa-bell" style="margin-right:4px;"></i><?php echo htmlspecialchars(t('suivi.btn_relancer')); ?>
                 </button>
                 <button id="btn-chat-demandeur" style="background:#3498db; color:white; border:none; padding:7px 14px; border-radius:6px; font-weight:600; cursor:pointer; font-size:0.75rem; transition:0.2s; text-transform:uppercase; box-shadow: 0 2px 4px rgba(52,152,219,0.3); display:none;" onmouseover="this.style.background='#2980b9';" onmouseout="this.style.background='#3498db';">
@@ -628,7 +628,7 @@ $stats_total = count($historique_demandes);
                     <div class="data-val" id="dt-demandeur" style="color:var(--primary); font-weight:400;"></div>
                 </div>
                 <div class="data-row">
-                    <div class="data-label"><i class="fa-solid fa-user-gear" style="color:var(--gelpam-orange);"></i> <?php echo htmlspecialchars(t('suivi.label_technicien')); ?></div>
+                    <div class="data-label"><i class="fa-solid fa-user-gear" style="color:var(--brand-orange);"></i> <?php echo htmlspecialchars(t('suivi.label_technicien')); ?></div>
                     <div class="data-val" id="dt-tech" style="color:var(--primary); font-weight:400;"></div>
                 </div>
             </div>
@@ -641,11 +641,11 @@ $stats_total = count($historique_demandes);
 
             <div class="two-col" id="dt-realisation-row" style="display:none; margin-bottom:16px;">
                 <div class="data-row" style="margin-bottom:0;">
-                    <div class="data-label"><i class="fa-solid fa-hourglass-half" style="color:var(--gelpam-orange);"></i> <?php echo htmlspecialchars(t('suivi.label_heures')); ?></div>
+                    <div class="data-label"><i class="fa-solid fa-hourglass-half" style="color:var(--brand-orange);"></i> <?php echo htmlspecialchars(t('suivi.label_heures')); ?></div>
                     <div class="data-val" id="dt-heures" style="color:var(--primary); font-weight:400;"></div>
                 </div>
                 <div class="data-row" style="margin-bottom:0;">
-                    <div class="data-label"><i class="fa-solid fa-calendar-check" style="color:var(--gelpam-green);"></i> <?php echo htmlspecialchars(t('suivi.label_date_realisation')); ?></div>
+                    <div class="data-label"><i class="fa-solid fa-calendar-check" style="color:var(--brand-green);"></i> <?php echo htmlspecialchars(t('suivi.label_date_realisation')); ?></div>
                     <div class="data-val" id="dt-date-realisation" style="color:var(--primary); font-weight:400;"></div>
                 </div>
             </div>

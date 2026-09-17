@@ -24,8 +24,8 @@ header('Content-Type: text/html; charset=utf-8');
 <style>
 :root {
     --primary: #2c3e50; --accent: #3498db; --success: #2ecc71;
-    --danger: #e74c3c; --gelpam-green: #2ecc71; --gelpam-orange: #f39c12;
-    --ardo-blue: #005696; --neutral-dark: #34495e; --attente: #95a5a6;
+    --danger: #e74c3c; --brand-green: #2ecc71; --brand-orange: #f39c12;
+    --brand-blue: #005696; --neutral-dark: #34495e; --attente: #95a5a6;
 }
 body { margin: 0; font-family: 'Segoe UI', sans-serif; background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('img/fond.jpg') no-repeat center center fixed; background-color: #1a2733; background-size: cover; min-height: 100vh; padding-top: 54px; color: var(--primary); box-sizing: border-box; }
 @keyframes pulse-dot { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(2.5); opacity: 0; } }
@@ -122,7 +122,7 @@ tbody td:first-child { font-weight: 700; color: var(--primary); white-space: now
 .callout b { font-weight: 700; }
 
 .pill { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.72rem; letter-spacing: 0.03em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; color: #fff; white-space: nowrap; }
-.pill-admin { background: var(--gelpam-orange); }
+.pill-admin { background: var(--brand-orange); }
 .pill-all { background: var(--accent); }
 .pill-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.85); }
 

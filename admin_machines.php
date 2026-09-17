@@ -347,7 +347,7 @@ $total_usines = count($tree);
     <style>
         :root {
             --primary: #2c3e50; --accent: #3498db; --success: #2ecc71;
-            --danger: #e74c3c; --gelpam-green: #2ecc71; --gelpam-orange: #f39c12;
+            --danger: #e74c3c; --brand-green: #2ecc71; --brand-orange: #f39c12;
             --stat-red: #c0392b; --purple: #9b59b6; --dark-blue: #2980b9;
             --line: #e3e8ec; --line-strong: #ccd5db; --surface-2: #f4f6f8; --ink-500: #64748b; --accent-100: #eaf4fc;
         }
@@ -860,7 +860,7 @@ $total_usines = count($tree);
 
         .loc-done-card { grid-column: 1 / -1; display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; background: #e8f8f5; border: 1.5px solid #b8ecd9; border-radius: 10px; padding: 10px 12px; }
         .loc-done-info { display: flex; align-items: center; gap: 9px; min-width: 0; }
-        .loc-done-icon { width: 28px; height: 28px; border-radius: 8px; background: var(--gelpam-green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; }
+        .loc-done-icon { width: 28px; height: 28px; border-radius: 8px; background: var(--brand-green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; }
         .loc-done-name { font-weight: 800; color: var(--primary); font-size: 0.8rem; }
         .loc-done-path { font-size: 0.66rem; color: #5a8a76; margin-top: 1px; }
         .loc-done-actions { display: flex; gap: 8px; flex: none; }
@@ -951,7 +951,7 @@ $total_usines = count($tree);
                     <div class="tree-node lvl-secteur" id="<?php echo $idS; ?>" data-level="secteur">
                         <div class="tree-row">
                             <span class="chev"><i class="fa-solid fa-chevron-right"></i></span>
-                            <span class="n-ico"><i class="fa-solid fa-diagram-project" style="color:var(--gelpam-orange)"></i></span>
+                            <span class="n-ico"><i class="fa-solid fa-diagram-project" style="color:var(--brand-orange)"></i></span>
                             <span class="n-name" data-original="<?php echo htmlspecialchars($s); ?>"><?php echo htmlspecialchars($s); ?></span>
                             <span class="n-count"><?php echo compterSecteur($lignes); ?></span>
                             <?php if ($is_admin): ?>
@@ -981,7 +981,7 @@ $total_usines = count($tree);
                                     <div class="tree-node lvl-zone" id="<?php echo $idZ; ?>" data-level="zone">
                                         <div class="tree-row">
                                             <span class="chev"><i class="fa-solid fa-chevron-right"></i></span>
-                                            <span class="n-ico"><i class="fa-solid fa-location-dot" style="color:var(--gelpam-green)"></i></span>
+                                            <span class="n-ico"><i class="fa-solid fa-location-dot" style="color:var(--brand-green)"></i></span>
                                             <span class="n-name" data-original="<?php echo htmlspecialchars($z); ?>"><?php echo htmlspecialchars($z); ?></span>
                                             <span class="n-count"><?php echo compterZone($machines); ?></span>
                                             <span class="row-actions">
@@ -4040,7 +4040,7 @@ function renderBiMachineTable() {
         <tbody>
             ${filtered.map(t => `
             <tr class="bi-row" data-id="${t.id}" style="border-bottom:1px solid #eee; cursor:pointer;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''">
-                <td style="padding:8px; font-weight:bold; color:var(--gelpam-orange); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${t.num_bi || '-'}</td>
+                <td style="padding:8px; font-weight:bold; color:var(--brand-orange); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${t.num_bi || '-'}</td>
                 <td style="padding:8px; text-align:center; white-space:nowrap;">${t.date ? t.date.split(' ')[0].split('-').reverse().join('/') : '-'}</td>
                 <td style="padding:8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${(t.description || '').replace(/"/g, '&quot;')}">${(t.description || '-').replace(/</g, '&lt;')}</td>
                 <td style="padding:8px; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${t.tech || '-'}</td>

@@ -455,31 +455,31 @@ if (!empty($id_ee_prefill)) {
                     <td>Collision véhicule légère, lourds et engins de manutention<br>Collision de piétons</td>
                     <td>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Vitesse limitée à 20 km/h sur le site pour VL, PL, remorques…</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Ceinture de sécurité obligatoire (y compris pour les engins de manutention)</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Utiliser les voies de circulation piétonnes</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Informer le personnel des risques interférents</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Respect du plan de circulation</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Stationnement des véhicules défini et respecté (se garer en marche arrière)</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Port des EPI pour circuler : casque, chaussures de sécurité, gilet haute visibilité</div>
                         </div>
                     </td>
@@ -489,23 +489,23 @@ if (!empty($id_ee_prefill)) {
                     <td>Trébuchement des personnes, chute de plain-pied</td>
                     <td>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Ranger le matériel</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Délimiter la zone de travail</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Ne pas encombrer les zones de circulation</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Tenir la rampe dans les escaliers</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Rangement en fin de journée et en clôture de chantier</div>
                         </div>
                     </td>
@@ -530,31 +530,31 @@ if (!empty($id_ee_prefill)) {
                     <td>Fatigue<br>Exposition au bruit<br>Travailleur Isolé<br>Températures négatives (-18 °C)<br>Non détection de dangers<br>Inhalation de poussière</td>
                     <td>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Faire des pauses régulières (toutes les 2h)</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Limiter le travail isolé au maximum (ex=combles) ou être accompagné par une personne de [votre entreprise]</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Protection auditive en cas de travaux bruyants (+80Db)</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Port de masques adaptés</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Accès à l’atelier pour utiliser la hotte aspirante</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Travail en extérieur</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Vêtements de froid (cagoule, veste, gants, chaussures, …)</div>
                         </div>
                     </td>
@@ -579,51 +579,51 @@ if (!empty($id_ee_prefill)) {
                     <td>Chute de hauteur<br>Chute d’objets</td>
                     <td>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">* Echafaudage</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">* Nacelle = port du harnais et de la longe de maintien (absorbeurs interdits) + casque avec jugulaire</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Plateforme individuelle roulante (PIR)</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">* Ligne de vie, port du harnais et de la longe dans la nacelle</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Pose de garde-corps</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">* Pose de filets</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Echelles uniquement en cas d’impossibilité d’accès, échelle attachée en haut, port du harnais * et de la longe de maintien</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Pour les travaux dans les combles : 90 kg maximum par panneau sandwich</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Prévoir des passerelles adaptées</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Balisage au sol et derrière les portes si travail à proximité d’une voie d’accès</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Interdire les travaux superposés</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Vigie au sol</div>
                         </div>
                     </td>
@@ -648,35 +648,35 @@ if (!empty($id_ee_prefill)) {
                     <td>Projections<br>Objets tranchants<br>Objets brûlants, froids<br>Dégradation de la vision</td>
                     <td>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Lunettes, écran facial</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Masque de soudeur</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Balisage de la zone</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Vêtements ignifugés</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Bâche ignifugée</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Gants anti-coupure</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Gants anti-chaleur</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Gants froid</div>
                         </div>
                     </td>
@@ -686,19 +686,19 @@ if (!empty($id_ee_prefill)) {
                     <td>Heurt<br>Écrasement</td>
                     <td>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Interdiction d’intervenir sur des organes en mouvement</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Présence d’arrêts d’urgence : A repérer</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Carters de protection en place</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Balisage et interdiction de passage dans les zones dangereuses</div>
                         </div>
                     </td>
@@ -723,31 +723,31 @@ if (!empty($id_ee_prefill)) {
                     <td>Départ de feu/ explosion</td>
                     <td>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">* Permis feu HEBDOMADAIRE</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Privilégier la préparation des pièces en atelier ou en extérieur</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">S'assurer que les conditions de travail sont adaptées à la soudure</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Mettre à disposition des dispositifs de lutte contre le feu</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Arrêts des travaux 1 heure avant la fin des travaux (16h30 maximum)</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Surveillances</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Mise Hors Service en durée limitée de la zone de détection incendie</div>
                         </div>
                     </td>
@@ -772,58 +772,58 @@ if (!empty($id_ee_prefill)) {
                     <td>Collision<br>Renversement engin de manutention<br>Chute d’objets</td>
                     <td>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Balisage de la zone d’intervention</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Signaler la topographie du terrain + risques de la zone</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">S’assurer de la conformité des appareils (VGP, carnet de maintenance)</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Respect des règles de bonne conduite</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">*S’assurer que les conducteurs ont reçu une formation adaptée</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Respect des consignes d’utilisation et consignes du constructeur</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Veiller aux opérations de manutention</div>
                         </div>
 
                         <div style="margin-top: 15px; margin-bottom: 5px; font-weight: bold;">Matériel de manutention conforme (VGP à jour, NC levées) :</div>
 
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">* Chariots élévateurs (6 mois)</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">* Grues (6 ou 12 mois selon type)</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">* Élingues (12 mois)</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">* Pont roulant (12 mois)</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">* Palan sur monorail, à bras (12 mois/6 mois)</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Cric hydraulique, mécanique (12 mois)</div>
                         </div>
 
@@ -837,15 +837,15 @@ if (!empty($id_ee_prefill)) {
                     <td></td>
                     <td>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">S'assurer de la conformité des appareils (VGP, carnet de maintenance)</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">S'assurer que les conducteurs ont reçu une formation adaptée</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Respect des consignes d'utilisation et consignes du constructeur</div>
                         </div>
                         <div style="margin-top: 15px;">
@@ -873,31 +873,31 @@ if (!empty($id_ee_prefill)) {
                     <td>Lésions dorsales<br>Lésions corporelles<br>Coupure</td>
                     <td>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Port de charge limité à 25 kg (+ si reconnu apte)</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Formation gestes et postures (conseillé)</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Formations TMS</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Port d’EPI adaptés à la manutention (gants anti-coupure, chaussures de sécurité)</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Prêt de transpalettes manuels</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Étirement avant le début des travaux</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Fournir de l’aide d’un cariste</div>
                         </div>
                     </td>
@@ -922,43 +922,43 @@ if (!empty($id_ee_prefill)) {
                     <td>Électrocution<br>Explosion<br>Incendie</td>
                     <td>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">S’assurer que le personnel a reçu des formations adaptées</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Consignation électrique</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Bon de consignation</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Travaux hors tension obligatoire</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">VAT</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">S’assurer de la conformité des installations</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Informer des PNST</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Utilisations EPI adaptées : gants isolants, visière, tapis isolant</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Balisage</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Travaux à proximité de réseaux souterrains (eau, gaz, électricité…)</div>
                         </div>
                     </td>
@@ -983,43 +983,43 @@ if (!empty($id_ee_prefill)) {
                     <td>Brûlure chimique, irritation<br>Incendie<br>CMR<br>Projection<br>Mélange incompatible<br>Fuite NH3 / CO2</td>
                     <td>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Port des EPI en adéquation avec les produits utilisés</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Balisage de la zone</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">FDS / FT</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Respecter la compatibilité au stockage (interdire acide-base)</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Les produits chimiques identifiés et stockés sur bacs de rétention</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Stockage/transport de bidon fermés (seaux interdits)</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Absorbants minéraux</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">*Formation NH3 / CO2</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Procédure en cas d'alerte NH3/CO2 + lever le doute</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Présence de douche de sécurité + lave œil</div>
                         </div>
                     </td>
@@ -1044,15 +1044,15 @@ if (!empty($id_ee_prefill)) {
                     <td>Inhalation de bactéries</td>
                     <td>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Accès limité et signalé</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">Port de masques adaptés FFP3</div>
                         </div>
                         <div class="checklist-item">
-                            <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
+                            <div class="checklist-boxes"><label><input type="checkbox"> <b>Interne</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
                             <div class="checklist-text">*Formation adaptée et suivi médical</div>
                         </div>
                     </td>

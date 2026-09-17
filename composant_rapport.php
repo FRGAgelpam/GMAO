@@ -38,7 +38,7 @@ try {
 
 <div id="modalDetailBI" class="modal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background-color:rgba(15, 23, 42, 0.4); backdrop-filter: blur(3px); overflow-y:auto;">
     
-    <div class="modal-content" style="max-width: 850px !important; width: 95% !important; max-height: 94vh; border-top: 3px solid var(--gelpam-orange); padding: 0; background: #fff; margin: 3vh auto; border-radius: 12px; position: relative; box-shadow: 0 20px 25px -5px rgba(46, 204, 113, 0.25), 0 10px 10px -5px rgba(46, 204, 113, 0.15); display: flex; flex-direction: column; overflow: hidden;" onclick="event.stopPropagation()">
+    <div class="modal-content" style="max-width: 850px !important; width: 95% !important; max-height: 94vh; border-top: 3px solid var(--brand-orange); padding: 0; background: #fff; margin: 3vh auto; border-radius: 12px; position: relative; box-shadow: 0 20px 25px -5px rgba(46, 204, 113, 0.25), 0 10px 10px -5px rgba(46, 204, 113, 0.15); display: flex; flex-direction: column; overflow: hidden;" onclick="event.stopPropagation()">
 
         <div id="detailBIContent" style="overflow-y: auto; flex: 1; min-height: 0;"></div>
 
@@ -52,13 +52,13 @@ try {
      inclus dans d'autres pages (ex. admin_machines.php via la fiche de vie) qui ne les ont pas — sans ça, les
      boutons Réouvrir/Supprimer/Basculer préventif ne faisaient rien (erreur JS silencieuse). -->
 <div id="rapportCustomConfirm" style="display:none; position:fixed; z-index:100000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); backdrop-filter: blur(3px);">
-    <div style="background:white; width:350px; margin:15% auto; padding:20px; border-radius:12px; text-align:center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-top: 5px solid var(--gelpam-orange, #f39c12);">
-        <i class="fa-solid fa-circle-question" style="font-size:3rem; color:var(--gelpam-orange, #f39c12); margin-bottom:15px;"></i>
+    <div style="background:white; width:350px; margin:15% auto; padding:20px; border-radius:12px; text-align:center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-top: 5px solid var(--brand-orange, #f39c12);">
+        <i class="fa-solid fa-circle-question" style="font-size:3rem; color:var(--brand-orange, #f39c12); margin-bottom:15px;"></i>
         <h3 id="rapportConfirmTitle" style="margin:10px 0; color:var(--dark-blue, #2c3e50);"><?php echo htmlspecialchars(t('maint.confirm_default_title')); ?></h3>
         <p id="rapportConfirmMessage" style="color:#666; font-size:0.9rem; margin-bottom:20px;"><?php echo htmlspecialchars(t('maint.confirm_default_msg')); ?></p>
         <div style="display:flex; justify-content:center; gap:10px;">
             <button id="rapportConfirmCancel" style="padding:10px 20px; border:none; border-radius:6px; background:#eee; cursor:pointer; font-weight:bold; font-family:inherit;"><?php echo htmlspecialchars(t('maint.cancel')); ?></button>
-            <button id="rapportConfirmOk" style="padding:10px 20px; border:none; border-radius:6px; background:var(--gelpam-orange, #f39c12); color:white; cursor:pointer; font-weight:bold; font-family:inherit;"><?php echo htmlspecialchars(t('maint.confirm_btn')); ?></button>
+            <button id="rapportConfirmOk" style="padding:10px 20px; border:none; border-radius:6px; background:var(--brand-orange, #f39c12); color:white; cursor:pointer; font-weight:bold; font-family:inherit;"><?php echo htmlspecialchars(t('maint.confirm_btn')); ?></button>
         </div>
     </div>
 </div>
@@ -233,7 +233,7 @@ async function showDetailBI(id) {
                 if (foundEE) stName = foundEE.nom;
             }
             
-            ligneST = `<span style="color: #64748b;">${I18N_RAPPORT.sous_traitant_label}</span> <span style="color: var(--gelpam-orange); font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${stName}</span>`;
+            ligneST = `<span style="color: #64748b;">${I18N_RAPPORT.sous_traitant_label}</span> <span style="color: var(--brand-orange); font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${stName}</span>`;
         }
 
         let s = (t.statut || "À faire");

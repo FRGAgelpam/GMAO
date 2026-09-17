@@ -91,7 +91,7 @@ try {
     <style>
         :root {
             --primary: #2c3e50; --accent: #3498db; --success: #2ecc71;
-            --danger: #e74c3c; --gelpam-green: #2ecc71; --gelpam-orange: #f39c12;
+            --danger: #e74c3c; --brand-green: #2ecc71; --brand-orange: #f39c12;
         }
 
         html, body { height: 100%; }

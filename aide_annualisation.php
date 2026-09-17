@@ -24,8 +24,8 @@ header('Content-Type: text/html; charset=utf-8');
 <style>
 :root {
     --primary: #2c3e50; --accent: #3498db; --success: #2ecc71;
-    --danger: #e74c3c; --gelpam-green: #2ecc71; --gelpam-orange: #f39c12;
-    --ardo-blue: #005696; --neutral-dark: #34495e; --attente: #95a5a6;
+    --danger: #e74c3c; --brand-green: #2ecc71; --brand-orange: #f39c12;
+    --brand-blue: #005696; --neutral-dark: #34495e; --attente: #95a5a6;
 }
 body { margin: 0; font-family: 'Segoe UI', sans-serif; background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('img/fond.jpg') no-repeat center center fixed; background-color: #1a2733; background-size: cover; min-height: 100vh; padding-top: 54px; color: var(--primary); box-sizing: border-box; }
 @keyframes pulse-dot { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(2.5); opacity: 0; } }
@@ -124,7 +124,7 @@ tbody td:first-child { font-weight: 700; color: var(--primary); white-space: now
 .callout b { font-weight: 700; }
 
 .pill { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.72rem; letter-spacing: 0.03em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; color: #fff; white-space: nowrap; }
-.pill-admin { background: var(--gelpam-orange); }
+.pill-admin { background: var(--brand-orange); }
 .pill-all { background: var(--accent); }
 .pill-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.85); }
 
@@ -298,7 +298,7 @@ tbody td:first-child { font-weight: 700; color: var(--primary); white-space: now
                     <p class="lede"><?php echo htmlspecialchars(t('aide_annualisation.formule_lede')); ?></p>
 
                     <div class="year-donut-wrap">
-                        <div class="year-donut" style="background: conic-gradient(var(--attente) 0% 28.5%, var(--accent) 28.5% 35.3%, var(--gelpam-orange) 35.3% 37.5%, var(--success) 37.5% 100%);">
+                        <div class="year-donut" style="background: conic-gradient(var(--attente) 0% 28.5%, var(--accent) 28.5% 35.3%, var(--brand-orange) 35.3% 37.5%, var(--success) 37.5% 100%);">
                             <div class="year-donut-hole">
                                 <span class="year-donut-num"><?php echo htmlspecialchars(t('aide_annualisation.donut_num')); ?></span>
                                 <span class="year-donut-label"><?php echo t('aide_annualisation.donut_label'); ?></span>
@@ -307,7 +307,7 @@ tbody td:first-child { font-weight: 700; color: var(--primary); white-space: now
                         <ul class="year-legend">
                             <li><span class="dot" style="background:var(--attente);"></span> <?php echo htmlspecialchars(t('aide_annualisation.leg_weekends_label')); ?> <b>— <?php echo htmlspecialchars(t('aide_annualisation.leg_weekends_jours')); ?></b> <span class="year-legend-pct">(29%)</span></li>
                             <li><span class="dot" style="background:var(--accent);"></span> <?php echo htmlspecialchars(t('aide_annualisation.leg_cp_label')); ?> <b>— <?php echo htmlspecialchars(t('aide_annualisation.leg_cp_jours')); ?></b> <span class="year-legend-pct">(7%)</span></li>
-                            <li><span class="dot" style="background:var(--gelpam-orange);"></span> <?php echo htmlspecialchars(t('aide_annualisation.leg_feries_label')); ?> <b>— <?php echo htmlspecialchars(t('aide_annualisation.leg_feries_jours')); ?></b> <span class="year-legend-pct">(2%)</span></li>
+                            <li><span class="dot" style="background:var(--brand-orange);"></span> <?php echo htmlspecialchars(t('aide_annualisation.leg_feries_label')); ?> <b>— <?php echo htmlspecialchars(t('aide_annualisation.leg_feries_jours')); ?></b> <span class="year-legend-pct">(2%)</span></li>
                             <li><span class="dot" style="background:var(--success);"></span> <?php echo htmlspecialchars(t('aide_annualisation.leg_travailles_label')); ?> <b>— <?php echo htmlspecialchars(t('aide_annualisation.leg_travailles_jours')); ?></b> <span class="year-legend-pct">(62%)</span></li>
                         </ul>
                     </div>

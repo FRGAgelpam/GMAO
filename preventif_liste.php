@@ -524,8 +524,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <style>
         :root {
             --primary: #2c3e50; --accent: #3498db; --success: #2ecc71;
-            --danger: #e74c3c; --gelpam-green: #2ecc71; --gelpam-orange: #f39c12;
-            --ardo-blue: #005696;
+            --danger: #e74c3c; --brand-green: #2ecc71; --brand-orange: #f39c12;
+            --brand-blue: #005696;
             --soft-blue: #ebf5fb; --soft-green: #e8f8f5;
         }
 
@@ -612,11 +612,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .kpi-filterable { cursor: pointer; }
         .kpi-filterable.active { box-shadow: 0 0 0 2px var(--primary), 0 5px 15px rgba(0,0,0,0.08); }
         .kpi-card.k-danger { border-top-color: var(--danger); }
-        .kpi-card.k-warning { border-top-color: var(--gelpam-orange); }
+        .kpi-card.k-warning { border-top-color: var(--brand-orange); }
         .kpi-card.k-success { border-top-color: var(--success); }
         .kpi-icon { width: 34px; height: 34px; min-width: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; background: rgba(52,152,219,0.1); color: var(--accent); }
         .kpi-card.k-danger .kpi-icon { background: rgba(231,76,60,0.1); color: var(--danger); }
-        .kpi-card.k-warning .kpi-icon { background: rgba(243,156,18,0.12); color: var(--gelpam-orange); }
+        .kpi-card.k-warning .kpi-icon { background: rgba(243,156,18,0.12); color: var(--brand-orange); }
         .kpi-card.k-success .kpi-icon { background: rgba(46,204,113,0.12); color: var(--success); }
         .kpi-value { font-size: 1.25rem; font-weight: 800; color: var(--primary); line-height: 1.1; }
         .kpi-label { font-size: 0.62rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; margin-top: 2px; }
@@ -662,10 +662,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .preventif-tab.active { background: rgba(255, 255, 255, 0.95); color: var(--primary); box-shadow: 0 -2px 8px rgba(0,0,0,0.06); }
         .preventif-tab .chip-count { background: #eef1f5; color: #475569; padding: 1px 7px; border-radius: 10px; font-size: 0.7rem; }
         .preventif-tab.active .chip-count { background: var(--accent); color: #fff; }
-        .checklist-check { width: 16px; height: 16px; cursor: pointer; accent-color: var(--gelpam-green); }
+        .checklist-check { width: 16px; height: 16px; cursor: pointer; accent-color: var(--brand-green); }
         .btn-icon-del { background: none; border: 1px solid #fecaca; color: var(--danger); width: 30px; height: 30px; border-radius: 7px; cursor: pointer; }
         .btn-icon-del:hover { background: #fef2f2; }
-        .checklist-row.is-fait .ckl-desc-text { text-decoration: line-through; color: var(--gelpam-green); }
+        .checklist-row.is-fait .ckl-desc-text { text-decoration: line-through; color: var(--brand-green); }
         .ckl-th-tri { cursor: pointer; user-select: none; }
         .ckl-th-tri:hover { color: var(--accent); }
         .ckl-th-tri i { font-size: 0.7rem; margin-left: 4px; opacity: 0.5; }
@@ -894,12 +894,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .ss-icon { width: 28px; height: 28px; min-width: 28px; border-radius: 50%; background: #e2e8f0; color: #94a3b8; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; transition: 0.3s; }
         .wizard-sidebar-step.active .ss-icon { background: var(--accent); color: #fff; box-shadow: 0 0 0 4px rgba(52,152,219,0.15); }
         .wizard-sidebar-step.done .ss-icon { background: var(--success); color: #fff; }
-        .wizard-sidebar-step.done.step-incomplete .ss-icon { background: var(--gelpam-orange); }
+        .wizard-sidebar-step.done.step-incomplete .ss-icon { background: var(--brand-orange); }
         .ss-text strong { display: block; font-size: 0.76rem; color: #94a3b8; font-weight: 700; line-height: 1.25; }
         .ss-text span { font-size: 0.63rem; color: #cbd5e1; }
         .wizard-sidebar-step.active .ss-text strong { color: var(--primary); }
         .wizard-sidebar-step.done .ss-text strong { color: var(--success); }
-        .wizard-sidebar-step.done.step-incomplete .ss-text strong { color: var(--gelpam-orange); }
+        .wizard-sidebar-step.done.step-incomplete .ss-text strong { color: var(--brand-orange); }
         .wizard-sidebar-connector { width: 2px; height: 10px; background: #e2e8f0; margin-left: 22px; transition: 0.3s; }
         .wizard-sidebar-connector.done { background: var(--success); }
 
@@ -972,7 +972,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .loc-done-card { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--soft-green); border: 2px solid #b8ecd9; border-radius: 10px; padding: 12px 14px; flex-wrap: wrap; }
         .loc-done-info { display: flex; align-items: center; gap: 10px; }
-        .loc-done-icon { width: 36px; height: 36px; border-radius: 9px; background: var(--gelpam-green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.05rem; flex-shrink: 0; }
+        .loc-done-icon { width: 36px; height: 36px; border-radius: 9px; background: var(--brand-green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.05rem; flex-shrink: 0; }
         .loc-done-name { font-weight: 800; color: var(--primary); font-size: 0.88rem; }
         .loc-done-path { font-size: 0.72rem; color: #5a8a76; margin-top: 2px; }
         .loc-done-change { background: #fff; border: 1px solid #cbd5e1; color: var(--primary); font-weight: 700; font-size: 0.74rem; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-family: inherit; }
@@ -1010,8 +1010,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .choice-card.c-urgent.selected i, .choice-card.c-urgent.selected span { color: var(--danger); }
         .choice-card.c-danger.selected { border-color: var(--danger); background: rgba(231,76,60,0.06); }
         .choice-card.c-danger.selected i, .choice-card.c-danger.selected span { color: var(--danger); }
-        .choice-card.c-warning.selected { border-color: var(--gelpam-orange); background: rgba(243,156,18,0.08); }
-        .choice-card.c-warning.selected i, .choice-card.c-warning.selected span { color: var(--gelpam-orange); }
+        .choice-card.c-warning.selected { border-color: var(--brand-orange); background: rgba(243,156,18,0.08); }
+        .choice-card.c-warning.selected i, .choice-card.c-warning.selected span { color: var(--brand-orange); }
 
         .jour-chip { border: 2px solid #e2e8f0; background: #fff; border-radius: 20px; padding: 6px 12px; font-size: 0.75rem; font-weight: 600; color: #64748b; cursor: pointer; transition: 0.15s; display: flex; align-items: center; gap: 6px; }
         .jour-chip:hover { border-color: #cbd5e1; }
@@ -1245,7 +1245,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div>
                     <label style="display:flex; justify-content:space-between; align-items:center; font-size:0.7rem; font-weight:700; color:#555; text-transform:uppercase; margin-bottom:6px;">
                         <?php echo t('preventifliste.label_usine'); ?>
-                        <span onclick="ouvrirGererZones()" style="cursor:pointer; color:var(--gelpam-orange); font-weight:600; text-transform:none; font-size:0.72rem;"><i class="fa-solid fa-gear"></i> <?php echo t('preventifliste.gerer_link'); ?></span>
+                        <span onclick="ouvrirGererZones()" style="cursor:pointer; color:var(--brand-orange); font-weight:600; text-transform:none; font-size:0.72rem;"><i class="fa-solid fa-gear"></i> <?php echo t('preventifliste.gerer_link'); ?></span>
                     </label>
                     <select id="ckl-usine" style="width:100%; padding:9px 10px; border:1px solid #ddd; border-radius:8px; font-family:inherit; font-size:0.88rem; box-sizing:border-box;">
                         <option value="">—</option>
@@ -1271,8 +1271,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="checkbox" id="ckl-is-st" onchange="toggleSTChecklist()" style="width:18px; height:18px; margin:0;">
                 <label for="ckl-is-st" style="color:var(--primary); font-size:0.85rem; cursor:pointer; font-weight:bold;"><?php echo t('preventifliste.check_sous_traite'); ?></label>
             </div>
-            <div class="field" id="ckl-container-ee" style="display:none; background:#fff5e6; padding:10px; border-radius:6px; border-left:4px solid var(--gelpam-orange); margin-bottom:18px;">
-                <label style="display:block; font-size:0.7rem; font-weight:700; color:var(--gelpam-orange); text-transform:uppercase; margin-bottom:6px;"><?php echo t('preventifliste.label_entreprise_ext'); ?></label>
+            <div class="field" id="ckl-container-ee" style="display:none; background:#fff5e6; padding:10px; border-radius:6px; border-left:4px solid var(--brand-orange); margin-bottom:18px;">
+                <label style="display:block; font-size:0.7rem; font-weight:700; color:var(--brand-orange); text-transform:uppercase; margin-bottom:6px;"><?php echo t('preventifliste.label_entreprise_ext'); ?></label>
                 <select id="ckl-entreprise" style="width:100%; padding:9px 10px; border:1px solid #ddd; border-radius:8px; font-family:inherit; font-size:0.88rem; box-sizing:border-box;">
                     <option value=""><?php echo t('preventifliste.opt_choisir_entreprise'); ?></option>
                     <?php foreach ($entreprises_ext as $ee): ?>
@@ -1623,7 +1623,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="form-group span-2" style="flex-direction:row; align-items:center; gap:8px; margin-top:2px;">
                                 <input type="checkbox" id="f-auto-matin" style="width:16px; height:16px; cursor:pointer; margin:0;" onchange="toggleAutoMatin()">
                                 <label for="f-auto-matin" style="font-weight:600; font-size:0.72rem; color:#475569; cursor:pointer; display:flex; align-items:center; gap:5px;">
-                                    <i class="fa-solid fa-sun" style="color:var(--gelpam-orange);"></i> <?php echo t('preventifliste.label_auto_matin'); ?>
+                                    <i class="fa-solid fa-sun" style="color:var(--brand-orange);"></i> <?php echo t('preventifliste.label_auto_matin'); ?>
                                 </label>
                             </div>
                         </div>
@@ -2949,7 +2949,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             impact: 'Aucun impact', arret_h: '', intervenant: '', declarant: '',
             cause: '', pieces: '', commentaires: ''
         });
-        document.getElementById('wizardTitle').innerHTML = `<i class="fa-solid fa-recycle" style="color:var(--gelpam-green);"></i> ${I18N_PREVLISTE.wizard_title_depuis_demande}`;
+        document.getElementById('wizardTitle').innerHTML = `<i class="fa-solid fa-recycle" style="color:var(--brand-green);"></i> ${I18N_PREVLISTE.wizard_title_depuis_demande}`;
         demandeIdTransfert = payload.demandeId || null;
     }
 
@@ -3310,7 +3310,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const estSousTraite = i.is_sous_traitant == 1 || i.is_sous_traitant === true || i.is_sous_traitant === "1";
         if (estSousTraite) {
             const nom = (i.nom_entreprise || I18N_PREVLISTE.entreprise_ext_fallback).toString().replace(/</g, '&lt;');
-            return `<i class="fa-solid fa-building" style="color:var(--gelpam-orange); margin-right:4px;"></i>${nom}`;
+            return `<i class="fa-solid fa-building" style="color:var(--brand-orange); margin-right:4px;"></i>${nom}`;
         }
         return (i.intervenant || '—').toString().replace(/</g, '&lt;');
     }
@@ -3334,7 +3334,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Vue "cartes" (tablette/téléphone, voir .prev-cards-grid) : mêmes items, mêmes actions,
         // juste réarrangés verticalement au lieu des colonnes du tableau.
         cardsWrap.innerHTML = items.map(i => {
-            const prioColor = i.prio === '1' ? 'var(--danger)' : i.prio === '2' ? 'var(--gelpam-orange)' : 'var(--primary)';
+            const prioColor = i.prio === '1' ? 'var(--danger)' : i.prio === '2' ? 'var(--brand-orange)' : 'var(--primary)';
             const subLabel = i.statut === 'termine'
                 ? I18N_PREVLISTE.fait_le.replace('{date}', i.date_fait || '?') + (i.fait_par ? ' ' + I18N_PREVLISTE.par + ' ' + i.fait_par : '')
                 : (i.signale_par ? I18N_PREVLISTE.signale_par.replace('{n}', i.signale_par.toString().replace(/</g, '&lt;')) : '');
@@ -3372,7 +3372,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <td><span class="ckl-desc-text" title="${(i.desc || '').toString().replace(/</g, '&lt;').replace(/"/g, '&quot;')}">${(i.desc || '').toString().replace(/</g, '&lt;')}</span><div style="font-size:0.68rem; color:#94a3b8; margin-top:2px;">${i.statut === 'termine' ? I18N_PREVLISTE.fait_le.replace('{date}', i.date_fait || '?') + (i.fait_par ? ' ' + I18N_PREVLISTE.par + ' ' + i.fait_par : '') : (i.signale_par ? I18N_PREVLISTE.signale_par.replace('{n}', i.signale_par.toString().replace(/</g, '&lt;')) : '')}</div></td>
                 <td class="ckl-td-tronque" title="${(i.intervenant || '').toString().replace(/</g, '&lt;').replace(/"/g, '&quot;')}">${texteIntervenantChecklist(i)}</td>
                 <td>${i.date_prevue ? i.date_prevue.split('-').reverse().join('/') : '—'}</td>
-                <td>${i.prio ? `<span style="font-weight:700; color:${i.prio === '1' ? 'var(--danger)' : i.prio === '2' ? 'var(--gelpam-orange)' : 'var(--primary)'};">${i.prio}</span>` : '—'}</td>
+                <td>${i.prio ? `<span style="font-weight:700; color:${i.prio === '1' ? 'var(--danger)' : i.prio === '2' ? 'var(--brand-orange)' : 'var(--primary)'};">${i.prio}</span>` : '—'}</td>
                 <td>
                     <select class="ckl-status-select ckl-st-${i.statut}" onchange="changerStatutChecklistItem('${i.id}', this.value)">
                         ${Object.entries(CKL_STATUTS).map(([v, l]) => `<option value="${v}" ${i.statut === v ? 'selected' : ''}>${l}</option>`).join('')}

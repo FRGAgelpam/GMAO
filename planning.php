@@ -197,8 +197,8 @@ try {
     <style>
         :root {
             --primary: #2c3e50; --accent: #3498db; --success: #2ecc71; 
-            --danger: #e74c3c; --gelpam-green: #2ecc71; --gelpam-orange: #f39c12;
-            --ardo-blue: #005696;
+            --danger: #e74c3c; --brand-green: #2ecc71; --brand-orange: #f39c12;
+            --brand-blue: #005696;
         }
 
         body { 
@@ -236,7 +236,7 @@ try {
         .crumb-sep { color: rgba(255,255,255,0.45); font-weight: 400; }
         .crumb-current { color: rgba(255,255,255,0.75); font-weight: 400; }
         .nav-controls { display: flex; align-items: center; gap: 15px; }
-        .week-label { font-family: 'Caveat', cursive; font-size: 1.6rem; color: var(--gelpam-green); font-weight: 700; line-height: 1; white-space: nowrap; }
+        .week-label { font-family: 'Caveat', cursive; font-size: 1.6rem; color: var(--brand-green); font-weight: 700; line-height: 1; white-space: nowrap; }
         .date-range-sub { font-size: 0.65rem; font-weight: 800; color: var(--primary); text-transform: uppercase; margin-top: -2px; white-space: nowrap; }
         /* Sur tablette/téléphone, le bandeau .week-nav-center partage le peu de place restante avec le
            bouton accueil et le badge utilisateur (voir .header-top) : "Semaine XX" passait sur 2 lignes
@@ -248,7 +248,7 @@ try {
             .week-label { font-size: 1.15rem; }
             .date-range-sub { font-size: 0.55rem; }
         }
-        .nav-btn { background: rgba(46, 204, 113, 0.12); border: 1px solid rgba(46, 204, 113, 0.4); border-radius: 5px; padding: 2px 8px; cursor: pointer; transition: 0.2s; color: var(--gelpam-green); }
+        .nav-btn { background: rgba(46, 204, 113, 0.12); border: 1px solid rgba(46, 204, 113, 0.4); border-radius: 5px; padding: 2px 8px; cursor: pointer; transition: 0.2s; color: var(--brand-green); }
         .nav-btn:hover { background: rgba(46, 204, 113, 0.25); }
 
         .nav-tabs { display: flex; background: #fff; padding: 0 10px; gap: 2px; }
@@ -325,7 +325,7 @@ try {
             color: white; display: flex; align-items: center; justify-content: center; cursor: pointer;
             z-index: 4500; transition: 0.3s; font-size: 2rem; opacity: 0.7;
         }
-        .side-nav-btn:hover { background: var(--primary); opacity: 1; color: var(--gelpam-green); width: 65px; }
+        .side-nav-btn:hover { background: var(--primary); opacity: 1; color: var(--brand-green); width: 65px; }
         .side-btn-left { left: 0; border-radius: 0 15px 15px 0; }
         .side-btn-right { right: 0; border-radius: 15px 0 0 15px; }
         /* Ces flèches servent à glisser un bon d'intervention vers le bord de l'écran pour changer de
@@ -369,22 +369,22 @@ try {
         }
         .day-switcher { display: none; }
         .day-switcher.show { display: flex; align-items: center; gap: 4px; justify-content: center; padding: 6px 4px; background: rgba(255,255,255,0.9); backdrop-filter: blur(3px); margin: 0 4px; border-radius: 8px 8px 0 0; }
-        .day-switcher-arrow { background: rgba(46, 204, 113, 0.12); border: 1px solid rgba(46, 204, 113, 0.4); border-radius: 6px; color: var(--gelpam-green); width: 30px; height: 34px; flex-shrink: 0; cursor: pointer; font-size: 0.9rem; }
+        .day-switcher-arrow { background: rgba(46, 204, 113, 0.12); border: 1px solid rgba(46, 204, 113, 0.4); border-radius: 6px; color: var(--brand-green); width: 30px; height: 34px; flex-shrink: 0; cursor: pointer; font-size: 0.9rem; }
         .day-switcher-arrow:hover { background: rgba(46, 204, 113, 0.25); }
         .day-switcher-pills { display: flex; gap: 3px; flex: 1; min-width: 0; }
         .day-switcher-pill { flex: 1; min-width: 0; border: 1px solid rgba(0,0,0,0.1); background: #f8f9fa; border-radius: 6px; padding: 4px 2px; cursor: pointer; text-align: center; line-height: 1.15; }
         .day-switcher-pill .dsp-name { display: block; font-size: 0.62rem; font-weight: 800; color: #7f8c8d; text-transform: uppercase; }
-        .day-switcher-pill .dsp-date { display: block; font-size: 0.6rem; font-weight: 600; color: var(--ardo-blue); }
-        .day-switcher-pill.active { background: var(--gelpam-green); border-color: var(--gelpam-green); }
+        .day-switcher-pill .dsp-date { display: block; font-size: 0.6rem; font-weight: 600; color: var(--brand-blue); }
+        .day-switcher-pill.active { background: var(--brand-green); border-color: var(--brand-green); }
         .day-switcher-pill.active .dsp-name, .day-switcher-pill.active .dsp-date { color: #fff; }
-        .day-switcher-pill.today:not(.active) { border-color: var(--gelpam-green); border-width: 2px; }
+        .day-switcher-pill.today:not(.active) { border-color: var(--brand-green); border-width: 2px; }
 
         /* --- SÉLECTEUR DE TECHNICIEN (vue "1 technicien", tablette/mobile) --- */
         .tech-switcher { display: none; }
         .tech-switcher.show { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: #fff; margin: 6px 4px 10px; border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.18); color: var(--primary); }
-        .tech-switcher-icon { width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0; background: var(--gelpam-green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; box-shadow: 0 3px 8px -2px rgba(46,204,113,0.6); }
+        .tech-switcher-icon { width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0; background: var(--brand-green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; box-shadow: 0 3px 8px -2px rgba(46,204,113,0.6); }
         .tech-switcher select { flex: 1; border: 1.5px solid #e2e8f0; border-radius: 8px; padding: 8px 10px; font-family: 'Segoe UI', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--primary); background: #fff; }
-        .tech-switcher select:focus { border-color: var(--gelpam-green); outline: none; }
+        .tech-switcher select:focus { border-color: var(--brand-green); outline: none; }
         .tech-switcher select:disabled { background: #f8fafc; color: #64748b; border-color: #e2e8f0; opacity: 1; -webkit-appearance: none; appearance: none; }
         /* Téléphone portrait : sélecteur de technicien, pastilles de jour et tuile horaire du jour, tous
            un peu plus grands qu'en paysage/tablette (voir aussi .pdc-shift, plus bas) — davantage de place
@@ -416,12 +416,12 @@ try {
         .pdc-obj-stat { flex: 1; min-width: 0; text-align: center; display: flex; flex-direction: column; gap: 1px; }
         .pdc-obj-val { font-weight: 800; color: var(--primary); font-size: 0.98rem; white-space: nowrap; }
         .pdc-obj-label { font-size: 0.58rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.02em; }
-        .pdc-obj-stat.avance .pdc-obj-val { color: var(--gelpam-green); }
+        .pdc-obj-stat.avance .pdc-obj-val { color: var(--brand-green); }
         .pdc-obj-stat.retard .pdc-obj-val { color: var(--danger); }
         .pdc-obj-track-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
         .pdc-obj-track { position: relative; flex: 1; height: 5px; background: #e2e8f0; border-radius: 3px; }
-        .pdc-obj-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #3498db, var(--gelpam-green)); transition: width 0.3s ease; }
-        .pdc-obj-fill.over { background: linear-gradient(90deg, var(--gelpam-orange), var(--danger)); }
+        .pdc-obj-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #3498db, var(--brand-green)); transition: width 0.3s ease; }
+        .pdc-obj-fill.over { background: linear-gradient(90deg, var(--brand-orange), var(--danger)); }
         /* Repère 35h/semaine (congés déjà posés inclus) : trait vertical qui déborde légèrement de la
            barre (top/bottom négatifs) pour rester visible même quand il tombe près du remplissage. */
         .pdc-obj-marker { position: absolute; top: -2px; bottom: -2px; width: 2px; background: rgba(44,62,80,0.8); }
@@ -441,7 +441,7 @@ try {
         }
         .pdc-task { cursor: pointer; }
         .pdc-task-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
-        .pdc-task-bi { font-weight: 800; color: var(--gelpam-orange); font-size: 0.95rem; }
+        .pdc-task-bi { font-weight: 800; color: var(--brand-orange); font-size: 0.95rem; }
         .pdc-task-statut { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; }
         .pdc-task-machine { font-weight: 600; color: var(--primary); font-size: 0.86rem; margin-bottom: 4px; }
         .pdc-task-machine i { opacity: 0.5; margin-right: 4px; font-size: 0.75rem; }
@@ -453,16 +453,16 @@ try {
 
         /* On fige les jours en haut de l'écran lors du défilement */
         .day-header, .planning-container > div:first-child { 
-            padding: 8px 5px; text-align: center; border-bottom: 4px solid var(--gelpam-green); 
+            padding: 8px 5px; text-align: center; border-bottom: 4px solid var(--brand-green); 
             background: rgba(255,255,255,0.95); position: sticky; top: 0; z-index: 50; 
         }
         .day-header .day-name { font-family: 'Caveat', cursive; font-size: 1.4rem; color: #222; line-height: 1; }
-        .day-header .day-date { font-size: 0.65rem; color: var(--ardo-blue); font-weight: 800; }
+        .day-header .day-date { font-size: 0.65rem; color: var(--brand-blue); font-weight: 800; }
 
-        .day-header.today-active { background: rgba(46, 204, 113, 0.15); border: 2px solid var(--gelpam-green); border-bottom: 4px solid var(--gelpam-green); }
+        .day-header.today-active { background: rgba(46, 204, 113, 0.15); border: 2px solid var(--brand-green); border-bottom: 4px solid var(--brand-green); }
         .day-header.today-active::after {
             content: '<?php echo addslashes(t('planning.aujourdhui')); ?>'; position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%);
-            background: var(--gelpam-green); color: white; font-size: 0.5rem; padding: 0 6px; border-radius: 3px; font-weight: 900;
+            background: var(--brand-green); color: white; font-size: 0.5rem; padding: 0 6px; border-radius: 3px; font-weight: 900;
         }
 
         .tech-sidebar { border-right: 1px solid rgba(0,0,0,0.1); border-bottom: 1px solid rgba(0,0,0,0.05); background: rgba(255,255,255,0.2); display: flex; align-items: center; padding: 4px 8px; gap: 6px; overflow: hidden; min-height: 0; }
@@ -472,7 +472,7 @@ try {
         .avatar-wrapper img { width: 100%; height: 100%; object-fit: cover; }
         .tech-name { font-family: 'Caveat', cursive; font-size: 1.15rem; color: var(--primary); font-weight: 600; line-height: 1; text-transform: capitalize; }
         .tech-role { font-size: 0.55rem; color: #555; font-style: italic; line-height: 1.05; margin-top: 1px; }
-        .tech-hours-badge { font-size: 0.56rem; font-weight: 800; color: #fff; background: var(--ardo-blue); padding: 0px 5px; border-radius: 10px; display: inline-block; margin-top: 2px; }
+        .tech-hours-badge { font-size: 0.56rem; font-weight: 800; color: #fff; background: var(--brand-blue); padding: 0px 5px; border-radius: 10px; display: inline-block; margin-top: 2px; }
         .tech-annual-badge { font-size: 0.52rem; font-weight: 700; color: var(--primary); background: rgba(0,0,0,0.06); padding: 0px 5px; border-radius: 10px; display: inline-block; margin-top: 2px; margin-left: 3px; }
         .tech-annual-badge i { font-size: 0.52rem; margin-right: 2px; }
 
@@ -540,9 +540,9 @@ try {
             border-color: rgba(26, 37, 47, 0.95) transparent transparent transparent;
         }
 
-        .status-afaire { border-left-color: var(--gelpam-orange) !important; }
+        .status-afaire { border-left-color: var(--brand-orange) !important; }
         .status-encours { border-left-color: var(--accent) !important; }
-        .status-termine { border-left-color: var(--gelpam-green) !important; opacity: 0.6; }
+        .status-termine { border-left-color: var(--brand-green) !important; opacity: 0.6; }
         .status-urgent { border-left-color: var(--danger) !important; background: #fff5f5; }
         .blink-icon { color: var(--danger); animation: blinker 1s linear infinite; font-size: 0.7rem; }
         @keyframes blinker { 50% { opacity: 0; } }
@@ -561,7 +561,7 @@ try {
             display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: flex-start; align-items: start;
             gap: 2px; /* Espace entre les badges réduit */
         }
-        .drop-zone.drag-over { background: rgba(46, 204, 113, 0.2) !important; border: 2px dashed var(--gelpam-green); }
+        .drop-zone.drag-over { background: rgba(46, 204, 113, 0.2) !important; border: 2px dashed var(--brand-green); }
 
         /* --- Badges d'horaires d'équipe (postes/astreintes importés depuis Excel) --- */
         .shift-badges-row {
@@ -663,26 +663,26 @@ try {
 #week-indicator span { 
     font-family: 'Caveat', cursive; 
     font-size: 1.6rem; 
-    color: var(--gelpam-green); /* Reste en vert vif, l'effet va être magnifique sur l'anthracite */
+    color: var(--brand-green); /* Reste en vert vif, l'effet va être magnifique sur l'anthracite */
     font-weight: 700;
 }
 
         .edge-nav { position: fixed; top: 100px; bottom: 0; width: 25px; opacity: 0; z-index: 4000; pointer-events: none; transition: 0.3s; }
-        .edge-left { left: 0; border-right: 5px solid var(--gelpam-orange); background: linear-gradient(to right, rgba(243,146,0,0.1), transparent); }
-        .edge-right { right: 0; border-left: 5px solid var(--gelpam-green); background: linear-gradient(to left, rgba(78,157,45,0.1), transparent); }
+        .edge-left { left: 0; border-right: 5px solid var(--brand-orange); background: linear-gradient(to right, rgba(243,146,0,0.1), transparent); }
+        .edge-right { right: 0; border-left: 5px solid var(--brand-green); background: linear-gradient(to left, rgba(78,157,45,0.1), transparent); }
         .edge-nav.active { opacity: 1; width: 60px; }
 
         /* --- MODIFICATION DEMANDÉE : MODALE PLUS LARGE (800px) --- */
         .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
         .modal-content { background: white; margin: 5% auto; padding: 25px; border-radius: 12px; width: 800px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .modal-header { font-family: 'Caveat', cursive; font-size: 2rem; border-bottom: 2px solid var(--gelpam-green); margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;}
+        .modal-header { font-family: 'Caveat', cursive; font-size: 2rem; border-bottom: 2px solid var(--brand-green); margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;}
         
         /* --- MODIFICATION DEMANDÉE : 3 COLONNES AU LIEU DE 2 --- */
         .m-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
         
         .m-field { display: flex; flex-direction: column; font-weight: 800; font-size: 0.7rem; color: #444; }
         .m-field input, .m-field select, .m-field textarea { padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 4px; font-family: 'Segoe UI'; }
-        .btn-save { background: var(--gelpam-green); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: 900; margin-top: 20px; width: 100%; }
+        .btn-save { background: var(--brand-green); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: 900; margin-top: 20px; width: 100%; }
         .btn-save:disabled { background: #cbd5e1; cursor: not-allowed; }
         .btn-del { color: var(--danger); cursor: pointer; font-size: 1.2rem; transition: 0.2s; }
         .btn-del:hover { transform: scale(1.2); }
@@ -712,8 +712,8 @@ try {
         .shift-objectif-header { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.72rem; color: #666; font-weight: 600; margin-bottom: 10px; }
         .shift-objectif-header strong { font-size: 1.25rem; color: var(--primary); font-weight: 800; }
         .shift-objectif-track { position: relative; height: 12px; background: #e2e8f0; border-radius: 6px; margin-top: 6px; }
-        .shift-objectif-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, #3498db, var(--gelpam-green)); transition: width 0.35s ease; max-width: 100%; }
-        .shift-objectif-fill.over { background: linear-gradient(90deg, var(--gelpam-orange), var(--danger)); }
+        .shift-objectif-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, #3498db, var(--brand-green)); transition: width 0.35s ease; max-width: 100%; }
+        .shift-objectif-fill.over { background: linear-gradient(90deg, var(--brand-orange), var(--danger)); }
         /* Repère "où j'en serais à 35h/semaine (temps plein légal), congés déjà posés inclus" — un simple
            trait vertical positionné en % sur la barre, pour comparer visuellement au remplissage réel. */
         .objectif-marker-35h { position: absolute; top: -3px; bottom: -3px; width: 2px; background: rgba(44, 62, 80, 0.75); z-index: 3; pointer-events: none; }
@@ -721,7 +721,7 @@ try {
         .shift-objectif-legend { display: flex; flex-direction: column; gap: 3px; font-size: 0.68rem; color: #888; margin-top: 9px; font-weight: 600; }
         .shift-objectif-detail-stack { display: flex; flex-direction: column; gap: 3px; }
         .shift-objectif-pace { font-weight: 700; }
-        .shift-objectif-pace.avance { color: var(--gelpam-green); }
+        .shift-objectif-pace.avance { color: var(--brand-green); }
         .shift-objectif-pace.retard { color: var(--danger); }
 
         /* --- PLANNING ANNUEL (vue calendrier complète) --- */
@@ -744,7 +744,7 @@ try {
         /* "Fait" et "restant" sur la même ligne, dans deux petits encadrés distincts plutôt qu'empilés. */
         .atc-detail-chip { display: inline-flex; align-items: center; background: #eef1f5; border-radius: 6px; padding: 4px 9px; font-size: 0.66rem; color: #666; font-weight: 600; white-space: nowrap; }
         .atc-pace { font-weight: 700; }
-        .atc-pace.avance { color: var(--gelpam-green); }
+        .atc-pace.avance { color: var(--brand-green); }
         .atc-pace.retard { color: var(--danger); }
         .atc-info-btn { background: none; border: none; color: #aaa; cursor: pointer; font-size: 0.85rem; padding: 0 2px; line-height: 1; }
         .atc-info-btn:hover { color: var(--primary); }
@@ -754,15 +754,15 @@ try {
         .ecart-detail-tile { background: #f8fafc; border-radius: 10px; padding: 12px 14px; text-align: center; }
         .ecart-detail-tile .edt-label { font-size: 0.66rem; color: #888; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 4px; }
         .ecart-detail-tile .edt-value { font-size: 1.15rem; font-weight: 800; color: var(--primary); }
-        .ecart-detail-tile.avance .edt-value { color: var(--gelpam-green); }
+        .ecart-detail-tile.avance .edt-value { color: var(--brand-green); }
         .ecart-detail-tile.retard .edt-value { color: var(--danger); }
-        .ecart-detail-explain { background: #fff8e6; border-left: 4px solid var(--gelpam-orange); border-radius: 0 8px 8px 0; padding: 10px 14px; font-size: 0.8rem; color: #6b5200; line-height: 1.5; margin-bottom: 18px; }
+        .ecart-detail-explain { background: #fff8e6; border-left: 4px solid var(--brand-orange); border-radius: 0 8px 8px 0; padding: 10px 14px; font-size: 0.8rem; color: #6b5200; line-height: 1.5; margin-bottom: 18px; }
         .ecart-detail-ajust { background: #eef1f5; border-left: 4px solid var(--primary); border-radius: 0 8px 8px 0; padding: 8px 14px; font-size: 0.76rem; color: #444; line-height: 1.5; margin-top: -10px; margin-bottom: 18px; }
         .ecart-mois-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; margin-bottom: 18px; }
         .ecart-mois-tile { background: #f8fafc; border-radius: 8px; padding: 8px 10px; text-align: center; }
         .ecart-mois-tile .emt-mois { font-size: 0.62rem; color: #888; font-weight: 700; text-transform: uppercase; margin-bottom: 3px; }
         .ecart-mois-tile .emt-val { font-size: 0.88rem; font-weight: 800; }
-        .ecart-mois-tile.avance .emt-val { color: var(--gelpam-green); }
+        .ecart-mois-tile.avance .emt-val { color: var(--brand-green); }
         .ecart-mois-tile.retard .emt-val { color: var(--danger); }
         .ecart-mois-tile.neutre .emt-val { color: #999; }
         .ecart-vides-list { max-height: 180px; overflow-y: auto; border: 1px solid #eee; border-radius: 8px; }
@@ -777,7 +777,7 @@ try {
         .edt-cumul-table th:first-child, .edt-cumul-table td:first-child { text-align: left; white-space: normal; }
         .edt-cumul-table td { text-align: right; padding: 7px 6px; border-bottom: 1px solid #f2f2f2; font-weight: 600; color: #444; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .edt-cumul-table tr:last-child td { border-bottom: none; }
-        .edt-cumul-table td.avance { color: var(--gelpam-green); font-weight: 800; }
+        .edt-cumul-table td.avance { color: var(--brand-green); font-weight: 800; }
         .edt-cumul-table td.retard { color: var(--danger); font-weight: 800; }
         .edt-cumul-init-row td { background: #fbfbfb; font-style: italic; font-weight: 500; color: #888; white-space: normal; }
         .edt-cumul-init-row td:first-child { font-size: 0.72rem; }
@@ -850,7 +850,7 @@ try {
         .annual-calendar-label { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
         .annual-zoom-controls { display: flex; align-items: center; gap: 6px; text-transform: none; letter-spacing: normal; }
         .annual-zoom-controls button { width: 26px; height: 26px; border: 1px solid #dcdfe3; background: #fff; color: var(--primary); border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; }
-        .annual-zoom-controls button:hover { background: var(--gelpam-green); border-color: var(--gelpam-green); color: #fff; }
+        .annual-zoom-controls button:hover { background: var(--brand-green); border-color: var(--brand-green); color: #fff; }
         .annual-zoom-controls span { font-size: 0.68rem; font-weight: 700; color: #64748b; min-width: 34px; text-align: center; }
         .annual-grid-wrapper { overflow: auto; max-width: 100%; }
         #annual-grid { transform-origin: top left; transition: transform 0.15s ease; }
@@ -886,7 +886,7 @@ try {
             .annual-mobile-nav-months { display: flex; align-items: center; gap: 8px; min-width: 0; }
             .annual-mobile-nav.mode-global .annual-mobile-nav-months { display: none; }
             .annual-mobile-nav button { width: 34px; height: 34px; border: 1px solid #dcdfe3; background: #fff; color: var(--primary); border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
-            .annual-mobile-nav button:hover { background: var(--gelpam-green); border-color: var(--gelpam-green); color: #fff; }
+            .annual-mobile-nav button:hover { background: var(--brand-green); border-color: var(--brand-green); color: #fff; }
             .annual-mobile-nav button:disabled { opacity: 0.35; cursor: default; }
             .annual-mobile-nav button:disabled:hover { background: #fff; border-color: #dcdfe3; color: var(--primary); }
             #annual-mnav-label { font-family: 'Caveat', cursive; font-size: 1.3rem; color: var(--primary); font-weight: 700; text-transform: capitalize; min-width: 0; text-align: center; white-space: nowrap; }
@@ -1008,8 +1008,8 @@ try {
                 <label for="m-is-st" style="color: var(--primary); font-size: 0.85rem; cursor: pointer; font-weight: bold;"><?php echo htmlspecialchars(t('planning.label_sous_traitee')); ?></label>
             </div>
 
-            <div class="m-field" id="box-ee" style="display: none; grid-column: 1 / -1; background: #fff5e6; padding: 10px; border-radius: 6px; border-left: 4px solid var(--gelpam-orange); box-sizing: border-box;">
-                <span style="color: var(--gelpam-orange); font-weight: 800; font-size: 0.7rem; margin-bottom: 4px;"><?php echo htmlspecialchars(t('planning.label_entreprise_ext')); ?></span>
+            <div class="m-field" id="box-ee" style="display: none; grid-column: 1 / -1; background: #fff5e6; padding: 10px; border-radius: 6px; border-left: 4px solid var(--brand-orange); box-sizing: border-box;">
+                <span style="color: var(--brand-orange); font-weight: 800; font-size: 0.7rem; margin-bottom: 4px;"><?php echo htmlspecialchars(t('planning.label_entreprise_ext')); ?></span>
                 <select id="m-entreprise" style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; font-family: 'Segoe UI'; width: 100%; background: white;"></select>
             </div>
 
@@ -1857,7 +1857,7 @@ function renderTable() {
                         <span style="pointer-events: none; display: flex; align-items: center;">${numBadge}${alertIcon}${badgeHeuresHtml}</span>
                         
                         <div class="task-tooltip">
-                            <div style="font-family:'Caveat', cursive; font-size:1.4rem; color:var(--gelpam-orange); margin-bottom:5px; line-height:1;">${tk.equip}</div>
+                            <div style="font-family:'Caveat', cursive; font-size:1.4rem; color:var(--brand-orange); margin-bottom:5px; line-height:1;">${tk.equip}</div>
                             <div style="font-size:0.75rem; color:#e2e8f0; margin-bottom:10px; line-height:1.3; overflow:hidden; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical;">${tk.desc || I18N_PLANNING.aucune_description}</div>
                             <div style="display:flex; justify-content:space-between; border-top:1px solid rgba(255,255,255,0.1); padding-top:8px; font-size:0.7rem;">
                                 <span>${affichageTemps}</span>
@@ -3780,13 +3780,13 @@ function aspirineAlert(titre, message) {
 </div>
 
 <div id="customConfirm" style="display:none; position:fixed; z-index:99999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); backdrop-filter: blur(3px);">
-    <div style="background:white; width:350px; margin:15% auto; padding:20px; border-radius:12px; text-align:center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-top: 5px solid var(--gelpam-orange);">
-        <i class="fa-solid fa-circle-question" style="font-size:3rem; color:var(--gelpam-orange); margin-bottom:15px;"></i>
+    <div style="background:white; width:350px; margin:15% auto; padding:20px; border-radius:12px; text-align:center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-top: 5px solid var(--brand-orange);">
+        <i class="fa-solid fa-circle-question" style="font-size:3rem; color:var(--brand-orange); margin-bottom:15px;"></i>
         <h3 id="confirmTitle" style="margin:10px 0; color:var(--dark-blue);"><?php echo htmlspecialchars(t('planning.confirmation_title')); ?></h3>
         <p id="confirmMessage" style="color:#666; font-size:0.9rem; margin-bottom:20px;"><?php echo htmlspecialchars(t('planning.confirmation_msg_default')); ?></p>
         <div style="display:flex; justify-content:center; gap:10px;">
             <button id="confirmCancel" style="padding:10px 20px; border:none; border-radius:6px; background:#eee; cursor:pointer; font-weight:bold; font-family: inherit;"><?php echo htmlspecialchars(t('maint.cancel')); ?></button>
-            <button id="confirmOk" style="padding:10px 20px; border:none; border-radius:6px; background:var(--gelpam-orange); color:white; cursor:pointer; font-weight:bold; font-family: inherit;"><?php echo htmlspecialchars(t('planning.btn_confirmer')); ?></button>
+            <button id="confirmOk" style="padding:10px 20px; border:none; border-radius:6px; background:var(--brand-orange); color:white; cursor:pointer; font-weight:bold; font-family: inherit;"><?php echo htmlspecialchars(t('planning.btn_confirmer')); ?></button>
         </div>
     </div>
 </div>

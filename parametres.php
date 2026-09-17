@@ -911,7 +911,7 @@ $url_demo = $general_rows['url_demo'] ?? '';
     <style>
         :root {
             --primary: #2c3e50; --accent: #3498db; --success: #2ecc71;
-            --danger: #e74c3c; --gelpam-green: #2ecc71; --gelpam-orange: #f39c12;
+            --danger: #e74c3c; --brand-green: #2ecc71; --brand-orange: #f39c12;
             --line: #e3e8ec; --line-strong: #ccd5db; --surface-2: #f4f6f8; --ink-500: #64748b; --accent-100: #eaf4fc;
         }
         body { margin: 0; font-family: 'Segoe UI', sans-serif; background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('img/fond.jpg') no-repeat center 0px fixed; background-size: cover; min-height: 100vh; padding-top: 98px; }

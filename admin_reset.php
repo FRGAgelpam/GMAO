@@ -207,7 +207,7 @@ $default_avatar = "img/user.png";
     <style>
         :root {
             --primary: #2c3e50; --accent: #3498db; --success: #2ecc71; 
-            --danger: #e74c3c; --gelpam-green: #2ecc71; --gelpam-orange: #f39c12;
+            --danger: #e74c3c; --brand-green: #2ecc71; --brand-orange: #f39c12;
         }
 
         body { 
@@ -252,7 +252,7 @@ $default_avatar = "img/user.png";
         /* --- STYLES DE LA PAGE ET CARTES --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 10px 20px; }
         
-        .btn-create-main { background: var(--gelpam-orange); color: white; border: none; padding: 15px 30px; font-size: 1.1rem; font-weight: 900; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4); transition: 0.3s; margin-bottom: 20px; display: inline-block; }
+        .btn-create-main { background: var(--brand-orange); color: white; border: none; padding: 15px 30px; font-size: 1.1rem; font-weight: 900; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4); transition: 0.3s; margin-bottom: 20px; display: inline-block; }
         .btn-create-main:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(243, 156, 18, 0.6); }
 
         .section-title { font-family: 'Caveat', cursive; font-size: 1.8rem; color: white; margin-top: 10px; margin-bottom: 15px; border-bottom: 2px solid rgba(255,255,255,0.3); padding-bottom: 5px; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
@@ -260,8 +260,8 @@ $default_avatar = "img/user.png";
         .users-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 30px; }
         .user-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); border-radius: 8px; padding: 10px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-top: 3px solid var(--accent); cursor: pointer; transition: 0.2s; position: relative; }
         .user-card:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.2); }
-        .user-card.role-admin { border-top-color: var(--gelpam-orange); }
-        .user-card.role-technicien { border-top-color: var(--gelpam-green); }
+        .user-card.role-admin { border-top-color: var(--brand-orange); }
+        .user-card.role-technicien { border-top-color: var(--brand-green); }
         .user-card.role-portal { border-top-color: #8e44ad; }
 
         .avatar-container { width: 45px; height: 45px; border-radius: 50%; margin: 0 auto 5px auto; overflow: hidden; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
@@ -313,7 +313,7 @@ $default_avatar = "img/user.png";
         </button>
     </div>
 
-    <h2 class="section-title"><i class="fa-solid fa-wrench" style="color: var(--gelpam-green);"></i> <?php echo htmlspecialchars(t('adminreset.section_maintenance')); ?></h2>
+    <h2 class="section-title"><i class="fa-solid fa-wrench" style="color: var(--brand-green);"></i> <?php echo htmlspecialchars(t('adminreset.section_maintenance')); ?></h2>
     <div class="users-grid">
         <?php foreach($maintenance_users as $u):
             $role_class = ($u['role'] == 'admin') ? 'role-admin' : 'role-technicien';
@@ -332,7 +332,7 @@ $default_avatar = "img/user.png";
         <?php endforeach; ?>
     </div>
 
-    <h2 class="section-title"><i class="fa-solid fa-door-open" style="color: var(--gelpam-orange);"></i> <?php echo htmlspecialchars(t('adminreset.section_portails')); ?></h2>
+    <h2 class="section-title"><i class="fa-solid fa-door-open" style="color: var(--brand-orange);"></i> <?php echo htmlspecialchars(t('adminreset.section_portails')); ?></h2>
     <div class="users-grid">
         <?php foreach($portal_users as $u): $avatar_url = !empty($u['photo']) ? $u['photo'] : $default_avatar; ?>
         <div class="user-card role-portal" onclick='openEditModal(<?php echo htmlspecialchars(json_encode($u), ENT_QUOTES, 'UTF-8'); ?>)'>
@@ -378,7 +378,7 @@ $default_avatar = "img/user.png";
 
 <div id="modalAddUser" class="modal">
     <div class="modal-content">
-        <h2 class="modal-header" style="color: var(--gelpam-orange);"><?php echo htmlspecialchars(t('adminreset.modal_new_title')); ?></h2>
+        <h2 class="modal-header" style="color: var(--brand-orange);"><?php echo htmlspecialchars(t('adminreset.modal_new_title')); ?></h2>
         <form method="POST" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(csrf_token()); ?>">
             <input type="hidden" name="action" value="create_user">
@@ -434,7 +434,7 @@ $default_avatar = "img/user.png";
             </div>
 
             <div class="form-group full">
-                <button type="submit" class="btn-save" style="background: var(--gelpam-orange);"><?php echo htmlspecialchars(t('adminreset.btn_creer')); ?></button>
+                <button type="submit" class="btn-save" style="background: var(--brand-orange);"><?php echo htmlspecialchars(t('adminreset.btn_creer')); ?></button>
                 <button type="button" onclick="closeAddModal()" style="width:100%; background:none; border:none; color:#888; cursor:pointer; margin-top:10px; font-weight:700;"><?php echo htmlspecialchars(t('adminreset.btn_annuler')); ?></button>
             </div>
         </form>

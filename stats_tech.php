@@ -252,8 +252,8 @@ try {
     <style>
         :root {
             --primary: #2c3e50; --accent: #3498db; --success: #2ecc71; 
-            --danger: #e74c3c; --gelpam-green: #2ecc71; --gelpam-orange: #f39c12;
-            --ardo-blue: #005696; --bg-light: #f4f7f6;
+            --danger: #e74c3c; --brand-green: #2ecc71; --brand-orange: #f39c12;
+            --brand-blue: #005696; --bg-light: #f4f7f6;
             --stat-red: #c0392b;
         }
 
@@ -316,7 +316,7 @@ try {
         .dashboard-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 20px; }
         .chart-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); padding: 20px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border-top: 4px solid var(--accent); }
 
-        .card-main { grid-column: span 12; border-top-color: var(--gelpam-green); }
+        .card-main { grid-column: span 12; border-top-color: var(--brand-green); }
         .card-half { grid-column: span 6; }
         @media (max-width: 900px) { .card-half { grid-column: span 12; } }
 
@@ -348,13 +348,13 @@ try {
         .shift-objectif-header { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.68rem; color: #666; font-weight: 600; margin-bottom: 4px; }
         .shift-objectif-header strong { font-size: 0.95rem; color: var(--primary); font-weight: 800; }
         .shift-objectif-track { position: relative; height: 8px; background: #e2e8f0; border-radius: 5px; margin-top: 3px; }
-        .shift-objectif-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, #3498db, var(--gelpam-green)); transition: width 0.35s ease; max-width: 100%; }
-        .shift-objectif-fill.over { background: linear-gradient(90deg, var(--gelpam-orange), var(--danger)); }
+        .shift-objectif-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, #3498db, var(--brand-green)); transition: width 0.35s ease; max-width: 100%; }
+        .shift-objectif-fill.over { background: linear-gradient(90deg, var(--brand-orange), var(--danger)); }
         .objectif-marker-35h { position: absolute; top: -2px; bottom: -2px; width: 2px; background: rgba(44, 62, 80, 0.75); z-index: 3; pointer-events: none; }
         .shift-objectif-legend { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 0.65rem; color: #888; margin-top: 5px; font-weight: 600; }
         .shift-objectif-detail-stack { display: flex; flex-direction: row; gap: 14px; }
         .shift-objectif-pace { font-weight: 700; white-space: nowrap; }
-        .shift-objectif-pace.avance { color: var(--gelpam-green); }
+        .shift-objectif-pace.avance { color: var(--brand-green); }
         .shift-objectif-pace.retard { color: var(--danger); }
     </style>
 <?php include 'pwa_head.php'; ?>
@@ -377,7 +377,7 @@ try {
             </div>
         </div>
 
-        <div class="chart-card card-main" style="border-top-color: var(--gelpam-orange);" title="<?php echo htmlspecialchars(t('stats.card_repartition_tech_tooltip')); ?>">
+        <div class="chart-card card-main" style="border-top-color: var(--brand-orange);" title="<?php echo htmlspecialchars(t('stats.card_repartition_tech_tooltip')); ?>">
             <div class="card-title"><?php echo htmlspecialchars(t('stats.card_repartition_tech')); ?> <i class="fa-solid fa-users"></i></div>
             <div class="chart-container-pie">
                 <canvas id="pieTechChart"></canvas>

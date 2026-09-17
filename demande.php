@@ -93,7 +93,7 @@ $json_user_session = safe_json($_SESSION['user']);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Segoe+UI:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #2c3e50; --accent: #3498db; --gelpam-orange: #f39c12; --gelpam-green: #2ecc71; --danger: #e74c3c; --violet: #8e44ad; --soft-blue: #ebf5fb; --soft-green: #e8f8f5; }
+        :root { --primary: #2c3e50; --accent: #3498db; --brand-orange: #f39c12; --brand-green: #2ecc71; --danger: #e74c3c; --violet: #8e44ad; --soft-blue: #ebf5fb; --soft-green: #e8f8f5; }
         * { box-sizing: border-box; }
 
         body {
@@ -121,19 +121,19 @@ $json_user_session = safe_json($_SESSION['user']);
         .wizard-sidebar-step.clickable:hover { background: rgba(52,152,219,0.08); }
         .ss-icon { width: 34px; height: 34px; min-width: 34px; border-radius: 50%; background: #e2e8f0; color: #94a3b8; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: 0.3s; }
         .wizard-sidebar-step.active .ss-icon { background: var(--accent); color: #fff; box-shadow: 0 0 0 4px rgba(52,152,219,0.15); }
-        .wizard-sidebar-step.done .ss-icon { background: var(--gelpam-green); color: #fff; }
-        .wizard-sidebar-step.done.step-incomplete .ss-icon { background: var(--gelpam-orange); }
+        .wizard-sidebar-step.done .ss-icon { background: var(--brand-green); color: #fff; }
+        .wizard-sidebar-step.done.step-incomplete .ss-icon { background: var(--brand-orange); }
         .ss-text strong { display: block; font-size: 0.8rem; color: #94a3b8; font-weight: 800; line-height: 1.3; }
         .ss-text span { font-size: 0.66rem; color: #cbd5e1; }
         .wizard-sidebar-step.active .ss-text strong { color: var(--primary); }
-        .wizard-sidebar-step.done .ss-text strong { color: var(--gelpam-green); }
-        .wizard-sidebar-step.done.step-incomplete .ss-text strong { color: var(--gelpam-orange); }
+        .wizard-sidebar-step.done .ss-text strong { color: var(--brand-green); }
+        .wizard-sidebar-step.done.step-incomplete .ss-text strong { color: var(--brand-orange); }
         .wizard-sidebar-connector { width: 2px; height: 14px; background: #e2e8f0; margin-left: 25px; transition: 0.3s; }
-        .wizard-sidebar-connector.done { background: var(--gelpam-green); }
+        .wizard-sidebar-connector.done { background: var(--brand-green); }
 
         .wizard-sidebar-progress-wrap { margin-top: auto; padding-top: 16px; }
         .wizard-mini-progress-bar { height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; }
-        .wizard-mini-progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--gelpam-green)); transition: width 0.35s ease; width: 0%; }
+        .wizard-mini-progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--brand-green)); transition: width 0.35s ease; width: 0%; }
         .wizard-mini-progress-label { font-size: 0.65rem; color: #94a3b8; font-weight: 700; margin-top: 7px; text-align: center; }
 
         .wizard-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
@@ -199,7 +199,7 @@ $json_user_session = safe_json($_SESSION['user']);
 
         .loc-done-card { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 14px; background: var(--soft-green); border: 2px solid #b8ecd9; border-radius: 12px; padding: 16px; flex-wrap: wrap; }
         .loc-done-info { display: flex; align-items: center; gap: 12px; }
-        .loc-done-icon { width: 42px; height: 42px; border-radius: 10px; background: var(--gelpam-green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+        .loc-done-icon { width: 42px; height: 42px; border-radius: 10px; background: var(--brand-green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
         .loc-done-name { font-weight: 800; color: var(--primary); font-size: 0.95rem; }
         .loc-done-path { font-size: 0.75rem; color: #5a8a76; margin-top: 2px; }
         .loc-done-change { background: #fff; border: 1px solid #cbd5e1; color: var(--primary); font-weight: 700; font-size: 0.78rem; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-family: inherit; }
@@ -210,7 +210,7 @@ $json_user_session = safe_json($_SESSION['user']);
         .security-box .field-label { color: var(--danger); }
 
         .pin-status { font-size: 0.68rem; font-weight: 600; text-align:center; margin-top: 6px; min-height: 14px; }
-        .pin-status.ok { color: var(--gelpam-green); }
+        .pin-status.ok { color: var(--brand-green); }
         .pin-status.wait { color: #94a3b8; }
 
         .urgency-toggle { display: flex; gap: 10px; margin-bottom: 4px; }
@@ -218,15 +218,15 @@ $json_user_session = safe_json($_SESSION['user']);
         .urgency-opt i { font-size: 1.3rem; display:block; margin-bottom: 4px; }
         .urgency-opt .u-title { font-weight: 700; font-size: 0.8rem; }
         .urgency-opt .u-sub { font-size: 0.62rem; color: #94a3b8; margin-top: 2px; display:block; }
-        .urgency-opt.normal.selected { border-color: var(--gelpam-green); background: rgba(46,204,113,0.08); }
-        .urgency-opt.normal.selected i, .urgency-opt.normal.selected .u-title { color: var(--gelpam-green); }
+        .urgency-opt.normal.selected { border-color: var(--brand-green); background: rgba(46,204,113,0.08); }
+        .urgency-opt.normal.selected i, .urgency-opt.normal.selected .u-title { color: var(--brand-green); }
         .urgency-opt.urgent.selected { border-color: var(--danger); background: rgba(231,76,60,0.08); }
         .urgency-opt.urgent.selected i, .urgency-opt.urgent.selected .u-title { color: var(--danger); }
         .urgency-opt:not(.selected) i, .urgency-opt:not(.selected) .u-title { color: #94a3b8; }
 
         .char-counter { text-align:right; font-size: 0.65rem; color: #b0bac5; margin-top: -6px; margin-bottom: 10px; }
         .char-counter.warn { color: var(--danger); font-weight: 600; }
-        .char-counter.ready { color: var(--gelpam-green); font-weight: 600; }
+        .char-counter.ready { color: var(--brand-green); font-weight: 600; }
 
         .photo-picker { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; margin-top: 6px; }
         .photo-add-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; width: 76px; height: 76px; border: 2px dashed #cbd5e1; border-radius: 10px; color: var(--accent); font-size: 0.6rem; font-weight: 700; text-align: center; cursor: pointer; transition: border-color .15s, background .15s; flex-shrink: 0; }
@@ -254,7 +254,7 @@ $json_user_session = safe_json($_SESSION['user']);
         .btn-wizard-next { background: var(--accent); color: #fff; }
         .btn-wizard-next:hover:not(:disabled) { background: #2980b9; }
         .btn-wizard-next:disabled { background: #cbd5e1; cursor: not-allowed; }
-        .btn-wizard-submit { background: var(--gelpam-green); color: #fff; }
+        .btn-wizard-submit { background: var(--brand-green); color: #fff; }
         .btn-wizard-submit:hover:not(:disabled) { background: #27ae60; }
         .btn-wizard-submit:disabled { background: #cbd5e1; cursor: not-allowed; }
 
@@ -543,13 +543,13 @@ $json_user_session = safe_json($_SESSION['user']);
 
 <!-- ============ MODALE SUCCÈS ============ -->
 <div id="successModal" class="modal-overlay" style="z-index: 10000;">
-    <div class="modal-content-detail" style="text-align:center; max-width:380px; border-top:4px solid var(--gelpam-green);">
-        <div style="font-size: 50px; color: var(--gelpam-green); margin-bottom: 10px;"><i class="fa-solid fa-circle-check"></i></div>
+    <div class="modal-content-detail" style="text-align:center; max-width:380px; border-top:4px solid var(--brand-green);">
+        <div style="font-size: 50px; color: var(--brand-green); margin-bottom: 10px;"><i class="fa-solid fa-circle-check"></i></div>
         <h3 style="margin:0; color:var(--primary); font-size:1.5rem;"><?php echo htmlspecialchars(t('demande.success_title')); ?></h3>
         <p style="color:#64748b; font-size:0.9rem; margin-bottom:20px;"><?php echo htmlspecialchars(t('demande.success_text')); ?></p>
         <div style="display:flex; gap:10px;">
             <button onclick="location.reload()" style="flex:1; background:#f1f5f9; color:#64748b; border:none; padding:11px; border-radius:8px; font-weight:600; cursor:pointer;"><?php echo htmlspecialchars(t('demande.btn_new_request')); ?></button>
-            <button onclick="location.href='suivi.php'" style="flex:1; background:var(--gelpam-green); color:white; border:none; padding:11px; border-radius:8px; font-weight:600; cursor:pointer;"><?php echo htmlspecialchars(t('demande.btn_view_tracking')); ?></button>
+            <button onclick="location.href='suivi.php'" style="flex:1; background:var(--brand-green); color:white; border:none; padding:11px; border-radius:8px; font-weight:600; cursor:pointer;"><?php echo htmlspecialchars(t('demande.btn_view_tracking')); ?></button>
         </div>
     </div>
 </div>
@@ -629,7 +629,7 @@ const AIDE_DB = {
         body: <?php echo json_encode(t('demande.aide_code_body')); ?>
     },
     machine: {
-        icon: 'fa-gears', bg: 'rgba(243,156,18,0.12)', color: 'var(--gelpam-orange)',
+        icon: 'fa-gears', bg: 'rgba(243,156,18,0.12)', color: 'var(--brand-orange)',
         title: <?php echo json_encode(t('demande.aide_machine_title')); ?>, subtitle: <?php echo json_encode(t('demande.aide_machine_sub')); ?>,
         body: <?php echo json_encode(t('demande.aide_machine_body')); ?>
     },

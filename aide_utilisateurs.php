@@ -24,8 +24,8 @@ header('Content-Type: text/html; charset=utf-8');
 <style>
 :root {
     --primary: #2c3e50; --accent: #3498db; --success: #2ecc71;
-    --danger: #e74c3c; --gelpam-green: #2ecc71; --gelpam-orange: #f39c12;
-    --ardo-blue: #005696; --neutral-dark: #34495e; --attente: #95a5a6;
+    --danger: #e74c3c; --brand-green: #2ecc71; --brand-orange: #f39c12;
+    --brand-blue: #005696; --neutral-dark: #34495e; --attente: #95a5a6;
 }
 body { margin: 0; font-family: 'Segoe UI', sans-serif; background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('img/fond.jpg') no-repeat center center fixed; background-color: #1a2733; background-size: cover; min-height: 100vh; padding-top: 54px; color: var(--primary); box-sizing: border-box; }
 @keyframes pulse-dot { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(2.5); opacity: 0; } }
@@ -99,11 +99,11 @@ section.aide-sec { margin-bottom: 22px; scroll-margin-top: 128px; }
 .grid-2 { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 14px; }
 @media (min-width: 700px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
 .route-card { border: 1px solid #e6e9ec; border-radius: 12px; padding: 18px 20px; background: #fff; border-top: 4px solid var(--accent); }
-.route-card.alt { border-top-color: var(--gelpam-orange); }
+.route-card.alt { border-top-color: var(--brand-orange); }
 .route-tag { display: inline-block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #8a97a3; background: #f1f4f6; border-radius: 6px; padding: 3px 9px; margin-bottom: 10px; }
 .route-card h3 { display: flex; align-items: center; gap: 8px; }
 .route-card h3 i { color: var(--accent); }
-.route-card.alt h3 i { color: var(--gelpam-orange); }
+.route-card.alt h3 i { color: var(--brand-orange); }
 
 .tbl-wrap { overflow-x: auto; border: 1px solid #e6e9ec; border-radius: 12px; margin-top: 14px; }
 table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 0.88rem; }
@@ -217,11 +217,11 @@ tbody td:first-child { font-weight: 700; color: var(--primary); white-space: now
 
                     <div class="cases three">
                         <div class="case-card">
-                            <h4><i class="fa-solid fa-screwdriver-wrench" style="color:var(--gelpam-green);"></i> <?php echo htmlspecialchars(t('aide_utilisateurs.case1_h4')); ?></h4>
+                            <h4><i class="fa-solid fa-screwdriver-wrench" style="color:var(--brand-green);"></i> <?php echo htmlspecialchars(t('aide_utilisateurs.case1_h4')); ?></h4>
                             <p><?php echo t('aide_utilisateurs.case1_p'); ?></p>
                         </div>
                         <div class="case-card">
-                            <h4><i class="fa-solid fa-door-open" style="color:var(--gelpam-orange);"></i> <?php echo htmlspecialchars(t('aide_utilisateurs.case2_h4')); ?></h4>
+                            <h4><i class="fa-solid fa-door-open" style="color:var(--brand-orange);"></i> <?php echo htmlspecialchars(t('aide_utilisateurs.case2_h4')); ?></h4>
                             <p><?php echo htmlspecialchars(t('aide_utilisateurs.case2_p')); ?></p>
                         </div>
                         <div class="case-card">

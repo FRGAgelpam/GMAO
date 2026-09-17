@@ -16,7 +16,7 @@ $est_connecte = isset($_SESSION['user']);
 <style>
 :root {
     --primary: #2c3e50; --accent: #3498db; --success: #2ecc71;
-    --danger: #e74c3c; --gelpam-green: #2ecc71; --gelpam-orange: #f39c12;
+    --danger: #e74c3c; --brand-green: #2ecc71; --brand-orange: #f39c12;
     --violet: #8e44ad; --attente: #95a5a6; --refuse: #7f1d1d;
 }
 * { box-sizing: border-box; }
@@ -89,10 +89,10 @@ section.aide-sec { margin-bottom: 26px; scroll-margin-top: 20px; }
 
 .pill { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.72rem; letter-spacing: 0.03em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; color: #fff; white-space: nowrap; }
 .pill-attente { background: var(--attente); }
-.pill-afaire { background: var(--gelpam-orange); }
+.pill-afaire { background: var(--brand-orange); }
 .pill-urgent { background: var(--danger); }
 .pill-cours { background: var(--accent); }
-.pill-termine { background: var(--gelpam-green); }
+.pill-termine { background: var(--brand-green); }
 .pill-refuse { background: var(--refuse); }
 .pill-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.85); }
 
@@ -260,7 +260,7 @@ section.aide-sec { margin-bottom: 26px; scroll-margin-top: 20px; }
                     <p class="lede"><?php echo htmlspecialchars(t('aide_service.accueil_lede')); ?></p>
 
                     <div class="tiles-grid">
-                        <div class="tile-card" style="--t-color: var(--gelpam-green);">
+                        <div class="tile-card" style="--t-color: var(--brand-green);">
                             <i class="fa-solid fa-screwdriver-wrench tile-icon"></i>
                             <h4><?php echo htmlspecialchars(t('aide_service.tile1_titre')); ?></h4>
                             <p><?php echo htmlspecialchars(t('aide_service.tile1_desc')); ?></p>
@@ -270,7 +270,7 @@ section.aide-sec { margin-bottom: 26px; scroll-margin-top: 20px; }
                             <h4><?php echo htmlspecialchars(t('aide_service.tile2_titre')); ?></h4>
                             <p><?php echo htmlspecialchars(t('aide_service.tile2_desc')); ?></p>
                         </div>
-                        <div class="tile-card" style="--t-color: var(--gelpam-orange);">
+                        <div class="tile-card" style="--t-color: var(--brand-orange);">
                             <i class="fa-solid fa-lightbulb tile-icon"></i>
                             <h4><?php echo htmlspecialchars(t('aide_service.tile3_titre')); ?></h4>
                             <p><?php echo htmlspecialchars(t('aide_service.tile3_desc')); ?></p>
@@ -383,7 +383,7 @@ section.aide-sec { margin-bottom: 26px; scroll-margin-top: 20px; }
                             <h4><?php echo htmlspecialchars(t('aide_service.tile_soustraite_titre')); ?></h4>
                             <p><?php echo htmlspecialchars(t('aide_service.tile_soustraite_desc')); ?></p>
                         </div>
-                        <div class="tile-card" style="--t-color: var(--gelpam-orange);">
+                        <div class="tile-card" style="--t-color: var(--brand-orange);">
                             <i class="fa-solid fa-triangle-exclamation tile-icon"></i>
                             <h4><?php echo htmlspecialchars(t('aide_service.tile_bris_titre')); ?></h4>
                             <p><?php echo htmlspecialchars(t('aide_service.tile_bris_desc')); ?></p>

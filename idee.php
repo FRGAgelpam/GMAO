@@ -123,7 +123,7 @@ try {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Segoe+UI:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #2c3e50; --accent: #3498db; --gelpam-orange: #f39c12; --gelpam-green: #2ecc71; --danger: #e74c3c; --violet: #8e44ad; }
+        :root { --primary: #2c3e50; --accent: #3498db; --brand-orange: #f39c12; --brand-green: #2ecc71; --danger: #e74c3c; --violet: #8e44ad; }
         * { box-sizing: border-box; }
         body {
             margin: 0; font-family: 'Segoe UI', sans-serif;
@@ -148,33 +148,33 @@ try {
         }
         .topbar-links { display:flex; align-items:center; gap: 18px; }
         .topbar-links a { color:#94a3b8; text-decoration:none; font-size: 0.78rem; display:flex; align-items:center; gap:6px; font-weight:600; }
-        .topbar-links a:hover { color: var(--gelpam-orange); }
+        .topbar-links a:hover { color: var(--brand-orange); }
         .topbar-links a.logout:hover { color: var(--danger); }
         .who-badge { background:#f1f5f9; padding: 5px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; color: var(--primary); }
 
         .card { background: rgba(255, 255, 255, 0.97); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); padding: 24px 26px; }
 
         .card-head { display:flex; align-items:center; gap: 12px; margin-bottom: 4px; }
-        .card-head i { font-size: 1.6rem; color: var(--gelpam-orange); }
+        .card-head i { font-size: 1.6rem; color: var(--brand-orange); }
         .card-head h2 { font-family: 'Caveat', cursive; color: var(--primary); font-size: 1.7rem; margin: 0; }
         .card-sub { color:#94a3b8; font-size: 0.78rem; margin: 0 0 18px; }
 
         .field { margin-bottom: 14px; }
         label { display: block; font-size: 0.7rem; font-weight: 600; color: #555; margin-bottom: 4px; text-transform: uppercase; }
         input, select, textarea { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 0.9rem; font-family: inherit; background: #fff; }
-        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--gelpam-orange); box-shadow: 0 0 0 3px rgba(243,156,18,0.15); }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--brand-orange); box-shadow: 0 0 0 3px rgba(243,156,18,0.15); }
         textarea { resize: vertical; min-height: 90px; }
 
-        .btn-send { width: 100%; padding: 13px; border: none; border-radius: 8px; background: linear-gradient(135deg, #3ddc84, var(--gelpam-green)); color: #fff; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: 0.2s; display:flex; align-items:center; justify-content:center; gap: 8px; box-shadow: 0 3px 8px rgba(46,204,113,0.35); }
+        .btn-send { width: 100%; padding: 13px; border: none; border-radius: 8px; background: linear-gradient(135deg, #3ddc84, var(--brand-green)); color: #fff; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: 0.2s; display:flex; align-items:center; justify-content:center; gap: 8px; box-shadow: 0 3px 8px rgba(46,204,113,0.35); }
         .btn-send:hover:not(:disabled) { background: #27ae60; transform: translateY(-1px); box-shadow: 0 5px 12px rgba(46,204,113,0.45); }
         .btn-send:disabled { background: #cbd5e1; cursor: not-allowed; }
 
         .form-msg { font-size: 0.72rem; font-weight: 600; text-align:center; margin-top: 10px; min-height: 14px; }
         .form-msg.error { color: var(--danger); }
-        .form-msg.success { color: var(--gelpam-green); }
+        .form-msg.success { color: var(--brand-green); }
 
         .idees-title { font-family: 'Caveat', cursive; color: var(--primary); font-size: 1.5rem; margin: 0 0 12px; display:flex; align-items:center; gap:10px; }
-        .idees-title i { color: var(--gelpam-orange); }
+        .idees-title i { color: var(--brand-orange); }
 
         .idee-item { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; cursor: pointer; transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s; }
         .idee-item:hover { box-shadow: 0 3px 10px rgba(15,23,42,0.08); transform: translateY(-1px); }
@@ -194,7 +194,7 @@ try {
         .statut-pill { font-size: 0.6rem; font-weight: 700; padding: 3px 9px; border-radius: 20px; color: #fff; white-space: nowrap; text-transform: uppercase; }
         .statut-nouvelle { background: var(--accent); }
         .statut-etude { background: #16a085; }
-        .statut-acceptee { background: var(--gelpam-green); }
+        .statut-acceptee { background: var(--brand-green); }
         .statut-realisee { background: var(--violet); }
         .statut-rejetee { background: var(--danger); }
 
@@ -236,7 +236,7 @@ try {
 
         .idee-reply-form { display: flex; gap: 8px; margin-top: 6px; }
         .idee-reply-form textarea { flex: 1; min-height: 44px; max-height: 100px; resize: vertical; }
-        .idee-reply-form button { background: linear-gradient(135deg, #3ddc84, var(--gelpam-green)); color: #fff; border: none; border-radius: 10px; padding: 0 18px; font-weight: 700; cursor: pointer; flex-shrink: 0; transition: 0.2s; box-shadow: 0 3px 8px rgba(46,204,113,0.35); }
+        .idee-reply-form button { background: linear-gradient(135deg, #3ddc84, var(--brand-green)); color: #fff; border: none; border-radius: 10px; padding: 0 18px; font-weight: 700; cursor: pointer; flex-shrink: 0; transition: 0.2s; box-shadow: 0 3px 8px rgba(46,204,113,0.35); }
         .idee-reply-form button:hover:not(:disabled) { background: #27ae60; transform: translateY(-1px); box-shadow: 0 5px 12px rgba(46,204,113,0.45); }
         .idee-reply-form button:disabled { background: #cbd5e1; cursor: not-allowed; }
     </style>

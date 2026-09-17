@@ -640,8 +640,8 @@ HTML,
     'maint.aide_sous_traitant_body' => <<<'HTML'
 <p>Check this box if the intervention is entrusted to an external provider rather than the in-house team.</p>
             <ul class="aide-list">
-                <li><i class="fa-solid fa-list-check" style="color:var(--gelpam-orange);"></i> Then choose the company from the list that appears just below.</li>
-                <li><i class="fa-solid fa-file-pdf" style="color:var(--gelpam-orange);"></i> Once the order is created, a "Generate PPP" (Prevention Plan) button will appear on its record.</li>
+                <li><i class="fa-solid fa-list-check" style="color:var(--brand-orange);"></i> Then choose the company from the list that appears just below.</li>
+                <li><i class="fa-solid fa-file-pdf" style="color:var(--brand-orange);"></i> Once the order is created, a "Generate PPP" (Prevention Plan) button will appear on its record.</li>
             </ul>
 HTML,
 
@@ -3329,7 +3329,7 @@ HTML,
     'aide_planning.vue_ensemble_p2' => "In each cell, you can see up to three things:",
     'aide_planning.vue_li1' => "<b>A shift/event badge</b> — color + label (e.g. \"Morning · 7h\", \"Paid leave\", \"RTT\").",
     'aide_planning.vue_li2' => "<b>One or more work orders (BI)</b> — small numbered tags, if the technician logged time on a job that day.",
-    'aide_planning.vue_li3' => "<b>A note icon</b> <i class=\"fa-solid fa-note-sticky\" style=\"color:var(--gelpam-orange);\"></i> — if a remark was left (e.g. \"arrived at 9am, left at 3:30pm\").",
+    'aide_planning.vue_li3' => "<b>A note icon</b> <i class=\"fa-solid fa-note-sticky\" style=\"color:var(--brand-orange);\"></i> — if a remark was left (e.g. \"arrived at 9am, left at 3:30pm\").",
     'aide_planning.callout_annuel' => "Clicking a technician's name, avatar or total (the block on the left) opens their <a href=\"#planning-annuel\"><b>Annual Schedule</b></a> directly — the full calendar for the year, not just the week shown.",
     'aide_planning.naviguer_lede' => "Three ways to change week, all equivalent:",
     'aide_planning.case_fleches_titre' => "The arrows on the edges",

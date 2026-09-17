@@ -56,7 +56,7 @@ $json_ticket_ids = safe_json($mes_ticket_ids);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Segoe+UI:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #2c3e50; --accent: #3498db; --gelpam-orange: #f39c12; --gelpam-green: #2ecc71; --danger: #e74c3c; --violet: #8e44ad; }
+        :root { --primary: #2c3e50; --accent: #3498db; --brand-orange: #f39c12; --brand-green: #2ecc71; --danger: #e74c3c; --violet: #8e44ad; }
         * { box-sizing: border-box; }
         body {
             margin: 0; font-family: 'Segoe UI', sans-serif;
@@ -127,9 +127,9 @@ $json_ticket_ids = safe_json($mes_ticket_ids);
         .tile-cta i { transition: transform 0.2s ease; }
         .tile:hover .tile-cta i { transform: translateX(3px); }
 
-        .tile.t-demande { --tile-accent: var(--gelpam-green); --tile-rgb: 46, 204, 113; }
+        .tile.t-demande { --tile-accent: var(--brand-green); --tile-rgb: 46, 204, 113; }
         .tile.t-suivi { --tile-accent: var(--accent); --tile-rgb: 52, 152, 219; }
-        .tile.t-idee { --tile-accent: var(--gelpam-orange); --tile-rgb: 243, 156, 18; }
+        .tile.t-idee { --tile-accent: var(--brand-orange); --tile-rgb: 243, 156, 18; }
         .tile.t-aide { --tile-accent: var(--violet); --tile-rgb: 142, 68, 173; }
 
         .btn-floating-nav {

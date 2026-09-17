@@ -51,8 +51,8 @@ header('Content-Type: text/html; charset=utf-8');
 <style>
 :root {
     --primary: #2c3e50; --accent: #3498db; --success: #2ecc71;
-    --danger: #e74c3c; --gelpam-green: #2ecc71; --gelpam-orange: #f39c12;
-    --ardo-blue: #005696; --neutral-dark: #34495e; --attente: #95a5a6;
+    --danger: #e74c3c; --brand-green: #2ecc71; --brand-orange: #f39c12;
+    --brand-blue: #005696; --neutral-dark: #34495e; --attente: #95a5a6;
 }
 body { margin: 0; font-family: 'Segoe UI', sans-serif; background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('img/fond.jpg') no-repeat center center fixed; background-color: #1a2733; background-size: cover; min-height: 100vh; padding-top: 54px; color: var(--primary); box-sizing: border-box; }
 @keyframes pulse-dot { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(2.5); opacity: 0; } }
@@ -74,7 +74,7 @@ header::before { content: ""; position: absolute; top: -12px; left: -12px; right
 .user-badge { background: rgba(255,255,255,0.12); backdrop-filter: blur(14px) brightness(1.15); -webkit-backdrop-filter: blur(14px) brightness(1.15); padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: flex; align-items: center; gap: 8px; color: white; border: 1px solid rgba(255,255,255,0.4); text-shadow: 0 1px 3px rgba(0,0,0,0.4); box-shadow: 0 6px 16px rgba(0,0,0,0.2); }
 .btn-accueil { font-size: 16px; color: white; text-decoration: none; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.12); backdrop-filter: blur(14px) brightness(1.15); -webkit-backdrop-filter: blur(14px) brightness(1.15); border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 6px 16px rgba(0,0,0,0.2); transition: transform 0.2s, background 0.2s; }
 .btn-accueil:hover { background: rgba(255,255,255,0.28); transform: translateY(-2px); }
-.btn-accueil-green:hover { background: rgba(46, 204, 113, 0.15); border-color: rgba(46, 204, 113, 0.5); color: var(--gelpam-green); }
+.btn-accueil-green:hover { background: rgba(46, 204, 113, 0.15); border-color: rgba(46, 204, 113, 0.5); color: var(--brand-green); }
 .status-pulse { width: 8px; height: 8px; border-radius: 50%; position: relative; background: var(--success); }
 .status-pulse::after { content: ""; position: absolute; width: 100%; height: 100%; border-radius: 50%; background: inherit; animation: pulse-dot 2s infinite; opacity: 0.6; }
 .sidebar { height: 100%; width: 0; position: fixed; z-index: 3000; top: 0; left: 0; background-color: #1a252f; overflow-x: hidden; overflow-y: auto; transition: 0.4s; padding-top: 60px; padding-bottom: 20px; }

@@ -51,8 +51,8 @@ header('Content-Type: text/html; charset=utf-8');
     <style>
         :root {
             --primary: #2c3e50; --accent: #3498db; --success: #2ecc71;
-            --danger: #e74c3c; --gelpam-green: #2ecc71; --gelpam-orange: #f39c12;
-            --ardo-blue: #005696; --neutral-dark: #34495e;
+            --danger: #e74c3c; --brand-green: #2ecc71; --brand-orange: #f39c12;
+            --brand-blue: #005696; --neutral-dark: #34495e;
             --stat-red: #c0392b;
         }
 
@@ -217,7 +217,7 @@ header('Content-Type: text/html; charset=utf-8');
         .ratio-legend-item.type-curatif:hover { background: #fdf1ef; }
         .ratio-legend-item.type-preventif { border-left-color: var(--accent); }
         .ratio-legend-item.type-preventif:hover { background: #eef6fc; }
-        .ratio-legend-item.type-chantier { border-left-color: var(--gelpam-orange); }
+        .ratio-legend-item.type-chantier { border-left-color: var(--brand-orange); }
         .ratio-legend-item.type-chantier:hover { background: #fef6e9; }
         .ratio-legend-item .ratio-link-icon { font-size: 0.72rem; margin-left: 2px; }
         .ratio-legend-item.type-curatif .ratio-link-icon { color: var(--stat-red); }
@@ -225,8 +225,8 @@ header('Content-Type: text/html; charset=utf-8');
         .ratio-legend-item .ratio-type-icon { font-size: 0.85rem; }
         .ratio-legend-item.type-curatif .ratio-type-icon { color: var(--stat-red); }
         .ratio-legend-item.type-preventif .ratio-type-icon { color: var(--accent); }
-        .ratio-legend-item.type-chantier .ratio-type-icon { color: var(--gelpam-orange); }
-        .ratio-legend-item.type-chantier .ratio-link-icon { color: var(--gelpam-orange); }
+        .ratio-legend-item.type-chantier .ratio-type-icon { color: var(--brand-orange); }
+        .ratio-legend-item.type-chantier .ratio-link-icon { color: var(--brand-orange); }
         .ratio-legend .dot { width: 9px; height: 9px; border-radius: 3px; flex: none; }
         .ratio-legend b { color: var(--k-ink); font-weight: 800; }
         .ratio-legend .ratio-pct { color: var(--k-ink-faint); font-weight: 600; }
@@ -234,7 +234,7 @@ header('Content-Type: text/html; charset=utf-8');
         .progress-bar-global { height: 12px; background: #eef2f6; border-radius: 999px; display: flex; overflow: hidden; }
         .progress-curatif { background: linear-gradient(90deg, #e05c48, var(--stat-red)); height: 100%; transition: width .8s ease-in-out; }
         .progress-preventif { background: linear-gradient(90deg, var(--accent), #2b86c5); height: 100%; transition: width .8s ease-in-out; }
-        .progress-chantier { background: linear-gradient(90deg, #f5a623, var(--gelpam-orange)); height: 100%; transition: width .8s ease-in-out; }
+        .progress-chantier { background: linear-gradient(90deg, #f5a623, var(--brand-orange)); height: 100%; transition: width .8s ease-in-out; }
 
         /* --- Panneaux (technicien / équipement) --- */
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 10px; }
@@ -258,7 +258,7 @@ header('Content-Type: text/html; charset=utf-8');
         .carousel-type-pill:hover { border-color: var(--k-ink-faint); }
         .carousel-type-pill.active.type-curatif { background: var(--stat-red); border-color: var(--stat-red); color: #fff; box-shadow: 0 3px 8px rgba(192,57,43,.35); }
         .carousel-type-pill.active.type-preventif { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 3px 8px rgba(52,152,219,.35); }
-        .carousel-type-pill.active.type-chantier { background: var(--gelpam-orange); border-color: var(--gelpam-orange); color: #fff; box-shadow: 0 3px 8px rgba(243,156,18,.35); }
+        .carousel-type-pill.active.type-chantier { background: var(--brand-orange); border-color: var(--brand-orange); color: #fff; box-shadow: 0 3px 8px rgba(243,156,18,.35); }
         .carousel-pause-btn { cursor: pointer; margin-left: auto; display: inline-flex; align-items: center; gap: 7px; font-size: 0.76rem; font-weight: 700; padding: 6px 14px; border-radius: 999px; border: 1.5px solid var(--k-border); background: #fff; color: var(--k-ink); transition: background .15s; }
         .carousel-pause-btn:hover { background: #f1f5f9; }
         .carousel-pause-btn.is-paused { background: #fff7e6; border-color: #f3c969; color: #b9770e; }
@@ -701,7 +701,7 @@ function openTypeHistory(type) {
     const meta = {
         curatif: { icon: 'fa-screwdriver-wrench', color: 'var(--stat-red)', label: I18N_KPI.type_curatif },
         'préventif': { icon: 'fa-calendar-check', color: 'var(--accent)', label: I18N_KPI.type_preventif },
-        chantier: { icon: 'fa-person-digging', color: 'var(--gelpam-orange)', label: I18N_KPI.type_chantier }
+        chantier: { icon: 'fa-person-digging', color: 'var(--brand-orange)', label: I18N_KPI.type_chantier }
     }[type];
 
     title.innerHTML = `<i class="fa-solid ${meta.icon}" style="color:${meta.color};"></i> ${I18N_KPI.title_type_history.replace('{label}', meta.label)}`;
@@ -1156,7 +1156,7 @@ function openHistory(type) {
         let sorted = Object.entries(equipCounts).sort((a, b) => b[1] - a[1]);
         let top5Names = sorted.slice(0, 5).map(([name, _]) => name);
 
-        title.innerHTML = `<i class="fa-solid fa-chart-pie" style="color: var(--gelpam-orange);"></i> ${I18N_KPI.title_analyse_recurrentes} <span style="font-size:0.6em; color:#94a3b8; font-weight:600; text-transform:uppercase; margin-left:6px;">${I18N_KPI.curatif_uniquement}</span>`;
+        title.innerHTML = `<i class="fa-solid fa-chart-pie" style="color: var(--brand-orange);"></i> ${I18N_KPI.title_analyse_recurrentes} <span style="font-size:0.6em; color:#94a3b8; font-weight:600; text-transform:uppercase; margin-left:6px;">${I18N_KPI.curatif_uniquement}</span>`;
 
         if (sorted.length === 0) {
             body.innerHTML = `<div class="kempty"><i class="fa-solid fa-inbox"></i>${I18N_KPI.aucune_donnee}</div>`;
@@ -1207,8 +1207,8 @@ function openHistory(type) {
             if (filteredTasks.length === 0) return;
 
             targetZone.innerHTML = `
-            <h3 style="font-family:'Inter',sans-serif; color:var(--primary); font-size:0.95rem; font-weight:800; margin-bottom:12px; padding-bottom:8px; border-bottom:2px solid var(--gelpam-orange); display:flex; align-items:center; gap:8px;">
-                <i class="fa-solid fa-folder-open" style="color: var(--gelpam-orange);"></i> ${I18N_KPI.bi_pour} ${affichageTitre}
+            <h3 style="font-family:'Inter',sans-serif; color:var(--primary); font-size:0.95rem; font-weight:800; margin-bottom:12px; padding-bottom:8px; border-bottom:2px solid var(--brand-orange); display:flex; align-items:center; gap:8px;">
+                <i class="fa-solid fa-folder-open" style="color: var(--brand-orange);"></i> ${I18N_KPI.bi_pour} ${affichageTitre}
             </h3>
             <div style="overflow-x:auto;">${renderTasksTable(filteredTasks, I18N_KPI.loc_col_desc)}</div>`;
 

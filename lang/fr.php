@@ -640,8 +640,8 @@ HTML,
     'maint.aide_sous_traitant_body' => <<<'HTML'
 <p>Cochez cette case si l'intervention est confiée à un prestataire externe plutôt qu'à l'équipe interne.</p>
             <ul class="aide-list">
-                <li><i class="fa-solid fa-list-check" style="color:var(--gelpam-orange);"></i> Choisissez ensuite l'entreprise dans la liste qui apparaît juste en dessous.</li>
-                <li><i class="fa-solid fa-file-pdf" style="color:var(--gelpam-orange);"></i> Une fois le bon créé, un bouton « Générer PDP » (Plan de Prévention) apparaîtra sur sa fiche.</li>
+                <li><i class="fa-solid fa-list-check" style="color:var(--brand-orange);"></i> Choisissez ensuite l'entreprise dans la liste qui apparaît juste en dessous.</li>
+                <li><i class="fa-solid fa-file-pdf" style="color:var(--brand-orange);"></i> Une fois le bon créé, un bouton « Générer PDP » (Plan de Prévention) apparaîtra sur sa fiche.</li>
             </ul>
 HTML,
 
@@ -3329,7 +3329,7 @@ HTML,
     'aide_planning.vue_ensemble_p2' => "Dans chaque case, vous pouvez voir jusqu'à trois choses :",
     'aide_planning.vue_li1' => "<b>Un badge de poste/événement</b> — couleur + libellé (ex. « Matin · 7h », « CP », « RTT »).",
     'aide_planning.vue_li2' => "<b>Un ou plusieurs bons d'intervention (BI)</b> — les petites étiquettes numérotées, si le technicien a pointé du temps sur une intervention ce jour-là.",
-    'aide_planning.vue_li3' => "<b>Une icône de note</b> <i class=\"fa-solid fa-note-sticky\" style=\"color:var(--gelpam-orange);\"></i> — si une remarque a été laissée (ex. « arrivé à 9h, parti à 15h30 »).",
+    'aide_planning.vue_li3' => "<b>Une icône de note</b> <i class=\"fa-solid fa-note-sticky\" style=\"color:var(--brand-orange);\"></i> — si une remarque a été laissée (ex. « arrivé à 9h, parti à 15h30 »).",
     'aide_planning.callout_annuel' => "Cliquer sur le nom, l'avatar ou le total d'un technicien (le bloc de gauche) ouvre directement son <a href=\"#planning-annuel\"><b>Planning annuel</b></a> — le calendrier complet de l'année, pas seulement la semaine affichée.",
     'aide_planning.naviguer_lede' => "Trois façons de changer de semaine, toutes équivalentes :",
     'aide_planning.case_fleches_titre' => "Les flèches sur les bords",

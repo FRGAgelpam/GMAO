@@ -480,7 +480,7 @@ try {
         :root {
             /* TES COULEURS D'ORIGINE (Intactes) */
             --primary: #2c3e50; --accent: #3498db; --success: #2ecc71; 
-            --danger: #e74c3c; --gelpam-green: #2ecc71; --gelpam-orange: #f39c12;
+            --danger: #e74c3c; --brand-green: #2ecc71; --brand-orange: #f39c12;
             --stat-red: #c0392b; --purple: #9b59b6; --dark-blue: #2980b9;
 
             /* NOUVELLES COULEURS "FINESSE" (Pour adoucir la modale) */
@@ -599,8 +599,8 @@ try {
             cursor: pointer; transition: all 0.35s ease; display: flex; flex-direction: column; align-items: center; position: relative;
         }
         .stat-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: 15px; z-index: -1; animation: water-ripple 2s infinite; }
-        .stat-card:nth-child(odd) { border-bottom: 6px solid var(--gelpam-orange); box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 12px 28px -5px rgba(243, 156, 18, 0.75); }
-        .stat-card:nth-child(even) { border-bottom: 6px solid var(--gelpam-green); box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 12px 28px -5px rgba(46, 204, 113, 0.75); }
+        .stat-card:nth-child(odd) { border-bottom: 6px solid var(--brand-orange); box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 12px 28px -5px rgba(243, 156, 18, 0.75); }
+        .stat-card:nth-child(even) { border-bottom: 6px solid var(--brand-green); box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 12px 28px -5px rgba(46, 204, 113, 0.75); }
         .stat-card:hover { transform: translateY(-8px); background: linear-gradient(160deg, rgba(255,255,255,0.98), rgba(255,255,255,0.85)); }
         .stat-card:nth-child(odd):hover {
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.7),
@@ -763,7 +763,7 @@ try {
         .field input, .field select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 4px; height: 35px; box-sizing: border-box; }
         .field select:disabled { background: #f1f2f6; cursor: not-allowed; color: #999; }
         
-        #btn-submit { width: 100%; height: 40px; margin-top: 10px; background: var(--gelpam-green); color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; grid-column: 1 / -1; transition: 0.3s; }
+        #btn-submit { width: 100%; height: 40px; margin-top: 10px; background: var(--brand-green); color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; grid-column: 1 / -1; transition: 0.3s; }
         .wizard-nav #btn-submit { width: auto; height: auto; margin-top: 0; padding: 10px 22px; font-size: 0.88rem; border-radius: 8px; display: flex; align-items: center; gap: 8px; }
         #btn-submit:hover { background: #27ae60; }
         .btn-update { background: var(--accent) !important; }
@@ -783,7 +783,7 @@ try {
         .histo-limit-label { font-size: 0.75rem; font-weight: 700; color: #64748b; }
         .histo-limit-buttons { display: flex; gap: 4px; }
         .histo-limit-buttons button { border: 1px solid #dcdfe3; background: #fff; color: var(--primary); width: 28px; height: 28px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; transition: 0.15s; }
-        .histo-limit-buttons button:hover:not(:disabled) { background: var(--gelpam-green); border-color: var(--gelpam-green); color: #fff; }
+        .histo-limit-buttons button:hover:not(:disabled) { background: var(--brand-green); border-color: var(--brand-green); color: #fff; }
         .histo-limit-buttons button:disabled { opacity: 0.35; cursor: not-allowed; }
         .historique-table-scroll { overflow: auto; max-height: 78vh; border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); }
         /* Seule la ligne des titres de colonnes reste collée en haut (la ligne de filtres défile avec le contenu) */
@@ -809,7 +809,7 @@ try {
         .bi-card { position: relative; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 14px 12px 18px; overflow: hidden; }
         .bi-card-accent { position: absolute; top: 0; left: 0; bottom: 0; width: 5px; }
         .bi-card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
-        .bi-card-num { font-weight: bold; color: var(--gelpam-orange); font-size: 0.95rem; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+        .bi-card-num { font-weight: bold; color: var(--brand-orange); font-size: 0.95rem; display: flex; align-items: center; gap: 6px; cursor: pointer; }
         .bi-card-machine { font-weight: 600; color: var(--primary); font-size: 0.88rem; margin-bottom: 2px; }
         .bi-card-machine i { font-size: 0.7rem; opacity: 0.5; margin-right: 4px; }
         .bi-card-loc { font-size: 0.72rem; color: #64748b; margin-bottom: 6px; }
@@ -875,14 +875,14 @@ try {
             .hcf-group { flex: 1 1 calc(50% - 7px); }
         }
 
-        .select-periode { padding: 5px 10px; border-radius: 15px; border: 1px solid var(--gelpam-green); font-size: 0.8rem; font-weight: bold; color: var(--primary); outline: none; cursor: pointer; }
+        .select-periode { padding: 5px 10px; border-radius: 15px; border: 1px solid var(--brand-green); font-size: 0.8rem; font-weight: bold; color: var(--primary); outline: none; cursor: pointer; }
 
         .modal { display:none; position:fixed; z-index:4000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); backdrop-filter:blur(5px); }
         .modal-content { background:white; margin:2% auto; padding:20px; border-radius:15px; width:95%; max-height:90vh; overflow-y:auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .modal-form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; background: #f8f9fa; padding: 20px; border-radius: 10px; border: 1px solid #ddd; }
         .modal-field { display: flex; flex-direction: column; font-weight: bold; font-size: 0.8rem; }
         .modal-field input, .modal-field select, .modal-field textarea { padding: 10px; border-radius: 5px; border: 1px solid #ccc; margin-top: 5px; font-family: inherit; }
-        .btn-modal-save { grid-column: 1 / -1; padding: 15px; background: var(--gelpam-green); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; transition: 0.3s; }
+        .btn-modal-save { grid-column: 1 / -1; padding: 15px; background: var(--brand-green); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; transition: 0.3s; }
         .icon-help { color:var(--accent); cursor:pointer; font-size:1rem; transition: transform 0.2s; }
 
         /* ============================================================
@@ -917,7 +917,7 @@ try {
 
         .sas-modal-header { padding: 18px 26px; display: flex; justify-content: space-between; align-items: center; background: white; border-bottom: 1px solid var(--border-color); border-radius: 12px 12px 0 0; }
         .sas-modal-heading { display: flex; align-items: center; gap: 14px; }
-        .sas-modal-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--soft-orange); color: var(--gelpam-orange); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0; }
+        .sas-modal-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--soft-orange); color: var(--brand-orange); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0; }
         .sas-modal-title { font-family: 'Caveat', cursive; margin: 0; font-size: 2rem; line-height: 1; color: var(--primary); font-weight: 600; }
         .sas-modal-subtitle { margin: 2px 0 0 0; font-size: 0.78rem; color: var(--text-light); }
         .sas-modal-close-btn { flex-shrink: 0; padding: 8px 18px; border-radius: 6px; border: 1px solid #e2e8f0; background: #fff; cursor: pointer; color: #64748b; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.3px; font-family: inherit; transition: 0.2s; }
@@ -938,7 +938,7 @@ try {
         .sas-master-head { padding: 6px 6px 10px; font-size: 0.68rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; }
 
         .sas-master-list { display: flex; flex-direction: column; gap: 8px; padding-bottom: 4px; }
-        .sas-master-item { width: 100%; display: flex; flex-direction: column; gap: 4px; text-align: left; font-family: inherit; color: inherit; background: white; border: 1px solid var(--border-color); border-left: 4px solid var(--gelpam-orange); border-radius: 9px; padding: 11px 13px; cursor: pointer; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); transition: 0.15s; }
+        .sas-master-item { width: 100%; display: flex; flex-direction: column; gap: 4px; text-align: left; font-family: inherit; color: inherit; background: white; border: 1px solid var(--border-color); border-left: 4px solid var(--brand-orange); border-radius: 9px; padding: 11px 13px; cursor: pointer; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); transition: 0.15s; }
         .sas-master-item:nth-child(even) { background: #e4eaf1; }
         .sas-master-item:hover { box-shadow: 0 4px 10px rgba(15, 23, 42, 0.1); transform: translateY(-1px); }
         .sas-master-item.is-active { background: white; border-color: var(--accent); border-left-color: var(--accent); box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2); }
@@ -948,7 +948,7 @@ try {
         .sas-master-urgent-icon { color: var(--danger); font-size: 0.7rem; }
         .sas-master-service { font-weight: 700; font-size: 0.82rem; color: var(--primary); }
         .sas-master-user-icon { color: var(--accent); margin-right: 2px; }
-        .sas-master-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: var(--gelpam-orange); }
+        .sas-master-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: var(--brand-orange); }
         .sas-master-equip { font-size: 0.72rem; color: var(--text-light); }
         .sas-master-loc { font-size: 0.68rem; color: #94a3b8; }
         .sas-master-date { font-size: 0.68rem; color: #94a3b8; display: flex; align-items: center; gap: 4px; }
@@ -966,7 +966,7 @@ try {
            de défilement/retour à la ligne. Repéré en corrigeant l'affichage mobile, valable aussi en
            desktop. */
         .sas-detail-head-main { min-width: 0; }
-        .sas-detail-accent { height: 4px; border-radius: 4px; background: linear-gradient(90deg, var(--gelpam-orange), var(--soft-orange)); margin-top: -4px; }
+        .sas-detail-accent { height: 4px; border-radius: 4px; background: linear-gradient(90deg, var(--brand-orange), var(--soft-orange)); margin-top: -4px; }
         .sas-detail-id-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
         .sas-detail-num { font-size: 0.68rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.6px; font-family: 'Consolas', monospace; }
         .sas-tag { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; background: #eef2f5; color: var(--text-light); border: 1px solid var(--border-color); }
@@ -975,7 +975,7 @@ try {
         .sas-detail-meta span { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
         .sas-detail-machine { color: var(--danger); font-weight: 700; }
 
-        .sas-status-pill { display: flex; align-items: center; gap: 5px; font-size: 0.7rem; font-weight: 700; color: var(--gelpam-orange); background: var(--soft-orange); padding: 3px 9px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.3px; flex-shrink: 0; }
+        .sas-status-pill { display: flex; align-items: center; gap: 5px; font-size: 0.7rem; font-weight: 700; color: var(--brand-orange); background: var(--soft-orange); padding: 3px 9px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.3px; flex-shrink: 0; }
         .sas-status-pill i { font-size: 0.5rem; }
 
         .sas-desc-label { display: flex; align-items: center; gap: 5px; font-size: 0.62rem; color: var(--text-light); text-transform: uppercase; font-weight: 700; letter-spacing: 0.4px; margin-bottom: 4px; }
@@ -1000,9 +1000,9 @@ try {
         .sas-btn-ghost-danger:hover { background: #fef2f2; }
         .sas-btn-ghost-accent { background: none; color: var(--accent); border: 1px solid #bfe0f7; }
         .sas-btn-ghost-accent:hover { background: var(--soft-blue); }
-        .sas-btn-ghost-preventif { background: none; color: var(--gelpam-green); border: 1px solid #b7e4c7; }
+        .sas-btn-ghost-preventif { background: none; color: var(--brand-green); border: 1px solid #b7e4c7; }
         .sas-btn-ghost-preventif:hover { background: #eafaf1; }
-        .sas-btn-primary { background: var(--gelpam-green); color: white; padding: 9px 22px; box-shadow: 0 3px 8px rgba(46, 204, 113, 0.35); }
+        .sas-btn-primary { background: var(--brand-green); color: white; padding: 9px 22px; box-shadow: 0 3px 8px rgba(46, 204, 113, 0.35); }
         .sas-btn-primary:hover { background: #27ae60; }
 
         /* 900px (pas 760px) : une tablette en portrait (ex. 768px) tombe déjà dans la zone où le
@@ -1084,7 +1084,7 @@ try {
             display: flex; align-items: center; gap: 18px;
             background: linear-gradient(160deg, rgba(255,255,255,0.92), rgba(255,255,255,0.72));
             backdrop-filter: blur(14px) saturate(160%); -webkit-backdrop-filter: blur(14px) saturate(160%);
-            border-radius: 15px; border: 1px solid rgba(255,255,255,0.6); border-left: 5px solid var(--gelpam-orange);
+            border-radius: 15px; border: 1px solid rgba(255,255,255,0.6); border-left: 5px solid var(--brand-orange);
             padding: 20px 24px; margin-bottom: 20px; cursor: pointer;
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 12px 28px -6px rgba(243, 156, 18, 0.5);
             transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -1092,7 +1092,7 @@ try {
         .ot-create-tile:hover { transform: translateY(-4px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 18px 34px -8px rgba(243, 156, 18, 0.65); }
         .ot-create-tile-icon {
             flex-shrink: 0; width: 60px; height: 60px; border-radius: 50%;
-            background: var(--soft-orange); color: var(--gelpam-orange);
+            background: var(--soft-orange); color: var(--brand-orange);
             display: flex; align-items: center; justify-content: center; font-size: 1.6rem;
         }
         .ot-create-tile-text { flex: 1; min-width: 0; }
@@ -1100,7 +1100,7 @@ try {
         .ot-create-tile-text p { margin: 0; font-size: 0.85rem; color: #475569; }
         .ot-create-tile-cta {
             flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 12px 20px;
-            background: var(--gelpam-orange); color: white; border-radius: 10px; font-size: 0.8rem; font-weight: 700;
+            background: var(--brand-orange); color: white; border-radius: 10px; font-size: 0.8rem; font-weight: 700;
             text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap;
         }
 
@@ -1125,12 +1125,12 @@ try {
         .ss-icon { width: 34px; height: 34px; min-width: 34px; border-radius: 50%; background: #e2e8f0; color: #94a3b8; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: 0.3s; }
         .wizard-sidebar-step.active .ss-icon { background: var(--accent); color: #fff; box-shadow: 0 0 0 4px rgba(52,152,219,0.15); }
         .wizard-sidebar-step.done .ss-icon { background: var(--success); color: #fff; }
-        .wizard-sidebar-step.done.step-incomplete .ss-icon { background: var(--gelpam-orange); }
+        .wizard-sidebar-step.done.step-incomplete .ss-icon { background: var(--brand-orange); }
         .ss-text strong { display: block; font-size: 0.8rem; color: #94a3b8; font-weight: 800; line-height: 1.3; }
         .ss-text span { font-size: 0.66rem; color: #cbd5e1; }
         .wizard-sidebar-step.active .ss-text strong { color: var(--primary); }
         .wizard-sidebar-step.done .ss-text strong { color: var(--success); }
-        .wizard-sidebar-step.done.step-incomplete .ss-text strong { color: var(--gelpam-orange); }
+        .wizard-sidebar-step.done.step-incomplete .ss-text strong { color: var(--brand-orange); }
         .wizard-sidebar-connector { width: 2px; height: 14px; background: #e2e8f0; margin-left: 25px; transition: 0.3s; }
         .wizard-sidebar-connector.done { background: var(--success); }
 
@@ -1162,7 +1162,7 @@ try {
         .wizard-smart-box { display: flex; gap: 12px; align-items: flex-start; background: #eef7ff; border: 1px solid #cfe4fb; border-radius: 12px; padding: 12px 14px; margin: 4px 0 16px; grid-column: 1 / -1; }
         .wizard-smart-box.is-warning { background: #fff8ec; border-color: #f5dcae; }
         .wizard-smart-box-icon { width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.9rem; }
-        .wizard-smart-box.is-warning .wizard-smart-box-icon { background: var(--gelpam-orange); }
+        .wizard-smart-box.is-warning .wizard-smart-box-icon { background: var(--brand-orange); }
         .wizard-smart-box-body { flex: 1; font-size: 0.8rem; color: #5a6b7a; line-height: 1.4; min-width: 0; }
         .wizard-smart-box-body b { color: var(--primary); }
         .wizard-smart-list { max-height: 220px; overflow-y: auto; margin-top: 4px; padding-right: 2px; }
@@ -1225,7 +1225,7 @@ try {
 
         .loc-done-card { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 14px; background: var(--soft-green); border: 2px solid #b8ecd9; border-radius: 12px; padding: 16px; flex-wrap: wrap; }
         .loc-done-info { display: flex; align-items: center; gap: 12px; }
-        .loc-done-icon { width: 42px; height: 42px; border-radius: 10px; background: var(--gelpam-green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+        .loc-done-icon { width: 42px; height: 42px; border-radius: 10px; background: var(--brand-green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
         .loc-done-name { font-weight: 800; color: var(--primary); font-size: 0.95rem; }
         .loc-done-path { font-size: 0.75rem; color: #5a8a76; margin-top: 2px; }
         .loc-done-change { background: #fff; border: 1px solid #cbd5e1; color: var(--primary); font-weight: 700; font-size: 0.78rem; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-family: inherit; }
@@ -1392,7 +1392,7 @@ try {
     max-width: 480px;
     margin: 40px auto;
     background: #fff;
-    border: 3px solid var(--gelpam-orange);
+    border: 3px solid var(--brand-orange);
     border-radius: 10px;
     font-family: Arial, Helvetica, sans-serif;
     color: #2c3e50;
@@ -1400,7 +1400,7 @@ try {
 }
 .fiche-tache-card.urgent { border-color: var(--danger); }
 .fiche-tache-header {
-    background: var(--gelpam-orange);
+    background: var(--brand-orange);
     color: white;
     padding: 16px 24px;
     display: flex;
@@ -1418,9 +1418,9 @@ try {
 .fiche-tache-row.c-machine { border-left-color: var(--accent); }
 .fiche-tache-row.c-loc { border-left-color: var(--dark-blue); }
 .fiche-tache-row.c-desc { border-left-color: var(--primary); }
-.fiche-tache-row.c-demandeur { border-left-color: var(--gelpam-orange); }
+.fiche-tache-row.c-demandeur { border-left-color: var(--brand-orange); }
 .fiche-tache-row.c-date { border-left-color: #94a3b8; }
-.fiche-tache-row.c-tech { border-left-color: var(--gelpam-green); }
+.fiche-tache-row.c-tech { border-left-color: var(--brand-green); }
 .fiche-tache-carnet {
     margin: 8px 24px 0 24px;
     background: #eff6fc;
@@ -1506,7 +1506,7 @@ try {
         <div id="globalRecap" class="recap-bar"></div>
     </div>
 
-    <div class="card" style="border-left: 5px solid var(--gelpam-green);">
+    <div class="card" style="border-left: 5px solid var(--brand-green);">
         <div class="card-title">
     <span><i class="fa-solid fa-clock-rotate-left"></i> <?php echo htmlspecialchars(t('maint.histo_title')); ?></span>
     <div class="histo-date-filter" style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 0.85rem; font-family: 'Segoe UI', sans-serif;">
@@ -1681,7 +1681,7 @@ try {
 
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <h2 id="wizardTitleOT" style="font-family:'Caveat', cursive; font-size:2rem; color:var(--primary); margin:0; display:flex; align-items:center; gap:10px;">
-                <i class="fa-solid fa-pen-to-square" style="color:var(--gelpam-orange);"></i> <?php echo htmlspecialchars(t('maint.create_tile_title')); ?>
+                <i class="fa-solid fa-pen-to-square" style="color:var(--brand-orange);"></i> <?php echo htmlspecialchars(t('maint.create_tile_title')); ?>
             </h2>
             <button onclick="closeWizardOT()" style="background:none; border:none; font-size:2rem; cursor:pointer; color:#94a3b8;">&times;</button>
         </div>
@@ -1757,8 +1757,8 @@ try {
                                 <label for="f-is-st" style="color: var(--primary); font-size: 0.85rem; cursor: pointer; font-weight: bold;"><?php echo htmlspecialchars(t('maint.check_sous_traite')); ?> <i class="fa-solid fa-circle-question icon-help" onclick="ouvrirAide('sous_traitant')"></i></label>
                             </div>
 
-                            <div class="field" id="container-ee" style="display: none; grid-column: 1 / -1; background: #fff5e6; padding: 10px; border-radius: 6px; border-left: 4px solid var(--gelpam-orange);">
-                                <span style="color: var(--gelpam-orange);"><?php echo htmlspecialchars(t('maint.label_entreprise_ext')); ?></span>
+                            <div class="field" id="container-ee" style="display: none; grid-column: 1 / -1; background: #fff5e6; padding: 10px; border-radius: 6px; border-left: 4px solid var(--brand-orange);">
+                                <span style="color: var(--brand-orange);"><?php echo htmlspecialchars(t('maint.label_entreprise_ext')); ?></span>
                                 <select id="f-entreprise">
                                     <option value=""><?php echo htmlspecialchars(t('maint.opt_choisir_entreprise')); ?></option>
                                     <?php foreach($entreprises_ext as $ee): ?>
@@ -1938,7 +1938,7 @@ try {
 
 <div id="modalHistory" class="modal">
     <div class="modal-content">
-        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid var(--gelpam-orange); padding-bottom:10px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid var(--brand-orange); padding-bottom:10px;">
             <h2 id="modalTitle" style="font-family:'Caveat', cursive; margin:0;"></h2>
             <span style="cursor:pointer; font-size:30px;" onclick="closeModal()">&times;</span>
         </div>
@@ -2380,7 +2380,7 @@ async function uploadPendingPhotosOT(taskId) {
 }
 
 function ouvrirWizardOT() {
-    document.getElementById('wizardTitleOT').innerHTML = '<i class="fa-solid fa-pen-to-square" style="color:var(--gelpam-orange);"></i> ' + I18N_MAINT.create_tile_title;
+    document.getElementById('wizardTitleOT').innerHTML = '<i class="fa-solid fa-pen-to-square" style="color:var(--brand-orange);"></i> ' + I18N_MAINT.create_tile_title;
     const btn = document.getElementById('btn-submit');
     btn.innerHTML = '<i class="fa-solid fa-plus-circle"></i> ' + I18N_MAINT.btn_creer_ticket;
     btn.classList.remove('btn-update');
@@ -3137,8 +3137,8 @@ function render() {
     // d'alerte pour les techniciens (vert si ça va bien, orange si stable, rouge si ça décroche).
     const tauxRealisation = countTotal > 0 ? Math.round((countTermine / countTotal) * 100) : 100;
     let tauxIcon, tauxColorVar, tauxRgb;
-    if (tauxRealisation >= 90) { tauxIcon = 'fa-arrow-trend-up'; tauxColorVar = 'var(--gelpam-green)'; tauxRgb = '46,204,113'; }
-    else if (tauxRealisation >= 85) { tauxIcon = 'fa-minus'; tauxColorVar = 'var(--gelpam-orange)'; tauxRgb = '243,156,18'; }
+    if (tauxRealisation >= 90) { tauxIcon = 'fa-arrow-trend-up'; tauxColorVar = 'var(--brand-green)'; tauxRgb = '46,204,113'; }
+    else if (tauxRealisation >= 85) { tauxIcon = 'fa-minus'; tauxColorVar = 'var(--brand-orange)'; tauxRgb = '243,156,18'; }
     else { tauxIcon = 'fa-arrow-trend-down'; tauxColorVar = 'var(--danger)'; tauxRgb = '231,76,60'; }
 
     // 2. Calculs des Types & Casse
@@ -3173,7 +3173,7 @@ function render() {
                     <div class="kpi-tile-label">${I18N_MAINT.kpi_urgent}</div>
                     <div class="kpi-tile-value">${countUrgent}</div>
                 </div>
-                <div class="recap-item" data-chip-key="statut:À faire" onclick="filtrerStatutBouton('À faire')" style="--tile-color:var(--gelpam-orange); --tile-rgb:243,156,18;">
+                <div class="recap-item" data-chip-key="statut:À faire" onclick="filtrerStatutBouton('À faire')" style="--tile-color:var(--brand-orange); --tile-rgb:243,156,18;">
                     <div class="kpi-tile-icon"><i class="fa-solid fa-clipboard-list"></i></div>
                     <div class="kpi-tile-label">${I18N_MAINT.kpi_a_faire}</div>
                     <div class="kpi-tile-value">${countAfaire}</div>
@@ -3183,7 +3183,7 @@ function render() {
                     <div class="kpi-tile-label">${I18N_MAINT.kpi_en_cours}</div>
                     <div class="kpi-tile-value">${countEncours}</div>
                 </div>
-                <div class="recap-item" data-chip-key="statut:Terminée" onclick="filtrerStatutBouton('Terminée')" style="--tile-color:var(--gelpam-green); --tile-rgb:46,204,113;">
+                <div class="recap-item" data-chip-key="statut:Terminée" onclick="filtrerStatutBouton('Terminée')" style="--tile-color:var(--brand-green); --tile-rgb:46,204,113;">
                     <div class="kpi-tile-icon"><i class="fa-solid fa-check-double"></i></div>
                     <div class="kpi-tile-label">${I18N_MAINT.kpi_termine}</div>
                     <div class="kpi-tile-value">${countTermine}</div>
@@ -3405,7 +3405,7 @@ function buildHistoriqueRowsHtml(list) {
     <tr data-verif="${(t.verif_vis == 1 || t.verif_vis === "1" || t.verif_vis === true || t.verif_vis === "true") ? '1' : '0'}">
         ${typeof isAdmin !== 'undefined' && isAdmin ? `<td class="tc-tight" onclick="event.stopPropagation();"><input type="checkbox" class="task-check" value="${t.id}" onchange="toggleBulkDeleteBtn()"></td>` : ''}
 
-        <td class="tc-tight gap-r" onclick="showDetailBI('${t.id}')" style="font-weight:bold; color:var(--gelpam-orange); text-decoration:underline; cursor:pointer; position:relative; border-bottom:none;">
+        <td class="tc-tight gap-r" onclick="showDetailBI('${t.id}')" style="font-weight:bold; color:var(--brand-orange); text-decoration:underline; cursor:pointer; position:relative; border-bottom:none;">
             <div style="display:flex; align-items:center; justify-content:center; gap:5px; white-space:nowrap;">
                 ${t.num_bi || '-'}
                 <span id="badge-ticket-${t.id}" class="badge-msg-count" title="${I18N_MAINT.msg_count_tooltip}">0</span>
@@ -4120,10 +4120,10 @@ function ouvrirModaleBilan(t) {
         <div style="display:flex; justify-content:space-between; align-items:center; width:100%; padding: 10px;">
             <div>
                 <div style="font-family: 'Permanent Marker', cursive; font-size: 1.6rem; color: #34495e;">
-                    <i class="fa-solid fa-file-signature" style="color: var(--gelpam-orange);"></i> Clôture du BI
+                    <i class="fa-solid fa-file-signature" style="color: var(--brand-orange);"></i> Clôture du BI
                 </div>
                 <div style="font-size: 1.4rem; font-weight: 800; color: black; margin-top: 5px;">
-                    <span style="color: var(--gelpam-orange); opacity: 0.7;">#</span>${t.num_bi || t.id}
+                    <span style="color: var(--brand-orange); opacity: 0.7;">#</span>${t.num_bi || t.id}
                 </div>
             </div>
             <button onclick="reouvrirTicket('${t.id}')" class="status-btn st-encours" style="font-size:0.6rem; min-width:auto; padding:8px 12px; border-radius: 8px;">
@@ -4181,7 +4181,7 @@ const AIDE_DB = {
         body: <?php echo json_encode(t('maint.aide_assign_tech_body')); ?>
     },
     sous_traitant: {
-        icon: 'fa-handshake', bg: 'var(--soft-orange)', color: 'var(--gelpam-orange)',
+        icon: 'fa-handshake', bg: 'var(--soft-orange)', color: 'var(--brand-orange)',
         title: <?php echo json_encode(t('maint.aide_sous_traitant_title')); ?>, subtitle: <?php echo json_encode(t('maint.aide_sous_traitant_sub')); ?>,
         body: <?php echo json_encode(t('maint.aide_sous_traitant_body')); ?>
     },
@@ -4216,7 +4216,7 @@ const AIDE_DB = {
         body: <?php echo json_encode(t('maint.aide_casse_body')); ?>
     },
     verif_vis: {
-        icon: 'fa-screwdriver', bg: 'var(--soft-orange)', color: 'var(--gelpam-orange)',
+        icon: 'fa-screwdriver', bg: 'var(--soft-orange)', color: 'var(--brand-orange)',
         title: <?php echo json_encode(t('maint.aide_verif_vis_title')); ?>, subtitle: <?php echo json_encode(t('maint.aide_verif_vis_sub')); ?>,
         body: <?php echo json_encode(t('maint.aide_verif_vis_body')); ?>
     },
@@ -4231,7 +4231,7 @@ const AIDE_DB = {
         body: <?php echo json_encode(t('maint.aide_duree_body')); ?>
     },
     demandes: {
-        icon: 'fa-inbox', bg: 'var(--soft-orange)', color: 'var(--gelpam-orange)',
+        icon: 'fa-inbox', bg: 'var(--soft-orange)', color: 'var(--brand-orange)',
         title: <?php echo json_encode(t('maint.aide_demandes_title')); ?>, subtitle: <?php echo json_encode(t('maint.aide_demandes_sub')); ?>,
         body: <?php echo json_encode(t('maint.aide_demandes_body')); ?>
     },
@@ -4417,7 +4417,7 @@ function openHistory(name) {
         }
         
         h += `<tr style="border-bottom:1px solid #eee;">
-                <td onclick="closeModal(); showDetailBI('${t.id}')" style="padding:8px; text-align:center; font-weight:bold; color:var(--gelpam-orange); text-decoration:underline; cursor:pointer;">
+                <td onclick="closeModal(); showDetailBI('${t.id}')" style="padding:8px; text-align:center; font-weight:bold; color:var(--brand-orange); text-decoration:underline; cursor:pointer;">
                     ${t.num_bi || '-'}
                 </td>
                 
@@ -4537,7 +4537,7 @@ function editTask(id) {
 
     updatePrioIcon();
 
-    document.getElementById('wizardTitleOT').innerHTML = '<i class="fa-solid fa-pen" style="color:var(--gelpam-orange);"></i> ' + I18N_MAINT.wizard_edit_title;
+    document.getElementById('wizardTitleOT').innerHTML = '<i class="fa-solid fa-pen" style="color:var(--brand-orange);"></i> ' + I18N_MAINT.wizard_edit_title;
     wizardUnlockedOT = WIZARD_STEPS_OT; // Édition : on autorise à naviguer librement, les données sont déjà valides
 
     // En édition, les photos se gèrent depuis la fiche détail du BI (bouton "Voir le détail"),
@@ -5756,13 +5756,13 @@ window.filterHistory = function() {
 </script>
 
 <div id="customConfirm" style="display:none; position:fixed; z-index:99999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); backdrop-filter: blur(3px);">
-    <div style="background:white; width:350px; margin:15% auto; padding:20px; border-radius:12px; text-align:center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-top: 5px solid var(--gelpam-orange);">
-        <i class="fa-solid fa-circle-question" style="font-size:3rem; color:var(--gelpam-orange); margin-bottom:15px;"></i>
+    <div style="background:white; width:350px; margin:15% auto; padding:20px; border-radius:12px; text-align:center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-top: 5px solid var(--brand-orange);">
+        <i class="fa-solid fa-circle-question" style="font-size:3rem; color:var(--brand-orange); margin-bottom:15px;"></i>
         <h3 id="confirmTitle" style="margin:10px 0; color:var(--dark-blue);"><?php echo htmlspecialchars(t('maint.confirm_default_title')); ?></h3>
         <p id="confirmMessage" style="color:#666; font-size:0.9rem; margin-bottom:20px;"><?php echo htmlspecialchars(t('maint.confirm_default_msg')); ?></p>
         <div style="display:flex; justify-content:center; gap:10px;">
             <button id="confirmCancel" style="padding:10px 20px; border:none; border-radius:6px; background:#eee; cursor:pointer; font-weight:bold;"><?php echo htmlspecialchars(t('maint.cancel')); ?></button>
-            <button id="confirmOk" style="padding:10px 20px; border:none; border-radius:6px; background:var(--gelpam-orange); color:white; cursor:pointer; font-weight:bold;"><?php echo htmlspecialchars(t('maint.confirm_btn')); ?></button>
+            <button id="confirmOk" style="padding:10px 20px; border:none; border-radius:6px; background:var(--brand-orange); color:white; cursor:pointer; font-weight:bold;"><?php echo htmlspecialchars(t('maint.confirm_btn')); ?></button>
         </div>
     </div>
 </div>
@@ -5786,13 +5786,13 @@ window.filterHistory = function() {
 
         <div style="padding: 16px 25px; background: white; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;">
             <div style="display: flex; align-items: center; gap: 12px;">
-                <div style="background: var(--soft-orange); color: var(--gelpam-orange); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">
+                <div style="background: var(--soft-orange); color: var(--brand-orange); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">
                     <i class="fa-solid fa-file-signature"></i>
                 </div>
                 <div>
                     <h3 style="margin:0; font-family:'Caveat', cursive; font-size: 1.8rem; color: var(--primary); font-weight: 500;"><?php echo htmlspecialchars(t('maint.cloture_title')); ?></h3>
                     <div style="font-size: 0.85rem; color: #64748b; font-weight: 500;">
-                        <?php echo htmlspecialchars(t('maint.cloture_bi_prefix')); ?><span id="cloture-titre-bi" style="color: var(--gelpam-orange); font-weight: 700;"></span>
+                        <?php echo htmlspecialchars(t('maint.cloture_bi_prefix')); ?><span id="cloture-titre-bi" style="color: var(--brand-orange); font-weight: 700;"></span>
                     </div>
                 </div>
             </div>
@@ -5820,7 +5820,7 @@ window.filterHistory = function() {
                                 <span style="color: #64748b;"><?php echo htmlspecialchars(t('rapport.emetteur')); ?></span> <span id="cloture-info-emetteur" style="color: #2c3e50; font-weight: 600;">---</span>
                                 <span style="color: #64748b;"><?php echo htmlspecialchars(t('rapport.priorite_label')); ?></span> <span id="cloture-info-priorite" style="color: #2c3e50; font-weight: bold;">---</span>
                                 <div id="cloture-info-st-wrap" style="display:none;">
-                                    <span style="color: #64748b;"><?php echo htmlspecialchars(t('rapport.sous_traitant_label')); ?></span> <span id="cloture-info-st" style="color: var(--gelpam-orange); font-weight: bold;"></span>
+                                    <span style="color: #64748b;"><?php echo htmlspecialchars(t('rapport.sous_traitant_label')); ?></span> <span id="cloture-info-st" style="color: var(--brand-orange); font-weight: bold;"></span>
                                 </div>
                             </div>
                         </div>
@@ -5852,7 +5852,7 @@ window.filterHistory = function() {
                 <!-- COLONNE DROITE : temps et clôture -->
                 <div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
-                        <div style="background: white; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; border-left: 4px solid var(--gelpam-orange);">
+                        <div style="background: white; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; border-left: 4px solid var(--brand-orange);">
                             <label style="display:block; color: #e67e22; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px;"><?php echo htmlspecialchars(t('maint.cloture_total_time')); ?></label>
                             <span id="cloture-info-total-h" style="font-size: 1.1rem; color: #d35400; font-weight: 700;">0.00 h</span>
                         </div>
@@ -5864,7 +5864,7 @@ window.filterHistory = function() {
 
                     <div style="margin-bottom: 10px;">
                         <label style="display:block; color: var(--primary); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
-                            <i class="fa-solid fa-pen-nib" style="color: var(--gelpam-green);"></i> <?php echo htmlspecialchars(t('maint.cloture_rapport_label')); ?>
+                            <i class="fa-solid fa-pen-nib" style="color: var(--brand-green);"></i> <?php echo htmlspecialchars(t('maint.cloture_rapport_label')); ?>
                         </label>
                         <textarea id="cloture-cr" placeholder="<?php echo htmlspecialchars(t('maint.cloture_rapport_placeholder')); ?>"
                             style="width:100%; height:78px; min-height:78px; border:1px solid #cbd5e1; border-radius:8px; padding:12px; font-size:0.9rem; outline:none; resize: vertical; box-sizing: border-box; font-family: inherit; color: #334155; transition: border 0.2s;"
@@ -5903,8 +5903,8 @@ window.filterHistory = function() {
                 <i class="fa-solid fa-floppy-disk"></i> <?php echo htmlspecialchars(t('maint.cloture_btn_enregistrer_ouvert')); ?>
             </button>
             <button id="cloture-btn-confirmer" onclick="window.validerCloture()"
-                style="padding: 8px 25px; border-radius: 6px; border: none; background: var(--gelpam-green); color: white; cursor: pointer; font-weight: 700; font-size: 0.85rem; transition: 0.2s;"
-                onmouseover="this.style.background='#27ae60'" onmouseout="this.style.background='var(--gelpam-green)'">
+                style="padding: 8px 25px; border-radius: 6px; border: none; background: var(--brand-green); color: white; cursor: pointer; font-weight: 700; font-size: 0.85rem; transition: 0.2s;"
+                onmouseover="this.style.background='#27ae60'" onmouseout="this.style.background='var(--brand-green)'">
                 <?php echo htmlspecialchars(t('maint.cloture_btn_confirmer')); ?>
             </button>
         </div>
@@ -5931,7 +5931,7 @@ window.filterHistory = function() {
 </div>
 
 <div id="modalSasValidation" class="modal" style="display:none; align-items:center; justify-content:center; background:rgba(15, 23, 42, 0.7);">
-    <div class="modal-content" style="max-width:1150px; width:95%; border-top: 5px solid var(--gelpam-orange); background:#fdfdfd; padding:0; border-radius:12px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);">
+    <div class="modal-content" style="max-width:1150px; width:95%; border-top: 5px solid var(--brand-orange); background:#fdfdfd; padding:0; border-radius:12px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);">
 
         <div class="sas-modal-header">
             <div class="sas-modal-heading">
