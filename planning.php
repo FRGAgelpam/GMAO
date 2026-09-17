@@ -56,7 +56,7 @@ try {
     $equipe_db = [];
     if(isset($db)) {
         // On récupère l'équipe, mais ON EXCLUT le directeur (Florent)
-        $resE = $db->query("SELECT username FROM utilisateurs WHERE role IN ('admin', 'technicien') AND username != 'Florent' ORDER BY username");
+        $resE = $db->query("SELECT username, photo FROM utilisateurs WHERE role IN ('admin', 'technicien') AND username != 'Florent' ORDER BY username");
         $equipe_db = $resE->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -1480,6 +1480,7 @@ if (document.fonts && document.fonts.ready) { document.fonts.ready.then(ajusterP
 
 // L'équipe est maintenant chargée dynamiquement depuis MySQL
 const team = <?php echo json_encode(array_column($equipe_db, 'username')); ?>;
+const teamPhotos = <?php echo json_encode(array_column($equipe_db, 'photo', 'username')); ?>;
 
 // Ordre personnalisé de l'équipe demandé
 const ordreEquipe = ["Christophe", "Didier", "David", "Manu", "Gilbert", "Teddy", "Yannick"];
@@ -1708,7 +1709,7 @@ function renderTable() {
         }
         sidebarEl.innerHTML = `
                 <div class="avatar-wrapper">
-                    <img src="img/${tech}.png" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=${tech}'">
+                    <img src="${teamPhotos[tech] || 'img/user.png'}" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=${tech}'">
                 </div>
                 <div>
                     <div class="tech-name" style="font-weight: 600;">${tech}</div>
