@@ -966,6 +966,90 @@ try {
         .shift-bi-desc { font-size: 0.72rem; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-style: italic; }
         .shift-bi-statut { font-size: 0.6rem; font-weight: 600; text-transform: uppercase; color: white; padding: 3px 8px; border-radius: 10px; flex-shrink: 0; }
         .shift-bi-empty { text-align: center; color: #94a3b8; font-size: 0.78rem; font-style: italic; padding: 10px 0 16px; }
+
+        /* --- SELECTEUR DE VUE : Jour / Semaine / Mois ---
+           Meme habillage "verre depoli" que .user-badge/.btn-accueil dans le header : sur fond blanc plein
+           (v1), le selecteur se voyait mal sur la photo en arriere-plan du bandeau. */
+        .mode-vue-toggle { display: flex; background: rgba(255,255,255,0.16); backdrop-filter: blur(14px) brightness(1.15); -webkit-backdrop-filter: blur(14px) brightness(1.15); border: 1px solid rgba(255,255,255,0.45); box-shadow: 0 6px 16px rgba(0,0,0,0.2); border-radius: 18px; padding: 4px; gap: 2px; }
+        .mode-vue-btn { border: none; background: none; padding: 7px 16px; border-radius: 14px; font-family: 'Segoe UI', sans-serif; font-size: 0.8rem; font-weight: 700; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.4); cursor: pointer; transition: 0.15s; }
+        .mode-vue-btn:hover { background: rgba(255,255,255,0.18); }
+        .mode-vue-btn.active { background: #fff; color: var(--primary); text-shadow: none; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+        @media screen and (max-width: 1024px) { .mode-vue-toggle { display: none; } }
+
+        /* Vue "Jour" explicite (bouton du selecteur, pas seulement le mode mobile automatique) : la regle
+           .mode-jour existante ne s'appliquait qu'en dessous de 1024px (voir plus haut) ; on la rend aussi
+           active en plein ecran quand ce mode a ete choisi volontairement. */
+        @media screen and (min-width: 1025px) {
+            .planning-container.mode-jour { grid-template-columns: 200px 1fr; }
+            /* La case du jour prend toute la largeur restante : sans ceci, les bons d'intervention
+               (.task-badge-compact, width:100% par defaut car pense pour une colonne etroite en vue
+               Semaine) s'etirent demesurement sur toute cette largeur. */
+            .planning-container.mode-jour .task-badge-compact { width: fit-content; max-width: 150px; }
+            /* #daySwitcher (pastilles Lun..Dim) s'affiche AU-DESSUS de #planningTable, dans le flux normal —
+               sa hauteur (~46px) n'etait pas deduite de celle, fixe, du tableau (calc(100vh - 102px) : voir
+               .planning-container plus haut), qui debordait donc d'autant sous le bas de l'ecran. Body ayant
+               overflow:hidden, ce debordement etait invisible : la derniere ligne technicien de la liste
+               semblait coupee. */
+            #daySwitcher.show ~ #planningTable { height: calc(100vh - 102px - 47px); }
+        }
+
+        /* Le bandeau "Semaine XX / DU ... AU ..." (.week-nav-center) etait centre par justify-content:
+           space-between entre le bouton accueil (etroit) et le groupe de droite (langue + selecteur de vue +
+           badge utilisateur) — desormais plus large avec le selecteur Jour/Semaine/Mois, ce qui le decalait
+           visiblement du vrai centre. On le centre donc par rapport a la fenetre plutot que par rapport a ses
+           voisins. */
+        @media screen and (min-width: 1025px) {
+            .header-top { position: relative; }
+            .week-nav-center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+        }
+
+        /* --- VUE MOIS --- */
+        .mois-container { display: none; margin: 0 4px 4px 4px; background: rgba(255, 255, 255, 0.85); border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); backdrop-filter: blur(3px); height: calc(100vh - 102px); overflow-y: auto; flex-direction: column; }
+        .mois-container.show { display: flex; }
+        .mois-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid #eef0f2; flex-wrap: wrap; gap: 10px; }
+        /* Menu deroulant "technicien" maison (le <select> natif ne se stylait pas assez pour un rendu soigne :
+           pas moyen d'afficher un avatar par ligne dans sa liste). */
+        .tech-dropdown { position: relative; }
+        .tech-dropdown-trigger { display: flex; align-items: center; gap: 10px; background: #fff; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 6px 14px 6px 6px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.06); transition: 0.15s; font-family: 'Segoe UI'; min-width: 230px; text-align: left; }
+        .tech-dropdown-trigger:hover { border-color: var(--gelpam-green); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+        .tech-dropdown.open .tech-dropdown-trigger { border-color: var(--gelpam-green); box-shadow: 0 0 0 3px rgba(46,204,113,0.15); }
+        .tech-dropdown-avatar { width: 36px; height: 36px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: #dfe6ec; box-shadow: 0 0 0 1px #e2e8f0; }
+        .tech-dropdown-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .tech-dropdown-info { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+        .tech-dropdown-eyebrow { font-size: 0.6rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
+        .tech-dropdown-name { font-size: 0.92rem; font-weight: 700; color: var(--primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .tech-dropdown-chevron { color: #94a3b8; font-size: 0.75rem; transition: transform 0.2s; flex-shrink: 0; margin-right: 2px; }
+        .tech-dropdown.open .tech-dropdown-chevron { transform: rotate(180deg); color: var(--gelpam-green); }
+
+        .tech-dropdown-panel { position: absolute; top: calc(100% + 8px); left: 0; min-width: 260px; background: #fff; border-radius: 12px; box-shadow: 0 14px 34px rgba(0,0,0,0.2); border: 1px solid rgba(0,0,0,0.06); padding: 6px; z-index: 500; opacity: 0; visibility: hidden; transform: translateY(-8px); transition: 0.16s ease; max-height: 320px; overflow-y: auto; }
+        .tech-dropdown.open .tech-dropdown-panel { opacity: 1; visibility: visible; transform: translateY(0); }
+        .tech-dropdown-item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; cursor: pointer; transition: 0.12s; }
+        .tech-dropdown-item:hover { background: #f1f5f9; }
+        .tech-dropdown-item.selected { background: rgba(46, 204, 113, 0.1); }
+        .tech-dropdown-item-avatar { width: 30px; height: 30px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: #dfe6ec; }
+        .tech-dropdown-item-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .tech-dropdown-item-name { flex: 1; font-size: 0.84rem; font-weight: 600; color: var(--primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .tech-dropdown-item.selected .tech-dropdown-item-name { color: #196f3d; font-weight: 700; }
+        .tech-dropdown-item-check { color: var(--gelpam-green); font-size: 0.8rem; opacity: 0; flex-shrink: 0; }
+        .tech-dropdown-item.selected .tech-dropdown-item-check { opacity: 1; }
+        .mois-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; padding: 12px 16px 20px; }
+        .mois-jour-nom { text-align: center; font-size: 0.7rem; font-weight: 700; color: #8a94a0; padding-bottom: 4px; }
+        .mois-case { min-height: 86px; border-radius: 8px; background: #f8fafc; border: 1px solid #eef0f2; padding: 5px 6px; cursor: pointer; transition: 0.15s; display: flex; flex-direction: column; gap: 4px; }
+        .mois-case:hover { border-color: #cbd5e1; background: #f1f5f9; }
+        .mois-case.hors-mois { background: transparent; border-color: transparent; cursor: default; }
+        .mois-case.aujourdhui { border-color: var(--accent); border-width: 2px; }
+        .mois-case.drag-over { background: rgba(46, 204, 113, 0.2) !important; border: 2px dashed var(--gelpam-green); }
+        /* Bons d'intervention du jour (memes badges/couleurs que la vue Semaine, voir .task-badge-compact) :
+           en colonne etroite ici, donc pas question qu'ils s'etirent a 100% comme dans une case de semaine. */
+        .mois-case-tasks { display: flex; flex-wrap: wrap; gap: 2px; }
+        .mois-case .task-badge-compact { width: fit-content; max-width: 100%; font-size: 0.56rem; padding: 1px 4px; }
+        .mois-case-num { font-size: 0.72rem; font-weight: 700; color: var(--primary); }
+        .mois-case.hors-mois .mois-case-num { color: #d0d5db; }
+        /* Meme badge "contour colore / fond blanc" que la vue Semaine (.shift-badge-compact, reutilise tel
+           quel ci-dessous) plutot qu'un pave de couleur pleine : juste une taille un peu plus lisible et une
+           troncature pour les libelles longs, vu que la case du mois est plus etroite qu'une case semaine. */
+        .mois-case .shift-badge-compact { align-self: flex-start; max-width: 100%; font-size: 0.6rem; padding: 2px 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+        @media screen and (max-width: 1024px) { .mois-container { display: none !important; } }
     </style>
 <?php include 'pwa_head.php'; ?>
 </head>
@@ -992,6 +1076,23 @@ try {
 </div>
 <div id="planningTable" class="planning-container"></div>
 <div id="planningDayCards" class="planning-day-cards"></div>
+
+<div id="moisContainer" class="mois-container">
+    <div class="mois-toolbar">
+        <div class="tech-dropdown" id="techDropdown">
+            <button type="button" class="tech-dropdown-trigger" onclick="toggleTechDropdown()">
+                <div class="tech-dropdown-avatar"><img id="moisTechAvatar" src="img/user.png" alt=""></div>
+                <div class="tech-dropdown-info">
+                    <span class="tech-dropdown-eyebrow"><?php echo htmlspecialchars(t('planning.role_technicien')); ?></span>
+                    <span class="tech-dropdown-name" id="moisTechName">--</span>
+                </div>
+                <i class="fa-solid fa-chevron-down tech-dropdown-chevron"></i>
+            </button>
+            <div class="tech-dropdown-panel" id="techDropdownPanel"></div>
+        </div>
+    </div>
+    <div class="mois-grid" id="moisGrid"></div>
+</div>
 
 <div id="editModal" class="modal">
     <div class="modal-content">
@@ -1633,8 +1734,31 @@ async function loadData() {
         const resPt = await fetch('maintenance.php?get_pointages=1&t=' + Date.now());
         pointages = await resPt.json();
 
-        renderTable();
+        // La vue Mois a sa propre grille (moisGrid), pas la peine de reconstruire la grille Semaine
+        // (planningTable, masquee) pendant qu'on la regarde.
+        if (typeof modeVue !== 'undefined' && modeVue === 'mois') { renderMoisView(); } else { renderTable(); }
     } catch(e) { console.error("Erreur chargement:", e); }
+}
+
+// Ouvre le rapport d'un bon d'intervention (utilise par la vue Semaine ET la vue Mois, voir renderMoisView)
+// avec le meme filet de securite : le composant de rapport peut mettre un instant a etre pret, donc on
+// reessaie d'y injecter le demandeur pendant 2 secondes plutot que de risquer un champ vide.
+function ouvrirDetailBI(tk) {
+    showDetailBI(tk.id);
+    let verifCompteur = 0;
+    const forceDemandeur = setInterval(() => {
+        const repDemandeur = document.getElementById('rep-demandeur') || document.getElementById('rapport-demandeur');
+        if (repDemandeur) {
+            repDemandeur.innerText = tk.demandeur || I18N_PLANNING.non_renseigne;
+            clearInterval(forceDemandeur);
+        }
+        if (++verifCompteur > 20) clearInterval(forceDemandeur); // Stop après 2 secondes si non trouvé
+    }, 100);
+}
+
+function ouvrirDetailBIParId(id) {
+    const tk = tasks.find(t => t.id == id);
+    if (tk) { ouvrirDetailBI(tk); } else { showDetailBI(id); }
 }
 
 function renderTable() {
@@ -1866,21 +1990,7 @@ function renderTable() {
                         </div>
                     `;
                     
-                    card.onclick = (e) => { 
-                        e.stopPropagation(); 
-                        showDetailBI(tk.id);
-                        
-                        // Sécurité absolue : On observe le rapport pour injecter le demandeur dès qu'il est prêt
-                        let verifCompteur = 0;
-                        const forceDemandeur = setInterval(() => {
-                            const repDemandeur = document.getElementById('rep-demandeur') || document.getElementById('rapport-demandeur');
-                            if (repDemandeur) {
-                                repDemandeur.innerText = tk.demandeur || I18N_PLANNING.non_renseigne;
-                                clearInterval(forceDemandeur);
-                            }
-                            if (++verifCompteur > 20) clearInterval(forceDemandeur); // Stop après 2 secondes si non trouvé
-                        }, 100);
-                    };
+                    card.onclick = (e) => { e.stopPropagation(); ouvrirDetailBI(tk); };
                     
                     card.ondragstart = (e) => {
                         draggedTaskId = tk.id;
@@ -2134,6 +2244,200 @@ function jourAdjacent(dir) {
     if (idx < 0) { vueJour = 6; moveWeek(-7); }
     else if (idx > 6) { vueJour = 0; moveWeek(7); }
     else { vueJour = idx; appliquerVisibiliteJours(); renderPlanningDayCards(); }
+}
+
+// --- SELECTEUR DE VUE : Jour / Semaine / Mois ---
+// Contrairement a vueJour/vueTech (bascule automatique sur petit ecran, voir appliquerModeAffichage),
+// modeVue est choisi explicitement par le bouton en haut de page, a n'importe quelle largeur d'ecran.
+let modeVue = 'semaine';
+let moisTech = null;
+let moisCourant = null;
+
+// La navigation "semaine" (fleches sur les bords de l'ecran + petit encadre "Semaine XX" en haut, voir
+// .side-nav-btn/.week-nav-center) n'a aucun effet visible sur la vue Mois (qui a sa propre navigation par
+// mois, dans son bandeau). La laisser visible pretait a confusion : jusqu'a 4 fleches sur l'ecran en meme
+// temps, dont 2 qui ne faisaient rien de constatable pendant qu'on regardait un mois. En vue Mois, on
+// affiche a la place #moisNavCenter, un encadre identique (meme classe .week-nav-center, donc meme
+// centrage/style) mais avec les fleches de mois.
+function appliquerVisibiliteNavSemaine() {
+    const affiche = (modeVue !== 'mois');
+    document.querySelectorAll('.side-nav-btn').forEach(b => b.style.display = affiche ? '' : 'none');
+    document.getElementById('weekNavCenter').style.display = affiche ? '' : 'none';
+    document.getElementById('moisNavCenter').style.display = affiche ? 'none' : '';
+}
+
+function definirModeVue(mode) {
+    if (modeVue === mode) return;
+    modeVue = mode;
+    document.querySelectorAll('.mode-vue-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+    appliquerVisibiliteNavSemaine();
+
+    if (mode === 'mois') {
+        document.getElementById('planningTable').style.display = 'none';
+        document.getElementById('daySwitcher').classList.remove('show');
+        document.getElementById('moisContainer').classList.add('show');
+        if (!moisTech) { moisTech = currentUser; }
+        if (!moisCourant) { moisCourant = new Date(currentMonday.getFullYear(), currentMonday.getMonth(), 1); }
+        renderMoisTechSelect();
+        renderMoisView();
+        return;
+    }
+
+    document.getElementById('moisContainer').classList.remove('show');
+    document.getElementById('planningTable').style.display = '';
+
+    if (mode === 'jour') {
+        if (vueJour === null) {
+            const todayObj = new Date();
+            const diffJours = Math.round((todayObj - currentMonday) / 86400000);
+            vueJour = (diffJours >= 0 && diffJours <= 6) ? diffJours : 0;
+        }
+    } else {
+        vueJour = null;
+    }
+    renderTable();
+}
+
+function libelleTech(t) {
+    return t === currentUser ? `${I18N_PLANNING.moi_prefix} (${t})` : t;
+}
+
+function urlAvatarTech(t) {
+    return teamPhotos[t] || 'img/user.png';
+}
+
+// Menu deroulant maison (avatar + nom par ligne, coche sur le technicien choisi) : reconstruit a chaque
+// changement de technicien pour que la coche/le fond vert suivent la selection.
+function renderMoisTechSelect() {
+    const panel = document.getElementById('techDropdownPanel');
+    panel.innerHTML = team.map(t => `
+        <div class="tech-dropdown-item${t === moisTech ? ' selected' : ''}" onclick="selectionnerMoisTech('${t}')">
+            <div class="tech-dropdown-item-avatar"><img src="${urlAvatarTech(t)}" onerror="this.onerror=null; this.src='https://api.dicebear.com/7.x/initials/svg?seed=${t}';"></div>
+            <div class="tech-dropdown-item-name">${libelleTech(t)}</div>
+            <i class="fa-solid fa-check tech-dropdown-item-check"></i>
+        </div>`).join('');
+    document.getElementById('moisTechName').textContent = libelleTech(moisTech);
+    mettreAJourAvatarMoisTech();
+}
+
+// Meme logique que l'avatar de la ligne technicien en vue Semaine (teamPhotos + repli dicebear).
+function mettreAJourAvatarMoisTech() {
+    const img = document.getElementById('moisTechAvatar');
+    if (!img) return;
+    img.onerror = () => { img.onerror = null; img.src = `https://api.dicebear.com/7.x/initials/svg?seed=${moisTech}`; };
+    img.src = urlAvatarTech(moisTech);
+}
+
+function toggleTechDropdown(forcerEtat) {
+    const el = document.getElementById('techDropdown');
+    const ouvrir = (forcerEtat !== undefined) ? forcerEtat : !el.classList.contains('open');
+    el.classList.toggle('open', ouvrir);
+}
+
+// Clic en dehors du menu = fermeture, comme n'importe quel menu deroulant standard.
+document.addEventListener('click', (e) => {
+    const dd = document.getElementById('techDropdown');
+    if (dd && dd.classList.contains('open') && !dd.contains(e.target)) { toggleTechDropdown(false); }
+});
+
+function selectionnerMoisTech(nom) {
+    moisTech = nom;
+    renderMoisTechSelect();
+    toggleTechDropdown(false);
+    renderMoisView();
+}
+
+function changerMois(dir) {
+    moisCourant.setMonth(moisCourant.getMonth() + dir);
+    renderMoisView();
+}
+
+// Grille de type calendrier (6 semaines fixes, lundi->dimanche) pour un seul technicien a la fois : lit
+// les memes donnees deja chargees en page (shiftsParCle, planningPostes) que la vue Semaine, pas de
+// nouvel appel reseau. Un clic sur une case ouvre la meme modale de saisie que les autres vues.
+function renderMoisView() {
+    const grid = document.getElementById('moisGrid');
+    const label = document.getElementById('moisNavLabel');
+    label.textContent = moisCourant.toLocaleDateString(JS_LOCALE, { month: 'long', year: 'numeric' });
+
+    const todayObj = new Date();
+    const todayStr = `${todayObj.getFullYear()}-${String(todayObj.getMonth() + 1).padStart(2, '0')}-${String(todayObj.getDate()).padStart(2, '0')}`;
+
+    const premier = new Date(moisCourant.getFullYear(), moisCourant.getMonth(), 1);
+    const dernier = new Date(moisCourant.getFullYear(), moisCourant.getMonth() + 1, 0);
+    document.getElementById('moisDateRange').innerText = `${I18N_PLANNING.du} ${premier.toLocaleDateString(JS_LOCALE, {day:'numeric', month:'short'})} ${I18N_PLANNING.au_connector} ${dernier.toLocaleDateString(JS_LOCALE, {day:'numeric', month:'short', year:'numeric'})}`;
+    const decalage = (premier.getDay() + 6) % 7; // 0 = lundi
+    const debutGrille = new Date(premier);
+    debutGrille.setDate(debutGrille.getDate() - decalage);
+
+    let html = days.map(d => `<div class="mois-jour-nom">${d.slice(0, 3)}</div>`).join('');
+
+    // Meme regle que la vue Semaine (voir peutPlanifier dans renderTable) : un admin peut planifier
+    // n'importe qui, un technicien seulement sa propre ligne — ici, comme la vue Mois n'affiche qu'un seul
+    // technicien a la fois, ca revient a n'autoriser le glisser-deposer que si c'est SON propre calendrier.
+    const peutPlanifierMois = isAdmin || moisTech === currentUser;
+
+    for (let i = 0; i < 42; i++) {
+        const d = new Date(debutGrille);
+        d.setDate(d.getDate() + i);
+        const dStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        const horsMois = d.getMonth() !== moisCourant.getMonth();
+        const classes = ['mois-case'];
+        if (horsMois) classes.push('hors-mois');
+        if (dStr === todayStr) classes.push('aujourdhui');
+
+        let badge = '';
+        if (!horsMois) {
+            const shift = shiftsParCle[`${moisTech}_${dStr}`];
+            if (shift) {
+                let libelle = '', couleur = '';
+                if (shift.poste && planningPostes[shift.poste]) {
+                    libelle = planningPostes[shift.poste].label;
+                    couleur = planningPostes[shift.poste].couleur;
+                } else if (shift.demi_conge && planningPostes.demi_cp) {
+                    libelle = planningPostes.demi_cp.label;
+                    couleur = planningPostes.demi_cp.couleur;
+                } else if (shift.jour_ferie && planningPostes.jour_ferie) {
+                    libelle = planningPostes.jour_ferie.label;
+                    couleur = planningPostes.jour_ferie.couleur;
+                }
+                if (libelle) { badge = `<div class="shift-badge-compact" style="--c:${couleur}">${libelle}</div>`; }
+            }
+        }
+
+        // Bons d'intervention : meme filtre que la vue Semaine (un pointage du technicien ce jour-la sur
+        // la tache), meme code couleur par statut (voir .status-* + task-tooltip plus haut). Glisser-deposer
+        // vers un autre jour : meme mecanique que la vue Semaine (handleDrop), juste reconnectee a une case
+        // du mois plutot qu'une case de la grille semaine.
+        let tachesHtml = '';
+        if (!horsMois) {
+            const chips = tasks.filter(tk => pointages.some(p => p.task_id === tk.id && p.tech === moisTech && p.date.split(' ')[0] === dStr))
+                .map(tk => {
+                    const s = (tk.statut || '').toLowerCase();
+                    let statusClass = s.includes('termin') ? 'termine' : (s.includes('cours') ? 'encours' : 'afaire');
+                    if (tk.prio === 'Urgent' && !s.includes('termin')) statusClass = 'urgent';
+                    const numBadge = tk.num_bi ? tk.num_bi : I18N_PLANNING.prev_fallback;
+                    const ptgDuJour = pointages.find(p => p.task_id === tk.id && p.tech === moisTech && p.date.split(' ')[0] === dStr);
+                    const dragAttrs = peutPlanifierMois
+                        ? ` draggable="true" ondragstart="draggedTaskId='${tk.id}'; event.dataTransfer.setData('taskId','${tk.id}');${ptgDuJour ? ` event.dataTransfer.setData('pointageId','${ptgDuJour.id}');` : ''}"`
+                        : '';
+                    return `<span class="task-badge-compact status-${statusClass}"${dragAttrs} onclick="event.stopPropagation(); ouvrirDetailBIParId('${tk.id}')">${numBadge}</span>`;
+                }).join('');
+            if (chips) { tachesHtml = `<div class="mois-case-tasks">${chips}</div>`; }
+        }
+
+        const peutPlanifier = !horsMois && peutPlanifierMois;
+        const dropAttrs = peutPlanifier
+            ? ` ondragover="event.preventDefault();" ondragenter="this.classList.add('drag-over');" ondragleave="this.classList.remove('drag-over');" ondrop="this.classList.remove('drag-over'); handleDrop(event, '${moisTech}', '${dStr}');"`
+            : '';
+        html += `<div class="${classes.join(' ')}"${peutPlanifier ? ` onclick="openShiftModal('${moisTech}', '${dStr}')"` : ''}${dropAttrs}>
+            <div class="mois-case-num">${d.getDate()}</div>
+            ${badge}
+            ${tachesHtml}
+        </div>`;
+    }
+
+    grid.innerHTML = html;
 }
 
 function openModal(tk) {
