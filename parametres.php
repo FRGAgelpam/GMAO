@@ -878,7 +878,7 @@ $planning_postes = $db->query("SELECT * FROM planning_postes ORDER BY ordre ASC"
 $planning_astreintes = $db->query("SELECT * FROM planning_astreintes ORDER BY ordre ASC")->fetchAll(PDO::FETCH_ASSOC);
 $planning_shifts_count = (int)$db->query("SELECT COUNT(*) FROM planning_shifts")->fetchColumn();
 $planning_heures_count = (int)$db->query("SELECT COUNT(*) FROM planning_shifts WHERE heures IS NOT NULL")->fetchColumn();
-$equipe_objectifs = $db->query("SELECT username, objectif_heures_annuel FROM utilisateurs WHERE role IN ('admin','technicien') AND username != 'Florent' ORDER BY ordre")->fetchAll(PDO::FETCH_ASSOC);
+$equipe_objectifs = $db->query("SELECT username, objectif_heures_annuel FROM utilisateurs WHERE role IN ('admin','technicien') AND username != 'Directeur' ORDER BY ordre")->fetchAll(PDO::FETCH_ASSOC);
 $tuiles_perso = [];
 foreach ($db->query("SELECT href, couleur, titre, description, icone FROM tuiles_couleurs")->fetchAll(PDO::FETCH_ASSOC) as $row) {
     $tuiles_perso[$row['href']] = $row;

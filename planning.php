@@ -55,8 +55,8 @@ try {
 // --- NOUVEAU : CHARGEMENT DE L'ÉQUIPE DE MAINTENANCE ---
     $equipe_db = [];
     if(isset($db)) {
-        // On récupère l'équipe, mais ON EXCLUT le directeur (Florent)
-        $resE = $db->query("SELECT username, photo FROM utilisateurs WHERE role IN ('admin', 'technicien') AND username != 'Florent' ORDER BY username");
+        // On récupère l'équipe, mais ON EXCLUT le directeur (Directeur)
+        $resE = $db->query("SELECT username, photo FROM utilisateurs WHERE role IN ('admin', 'technicien') AND username != 'Directeur' ORDER BY username");
         $equipe_db = $resE->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -1483,7 +1483,7 @@ const team = <?php echo json_encode(array_column($equipe_db, 'username')); ?>;
 const teamPhotos = <?php echo json_encode(array_column($equipe_db, 'photo', 'username')); ?>;
 
 // Ordre personnalisé de l'équipe demandé
-const ordreEquipe = ["Christophe", "Didier", "David", "Manu", "Gilbert", "Teddy", "Yannick"];
+const ordreEquipe = ["Technicien 1", "Technicien 2", "Technicien 3", "Technicien 5", "Technicien 4", "Technicien 6", "Technicien 7"];
 team.sort((a, b) => ordreEquipe.indexOf(a) - ordreEquipe.indexOf(b));
 
 // --- Horaires d'équipe importés depuis Excel (Paramètres > Planning) ---
@@ -1691,14 +1691,14 @@ function renderTable() {
 
         // Détermination dynamique du rôle pour l'affichage
         let roleAffiche = I18N_PLANNING.role_technicien;
-        if (tech === "Christophe") {
+        if (tech === "Technicien 1") {
             roleAffiche = I18N_PLANNING.role_responsable;
-        } else if (tech === "Didier") {
+        } else if (tech === "Technicien 2") {
             roleAffiche = I18N_PLANNING.role_adjoint;
-        } else if (tech === "David") {
+        } else if (tech === "Technicien 3") {
             roleAffiche = I18N_PLANNING.role_chef_projet;
         }
-        // Les autres (Gilbert, Manu, Teddy, Yannick) resteront automatiquement sur "Technicien"
+        // Les autres (Technicien 4, 5, 6, 7) resteront automatiquement sur "Technicien"
 
         const peutVoirAnnuel = isAdmin || tech === currentUser;
         const sidebarEl = document.createElement('div');

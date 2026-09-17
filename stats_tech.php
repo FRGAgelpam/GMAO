@@ -96,7 +96,7 @@ try {
         )");
         $db->exec("ALTER TABLE planning_shifts ADD COLUMN IF NOT EXISTS note VARCHAR(255) NULL");
         $db->exec("ALTER TABLE planning_shifts ADD COLUMN IF NOT EXISTS demi_conge TINYINT(1) NOT NULL DEFAULT 0");
-        $equipe_annualisation = $db->query("SELECT username FROM utilisateurs WHERE role IN ('admin', 'technicien') AND username != 'Florent' ORDER BY username")->fetchAll(PDO::FETCH_COLUMN);
+        $equipe_annualisation = $db->query("SELECT username FROM utilisateurs WHERE role IN ('admin', 'technicien') AND username != 'Directeur' ORDER BY username")->fetchAll(PDO::FETCH_COLUMN);
         // Congé/RTT/férié comptent pour 0h : le seuil de 1607h les a déjà déduits en amont. La maladie est
         // neutralisée "comme si" (jurisprudence annualisation) : créditée à 7h même sans heures saisies.
         $stmtAnn = $db->prepare("SELECT utilisateur, SUM(COALESCE(heures,0) + CASE WHEN poste = 'maladie' THEN 7 ELSE 0 END) as total FROM planning_shifts WHERE jour BETWEEN ? AND ? GROUP BY utilisateur");

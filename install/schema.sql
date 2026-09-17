@@ -242,7 +242,7 @@ CREATE TABLE `machines` (
   `date_achat` date DEFAULT NULL,
   `etat` enum('Opérationnelle','En panne','Maintenance prévue') DEFAULT 'Opérationnelle',
   `ordre` int(11) DEFAULT 0,
-  `usine` varchar(100) DEFAULT 'Gel-Pam',
+  `usine` varchar(100) DEFAULT NULL,
   `secteur` varchar(100) DEFAULT NULL,
   `ligne` varchar(100) DEFAULT NULL,
   `zone` varchar(100) DEFAULT NULL,

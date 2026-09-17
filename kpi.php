@@ -350,13 +350,13 @@ header('Content-Type: text/html; charset=utf-8');
         <div class="kfield"><i class="fa-solid fa-user-gear"></i> <label><?php echo htmlspecialchars(t('kpi.filter_tech')); ?></label>
             <select id="filter-tech">
                 <option value=""><?php echo htmlspecialchars(t('kpi.filter_tous')); ?></option>
-                <option value="Christophe">Christophe</option>
-                <option value="David">David</option>
-                <option value="Didier">Didier</option>
-                <option value="Gilbert">Gilbert</option>
-                <option value="Manu">Manu</option>
-                <option value="Teddy">Teddy</option>
-                <option value="Yannick">Yannick</option>
+                <option value="Technicien 1">Technicien 1</option>
+                <option value="Technicien 3">Technicien 3</option>
+                <option value="Technicien 2">Technicien 2</option>
+                <option value="Technicien 4">Technicien 4</option>
+                <option value="Technicien 5">Technicien 5</option>
+                <option value="Technicien 6">Technicien 6</option>
+                <option value="Technicien 7">Technicien 7</option>
             </select>
         </div>
         <div class="kspacer"></div>

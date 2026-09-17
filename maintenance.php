@@ -438,7 +438,7 @@ try {
             SELECT username, role, fonction, photo
             FROM utilisateurs
             WHERE role IN ('admin', 'technicien')
-            AND username != 'Florent'
+            AND username != 'Directeur'
             ORDER BY
                 CASE WHEN ordre > 0 THEN ordre ELSE 99 END ASC,
                 username ASC

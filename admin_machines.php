@@ -53,7 +53,7 @@ $CATEGORIES_VISUELLES = $db->query("SELECT * FROM schema_categories_visuelles OR
 try {
     $db->exec("CREATE TABLE IF NOT EXISTS machines (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        usine VARCHAR(100) DEFAULT 'Gel-Pam',
+        usine VARCHAR(100) DEFAULT NULL,
         secteur VARCHAR(100),
         ligne VARCHAR(100),
         zone VARCHAR(100),

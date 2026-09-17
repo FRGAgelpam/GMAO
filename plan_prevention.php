@@ -331,17 +331,17 @@ if (!empty($id_ee_prefill)) {
     <table class="anti-coupe">
         <tr>
             <td width="50%">
-                <strong class="text-black" style="font-size: 16px;">GEL ‘PAM</strong><br>
-                Chemin de la Baque<br>
-                26700 LA GARDE ADHEMAR<br>
-                04.75.04.42.66.
+                <strong class="text-black" style="font-size: 16px;">[NOM DE VOTRE ENTREPRISE]</strong><br>
+                [Adresse]<br>
+                [Code postal] [Ville]<br>
+                [Téléphone]
             </td>
             <td width="50%">
                 <strong class="text-black">Représentée par :</strong><br>
-                <span class="text-black">Florent VIEVILLE</span> (Directeur)<br>
-                <span class="text-black">Christophe FAGOT</span> (Responsable Technique)<br>
-                <span class="text-black">Olivier COURTOIS</span> (Représentant Sécurité)<br>
-                <span class="text-black">Caroline PRIGENT</span> (Animatrice sécurité)
+                <span class="text-black">[Nom du Directeur]</span> (Directeur)<br>
+                <span class="text-black">[Nom du Responsable Technique]</span> (Responsable Technique)<br>
+                <span class="text-black">[Nom du Représentant Sécurité]</span> (Représentant Sécurité)<br>
+                <span class="text-black">[Nom de l'Animatrice Sécurité]</span> (Animatrice sécurité)
             </td>
         </tr>
     </table>
@@ -375,7 +375,7 @@ if (!empty($id_ee_prefill)) {
     </table>
 
     <table class="anti-coupe">
-        <tr><td colspan="2"><strong>Localisation de l’opération sur Gel’Pam =</strong> <input type="text" value="<?php echo htmlspecialchars($usine_prefill); ?>" style="width:60%; border:none; border-bottom:1px dotted #000; font-family: inherit; font-weight:bold;"></td></tr>
+        <tr><td colspan="2"><strong>Localisation de l’opération sur [votre entreprise] =</strong> <input type="text" value="<?php echo htmlspecialchars($usine_prefill); ?>" style="width:60%; border:none; border-bottom:1px dotted #000; font-family: inherit; font-weight:bold;"></td></tr>
         <tr><td colspan="2"><strong>Désignation de l’opération :</strong> <input type="text" value="<?php echo htmlspecialchars($equip_prefill); ?>" style="width:80%; border:none; border-bottom:1px dotted #000; font-family: inherit; font-weight:bold;"></td></tr>
         <tr>
             <td width="50%"><strong>Sous-traitant :</strong> Oui <input type="checkbox"> Non <input type="checkbox"></td>
@@ -535,7 +535,7 @@ if (!empty($id_ee_prefill)) {
                         </div>
                         <div class="checklist-item">
                             <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
-                            <div class="checklist-text">Limiter le travail isolé au maximum (ex=combles) ou être accompagné par une personne de Gel’Pam</div>
+                            <div class="checklist-text">Limiter le travail isolé au maximum (ex=combles) ou être accompagné par une personne de [votre entreprise]</div>
                         </div>
                         <div class="checklist-item">
                             <div class="checklist-boxes"><label><input type="checkbox"> <b>ARDO</b></label> <label><input type="checkbox"> <b style="color:#e74c3c;">EE</b></label></div>
@@ -1066,10 +1066,10 @@ if (!empty($id_ee_prefill)) {
     <div class="green-title" style="margin-top:20px;">CONSIGNES EN CAS D’ACCIDENT</div>
     <div class="anti-coupe" style="margin-top: 15px;">
         <img src="img/logo_sst.png" alt="Logo SST" class="img-float-left" style="height: 80px;">
-        <p><span class="alert-text">En cas d’accident grave ou bénin, vous devez immédiatement le signaler auprès de votre responsable ainsi qu’au responsable travaux de Gel’Pam (Monsieur FAGOT Christophe 06.31.70.57.27).</span><br>
+        <p><span class="alert-text">En cas d’accident grave ou bénin, vous devez immédiatement le signaler auprès de votre responsable ainsi qu’au responsable travaux de [votre entreprise] ([Nom] [Téléphone]).</span><br>
         Sur le chantier, vous devez obligatoirement posséder un Sauveteur Secouriste du Travail (SST) ainsi qu’une trousse de pharmacie complète. Chaque opérateur doit avoir connaissance de l’identité du sauveteur ainsi que la localisation de la trousse de secours.<br>
-        Gel’Pam met à disposition des douches de secours et rince œil (retrouvable à l’entrée de chaque salle des machines) et un défibrillateur (à côté de la pointeuse du personnel de Gel’Pam). Nous possédons également des sauveteurs en cas de force majeure (voir liste au-dessus de la badgeuse et aux entrées).<br>
-        Gel’Pam ne possède pas d’infirmeries.</p>
+        [votre entreprise] met à disposition des douches de secours et rince œil (retrouvable à l’entrée de chaque salle des machines) et un défibrillateur (à côté de la pointeuse du personnel de [votre entreprise]). Nous possédons également des sauveteurs en cas de force majeure (voir liste au-dessus de la badgeuse et aux entrées).<br>
+        [votre entreprise] ne possède pas d’infirmeries.</p>
     </div>
     
     <table class="anti-coupe" style="width:100%; border: 2px solid #000; margin-top: 20px;">
@@ -1097,8 +1097,8 @@ if (!empty($id_ee_prefill)) {
     <div class="green-title anti-coupe">CONSIGNES INCENDIE</div>
     <div class="anti-coupe">
         <p class="alert-text">Avant-propos = merci de vous référencer dans le livret d’accueil et de vérifier que votre permis feu est à jour avant de commencer les travaux. Interdiction de fumer sur le site sauf aux abris fumeur.</p>
-        <p><img src="img/logo_extincteur.png" class="img-inline" style="height:40px;"><img src="img/logo_alarme.png" class="img-inline" style="height:40px;"> <strong>En cas de départ incendie :</strong> Si vous êtes témoin d’un départ de feu, donnez l’alerte en prévenant une personne de Gel’Pam et déclenchez l’alarme incendie grâce à un déclencheur manuel. Dans un second temps, combattez-le par des moyens appropriés (RIA, extincteur). Si vous parvenez à éteindre le feu, surveillez le foyer. Une personne de Gel’Pam doit appeler les pompiers pour leur donner l'alerte et les guider sur le site.</p>
-        <p><img src="img/logo_issue.png" class="img-inline" style="height:40px;"> <strong class="alert-text">L’évacuation : Dès que l’alarme retentit, toutes les personnes doivent quitter immédiatement leur poste de travail</strong> en écoutant les conseils des guide-files de Gel’Pam. Vous devez vous diriger vers les issues de secours les plus proches et les plus accessibles. Ne faites pas de demi-tours ou n’allez pas récupérer vos affaires. Dirigez-vous vers le point de rassemblement le plus proche (VOIR ANNEXE 2).</p>
+        <p><img src="img/logo_extincteur.png" class="img-inline" style="height:40px;"><img src="img/logo_alarme.png" class="img-inline" style="height:40px;"> <strong>En cas de départ incendie :</strong> Si vous êtes témoin d’un départ de feu, donnez l’alerte en prévenant une personne de [votre entreprise] et déclenchez l’alarme incendie grâce à un déclencheur manuel. Dans un second temps, combattez-le par des moyens appropriés (RIA, extincteur). Si vous parvenez à éteindre le feu, surveillez le foyer. Une personne de [votre entreprise] doit appeler les pompiers pour leur donner l'alerte et les guider sur le site.</p>
+        <p><img src="img/logo_issue.png" class="img-inline" style="height:40px;"> <strong class="alert-text">L’évacuation : Dès que l’alarme retentit, toutes les personnes doivent quitter immédiatement leur poste de travail</strong> en écoutant les conseils des guide-files de [votre entreprise]. Vous devez vous diriger vers les issues de secours les plus proches et les plus accessibles. Ne faites pas de demi-tours ou n’allez pas récupérer vos affaires. Dirigez-vous vers le point de rassemblement le plus proche (VOIR ANNEXE 2).</p>
         <p>Les issues de secours sont localisées par le panneau suivant : Si vous n’arrivez pas à franchir le feu ou les fumées, n’insistez pas et baissez-vous pour trouver de l’air frais et prenez une autre issue. Les portes verrouillées par badge magnétique seront ouvertes. En attendant les secours : Une fois aux points de rassemblement, signalez votre présence à la personne responsable de l’appel et informez de toutes absences anormales.</p>
     </div>
 
@@ -1108,7 +1108,7 @@ if (!empty($id_ee_prefill)) {
         <p>AMMONIAC (NH3) : gaz frigorifique incolore d’odeur caractéristique piquante et irritante. En cas de projection liquide ou gazeuse il peut être dangereux pour l’Homme.<br>
         <strong class="alert-text">Ne pas pénétrer dans les zones contenant de l’Ammoniac sans y être habilité et autorisé. Si vous êtes habilité, merci de transmettre vos habilitations au responsable de travaux.</strong></p>
         
-        <p><strong>En cas de fuite de gaz :</strong> En cas de fuite d’ammoniac, une sirène retentit (ou alors en cas d’odeur irritante). Toutes les personnes doivent quitter immédiatement leur poste de travail : écoutez les directives des guide-files de Gel’Pam, ils sont formés à l’évacuation en cas de fuite NH3 ou CO2. Seul le personnel formé à l’intervention en sécurité ammoniac est autorisé à intervenir où se situe la fuite (les salles des machines). Pendant l’intervention, la zone sera consignée. Ne pas passer le balisage. Sortez des bâtiments sans précipitation en empruntant les issues de secours les plus proches.</p>
+        <p><strong>En cas de fuite de gaz :</strong> En cas de fuite d’ammoniac, une sirène retentit (ou alors en cas d’odeur irritante). Toutes les personnes doivent quitter immédiatement leur poste de travail : écoutez les directives des guide-files de [votre entreprise], ils sont formés à l’évacuation en cas de fuite NH3 ou CO2. Seul le personnel formé à l’intervention en sécurité ammoniac est autorisé à intervenir où se situe la fuite (les salles des machines). Pendant l’intervention, la zone sera consignée. Ne pas passer le balisage. Sortez des bâtiments sans précipitation en empruntant les issues de secours les plus proches.</p>
         
         <p class="alert-text" style="text-align:center; font-weight:bold; font-size: 16px; border:2px dashed #ff0000; padding:5px;">Ne jamais retourner en arrière</p>
         
@@ -1157,16 +1157,16 @@ if (!empty($id_ee_prefill)) {
         <h3 style="text-align:center; margin-top:10px; font-size:15px;">ENTREPRISE UTILISATRICE</h3>
         <table class="signature-table" style="margin-bottom: 10px;">
             <tr><th width="25%">Nom / Prénom</th><th width="25%">Fonction</th><th width="15%">Téléphone</th><th width="15%">Date</th><th width="20%">Signature</th></tr>
-            <tr><td height="14"><input type="text" class="cell-input" style="font-weight:bold;" value="VIEVILLE Florent"></td><td><input type="text" class="cell-input" value="Représentant légal"></td><td><input type="text" class="cell-input" value="07.87.01.61.24"></td><td><input type="text" class="cell-input"></td><td><input type="text" class="cell-input"></td></tr>
-            <tr><td height="14"><input type="text" class="cell-input" style="font-weight:bold;" value="FAGOT Christophe"></td><td><input type="text" class="cell-input" value="Responsable des travaux"></td><td><input type="text" class="cell-input" value="06.31.70.57.27"></td><td><input type="text" class="cell-input"></td><td><input type="text" class="cell-input"></td></tr>
-            <tr><td height="14"><input type="text" class="cell-input" style="font-weight:bold;" value="COURTOIS Olivier"></td><td><input type="text" class="cell-input" value="Référent sécurité"></td><td><input type="text" class="cell-input" value="06.80.59.43.84"></td><td><input type="text" class="cell-input"></td><td><input type="text" class="cell-input"></td></tr>
-            <tr><td height="14"><input type="text" class="cell-input" style="font-weight:bold;" value="PRIGENT Caroline"></td><td><input type="text" class="cell-input" value="Animatrice Sécurité"></td><td><input type="text" class="cell-input" value="07.87.34.95.89"></td><td><input type="text" class="cell-input"></td><td><input type="text" class="cell-input"></td></tr>
+            <tr><td height="14"><input type="text" class="cell-input" style="font-weight:bold;" value=""></td><td><input type="text" class="cell-input" value="Représentant légal"></td><td><input type="text" class="cell-input" value=""></td><td><input type="text" class="cell-input"></td><td><input type="text" class="cell-input"></td></tr>
+            <tr><td height="14"><input type="text" class="cell-input" style="font-weight:bold;" value=""></td><td><input type="text" class="cell-input" value="Responsable des travaux"></td><td><input type="text" class="cell-input" value=""></td><td><input type="text" class="cell-input"></td><td><input type="text" class="cell-input"></td></tr>
+            <tr><td height="14"><input type="text" class="cell-input" style="font-weight:bold;" value=""></td><td><input type="text" class="cell-input" value="Référent sécurité"></td><td><input type="text" class="cell-input" value=""></td><td><input type="text" class="cell-input"></td><td><input type="text" class="cell-input"></td></tr>
+            <tr><td height="14"><input type="text" class="cell-input" style="font-weight:bold;" value=""></td><td><input type="text" class="cell-input" value="Animatrice Sécurité"></td><td><input type="text" class="cell-input" value=""></td><td><input type="text" class="cell-input"></td><td><input type="text" class="cell-input"></td></tr>
             <tr><td height="14"><input type="text" class="cell-input"></td><td><input type="text" class="cell-input"></td><td><input type="text" class="cell-input"></td><td><input type="text" class="cell-input"></td><td><input type="text" class="cell-input"></td></tr>
             <tr><td height="14"><input type="text" class="cell-input"></td><td><input type="text" class="cell-input"></td><td><input type="text" class="cell-input"></td><td><input type="text" class="cell-input"></td><td><input type="text" class="cell-input"></td></tr>
         </table>
     </div>
     <div class="html2pdf__page-break"></div>
-    <div class="green-title anti-coupe">ANNEXE 1 : Plan de circulation Gel’Pam</div>
+    <div class="green-title anti-coupe">ANNEXE 1 : Plan de circulation [votre entreprise]</div>
     <img src="img/plan_circulation.png" class="img-center anti-coupe" style="display: block; width: 100%; max-height: 20cm; object-fit: contain; margin-top: 20px;" alt="Plan de circulation">
 
     <div class="html2pdf__page-break"></div>
