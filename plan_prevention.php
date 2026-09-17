@@ -1167,7 +1167,7 @@ if (!empty($id_ee_prefill)) {
     </div>
     <div class="html2pdf__page-break"></div>
     <div class="green-title anti-coupe">ANNEXE 1 : Plan de circulation [votre entreprise]</div>
-    <img src="img/plan_circulation.png" class="img-center anti-coupe" style="display: block; width: 100%; max-height: 20cm; object-fit: contain; margin-top: 20px;" alt="Plan de circulation">
+    <p style="text-align:center; font-style:italic; color:#666; margin-top:20px;">[Insérer ici le plan d'accès et de circulation de votre site]</p>
 
     <div class="html2pdf__page-break"></div>
     <div class="green-title anti-coupe">ANNEXE 2 : Points de rassemblements</div>
