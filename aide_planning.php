@@ -244,6 +244,7 @@ tbody td:first-child { font-weight: 700; color: var(--primary); white-space: now
                 <li><a href="#exemple"><i class="fa-solid fa-calculator"></i> <?php echo htmlspecialchars(t('aide_planning.toc_exemple')); ?></a></li>
                 <li><a href="#remplissage-rapide"><i class="fa-solid fa-layer-group"></i> <?php echo htmlspecialchars(t('aide_planning.toc_remplissage_rapide')); ?></a></li>
                 <li><a href="#bons-intervention"><i class="fa-solid fa-screwdriver-wrench"></i> <?php echo htmlspecialchars(t('aide_planning.toc_bons_intervention')); ?></a></li>
+                <li><a href="#todo-list"><i class="fa-solid fa-list-check"></i> <?php echo htmlspecialchars(t('aide_planning.toc_todo_list')); ?></a></li>
                 <li><a href="#planning-annuel"><i class="fa-solid fa-calendar-days"></i> <?php echo htmlspecialchars(t('aide_planning.toc_planning_annuel')); ?></a></li>
                 <li><a href="#droits"><i class="fa-solid fa-shield-halved"></i> <?php echo htmlspecialchars(t('aide_planning.toc_droits')); ?></a></li>
                 <li class="toc-sep"></li>
@@ -325,6 +326,23 @@ tbody td:first-child { font-weight: 700; color: var(--primary); white-space: now
                 <section id="remplir-case" class="aide-sec">
                     <div class="sec-eyebrow"><i class="fa-solid fa-hand-pointer"></i><h2><?php echo htmlspecialchars(t('aide_planning.toc_remplir_case')); ?></h2></div>
                     <p class="lede"><?php echo htmlspecialchars(t('aide_planning.remplir_case_lede')); ?></p>
+
+                    <div class="cases">
+                        <div class="case-card">
+                            <h4><i class="fa-solid fa-clock" style="color:var(--brand-green);"></i> <?php echo htmlspecialchars(t('aide_planning.choix_heures_titre')); ?></h4>
+                            <p><?php echo htmlspecialchars(t('aide_planning.choix_heures_desc')); ?></p>
+                        </div>
+                        <div class="case-card">
+                            <h4><i class="fa-solid fa-file-circle-plus" style="color:var(--brand-orange);"></i> <?php echo htmlspecialchars(t('aide_planning.choix_bi_titre')); ?></h4>
+                            <p><?php echo t('aide_planning.choix_bi_desc'); ?></p>
+                        </div>
+                        <div class="case-card">
+                            <h4><i class="fa-solid fa-list-check" style="color:#6b21a8;"></i> <?php echo htmlspecialchars(t('aide_planning.choix_todo_titre')); ?></h4>
+                            <p><?php echo htmlspecialchars(t('aide_planning.choix_todo_desc')); ?></p>
+                        </div>
+                    </div>
+
+                    <p><?php echo htmlspecialchars(t('aide_planning.remplir_case_suite')); ?></p>
 
                     <div class="shot">
                         <img src="img/aide/planning_modal_shift.png" alt="<?php echo htmlspecialchars(t('aide_planning.shot_modal_alt')); ?>">
@@ -508,7 +526,25 @@ tbody td:first-child { font-weight: 700; color: var(--primary); white-space: now
                         <li><?php echo t('aide_planning.bi_li1'); ?></li>
                         <li><?php echo t('aide_planning.bi_li2'); ?></li>
                         <li><?php echo t('aide_planning.bi_li3'); ?></li>
+                        <li><?php echo t('aide_planning.bi_li4'); ?></li>
                     </ul>
+                </section>
+
+                <section id="todo-list" class="aide-sec">
+                    <div class="sec-eyebrow"><i class="fa-solid fa-list-check"></i><h2><?php echo htmlspecialchars(t('aide_planning.toc_todo_list')); ?></h2></div>
+                    <p class="lede"><?php echo htmlspecialchars(t('aide_planning.todo_lede')); ?></p>
+
+                    <ul>
+                        <li><?php echo t('aide_planning.todo_li1'); ?></li>
+                        <li><?php echo t('aide_planning.todo_li2'); ?></li>
+                        <li><?php echo t('aide_planning.todo_li3'); ?></li>
+                        <li><?php echo t('aide_planning.todo_li4'); ?></li>
+                    </ul>
+
+                    <div class="callout callout-tip">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <div><p><?php echo t('aide_planning.todo_callout'); ?></p></div>
+                    </div>
                 </section>
 
                 <section id="planning-annuel" class="aide-sec">

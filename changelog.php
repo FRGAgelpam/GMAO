@@ -72,6 +72,7 @@ foreach ($journal as $jour) { $nb_total += count($jour['items']); }
         .page-title { font-family: 'Caveat', cursive; font-size: 1.8rem; color: var(--primary); margin: 0; }
         .page-subtitle { margin: 4px 0 16px; color: rgba(255,255,255,0.9); text-shadow: 0 1px 3px rgba(0,0,0,0.4); font-size: 0.85rem; }
         .count-badge { background: rgba(52, 152, 219, 0.15); color: #2980b9; border: 1px solid rgba(52, 152, 219, 0.3); padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; white-space: nowrap; }
+        .version-badge-changelog { background: rgba(44,62,80,0.08); color: var(--primary); border: 1px solid rgba(44,62,80,0.2); padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; white-space: nowrap; }
 
         .search-container { background: rgba(255,255,255,0.95); padding: 12px 20px; border-radius: 8px; display: flex; align-items: center; gap: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 20px; border-left: 5px solid var(--accent); flex-wrap: wrap; }
         .search-group { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 0.75rem; color: var(--primary); text-transform: uppercase; flex: 1; min-width: 200px; }
@@ -101,7 +102,10 @@ foreach ($journal as $jour) { $nb_total += count($jour['items']); }
 
 <div class="container">
     <div class="page-header">
-        <h1 class="page-title"><i class="fa-solid fa-rocket" style="color:var(--primary); margin-right:10px;"></i> <?php echo htmlspecialchars(t('changelog.h1')); ?></h1>
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <h1 class="page-title"><i class="fa-solid fa-rocket" style="color:var(--primary); margin-right:10px;"></i> <?php echo htmlspecialchars(t('changelog.h1')); ?></h1>
+            <span class="version-badge-changelog" title="<?php echo htmlspecialchars(t('nav.version_titre')); ?>">v<?php echo htmlspecialchars(trim(@file_get_contents(__DIR__ . '/VERSION')) ?: '?'); ?></span>
+        </div>
         <span class="count-badge" id="countBadge"><?php echo (int)$nb_total; ?> <?php echo htmlspecialchars($nb_total > 1 ? t('changelog.count_plural') : t('changelog.count_singular')); ?></span>
     </div>
     <p class="page-subtitle"><?php echo htmlspecialchars(t('changelog.subtitle')); ?></p>

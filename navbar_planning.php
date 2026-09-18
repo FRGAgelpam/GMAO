@@ -1,4 +1,9 @@
-<?php $page_actuelle = basename($_SERVER['PHP_SELF']); ?>
+<?php
+$page_actuelle = basename($_SERVER['PHP_SELF']);
+// Numéro de version affiché dans l'en-tête (voir aussi navbar.php, login.php et changelog.php) : une
+// seule source, le fichier VERSION à la racine.
+$gmao_version = trim(@file_get_contents(__DIR__ . '/VERSION')) ?: '?';
+?>
 
 <div id="mySidebar" class="sidebar"></div>
 
@@ -31,6 +36,7 @@
                 <button type="button" class="mode-vue-btn" data-mode="mois" onclick="definirModeVue('mois')"><?php echo htmlspecialchars(t('planning.mois')); ?></button>
             </div>
             <?php include 'lang_switcher.php'; ?>
+            <span class="user-badge" style="font-size:0.65rem; padding:4px 10px; gap:4px;" title="<?php echo htmlspecialchars(t('nav.version_titre')); ?>">v<?php echo htmlspecialchars($gmao_version); ?></span>
             <div class="user-badge">
                 <div class="status-pulse"></div>
                 <i class="fa-solid fa-user-gear"></i> <span><?php echo htmlspecialchars($_SESSION['user']); ?></span>

@@ -82,6 +82,37 @@ if (isset($_GET['get_pointages'])) {
     exit();
 }
 
+// --- TODO LIST PAR JOUR DU PLANNING (voir choisirTodoList/ouvrirTodoModal dans planning.php) ---
+// Une tâche non cochée se reporte au jour suivant : plutôt qu'un cron séparé (comme cron_preventif.php),
+// on fait avancer ici même, à chaque lecture, toute tâche non faite restée sur un jour déjà passé —
+// aucune tâche ne reste donc jamais bloquée sur une date révolue, sans dépendre d'une tâche planifiée
+// côté serveur (utile aussi en local/XAMPP, où rien de tel n'est configuré).
+if (isset($_GET['get_todo'])) {
+    ob_clean();
+    header('Content-Type: application/json');
+    try {
+        require_once 'db.php';
+        $db->exec("CREATE TABLE IF NOT EXISTS planning_todo (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            utilisateur VARCHAR(100) NOT NULL,
+            jour DATE NOT NULL,
+            texte VARCHAR(255) NOT NULL,
+            fait TINYINT(1) NOT NULL DEFAULT 0,
+            date_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )");
+        $db->exec("UPDATE planning_todo SET jour = CURDATE() WHERE fait = 0 AND jour < CURDATE()");
+        if ($is_admin) {
+            $rows = $db->query("SELECT id, utilisateur, jour, texte, fait FROM planning_todo ORDER BY id")->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            $stmt = $db->prepare("SELECT id, utilisateur, jour, texte, fait FROM planning_todo WHERE utilisateur = ? ORDER BY id");
+            $stmt->execute([$_SESSION['user']]);
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        echo json_encode($rows);
+    } catch (Exception $e) { echo json_encode([]); }
+    exit();
+}
+
 // --- SAUVEGARDE DU POINTAGE (MÉTHODE ADAPTÉE POUR LE PLANNING) ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'save_pointage') {
     try {
@@ -355,6 +386,89 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $stmt = $db->prepare("DELETE FROM planning_shifts WHERE utilisateur = ? AND jour = ?");
         $stmt->execute([$_POST['tech'], $_POST['date']]);
 
+        echo "OK";
+    } catch (Exception $e) {
+        http_response_code(500);
+        error_log("maintenance.php: " . $e->getMessage());
+        echo t('maint.err_server');
+    }
+    exit();
+}
+
+// --- AJOUT D'UNE TÂCHE TODO LIST (voir get_todo plus haut pour le report automatique) ---
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'todo_add') {
+    $tech = $_POST['tech'] ?? '';
+    if (!$is_admin && $tech !== $_SESSION['user']) {
+        http_response_code(403);
+        echo t('maint.err_only_own_days_plan');
+        exit();
+    }
+    try {
+        require_once 'db.php';
+        $db->exec("CREATE TABLE IF NOT EXISTS planning_todo (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            utilisateur VARCHAR(100) NOT NULL,
+            jour DATE NOT NULL,
+            texte VARCHAR(255) NOT NULL,
+            fait TINYINT(1) NOT NULL DEFAULT 0,
+            date_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )");
+        $texte = mb_substr(trim($_POST['texte'] ?? ''), 0, 255);
+        if ($texte === '') { http_response_code(400); echo t('maint.err_server'); exit(); }
+        $stmt = $db->prepare("INSERT INTO planning_todo (utilisateur, jour, texte) VALUES (?, ?, ?)");
+        $stmt->execute([$tech, $_POST['date'] ?? '', $texte]);
+        ob_clean();
+        header('Content-Type: application/json');
+        echo json_encode(['id' => (int)$db->lastInsertId()]);
+    } catch (Exception $e) {
+        http_response_code(500);
+        error_log("maintenance.php: " . $e->getMessage());
+        echo t('maint.err_server');
+    }
+    exit();
+}
+
+// --- COCHER/DÉCOCHER UNE TÂCHE TODO LIST ---
+// Le propriétaire vient de la ligne en base (pas d'un champ du formulaire) : un technicien ne peut pas se
+// donner accès à la tâche d'un collègue en falsifiant un paramètre "tech" côté client.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'todo_toggle') {
+    try {
+        require_once 'db.php';
+        $stmt = $db->prepare("SELECT utilisateur FROM planning_todo WHERE id = ?");
+        $stmt->execute([$_POST['id'] ?? '']);
+        $proprietaire = $stmt->fetchColumn();
+        if ($proprietaire === false) { http_response_code(404); exit(); }
+        if (!$is_admin && $proprietaire !== $_SESSION['user']) {
+            http_response_code(403);
+            echo t('maint.err_only_own_days_modif');
+            exit();
+        }
+        $stmt = $db->prepare("UPDATE planning_todo SET fait = ? WHERE id = ?");
+        $stmt->execute([!empty($_POST['fait']) ? 1 : 0, $_POST['id']]);
+        echo "OK";
+    } catch (Exception $e) {
+        http_response_code(500);
+        error_log("maintenance.php: " . $e->getMessage());
+        echo t('maint.err_server');
+    }
+    exit();
+}
+
+// --- SUPPRESSION D'UNE TÂCHE TODO LIST (même vérification de propriétaire que todo_toggle) ---
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'todo_delete') {
+    try {
+        require_once 'db.php';
+        $stmt = $db->prepare("SELECT utilisateur FROM planning_todo WHERE id = ?");
+        $stmt->execute([$_POST['id'] ?? '']);
+        $proprietaire = $stmt->fetchColumn();
+        if ($proprietaire === false) { http_response_code(404); exit(); }
+        if (!$is_admin && $proprietaire !== $_SESSION['user']) {
+            http_response_code(403);
+            echo t('maint.err_only_own_days_modif');
+            exit();
+        }
+        $stmt = $db->prepare("DELETE FROM planning_todo WHERE id = ?");
+        $stmt->execute([$_POST['id']]);
         echo "OK";
     } catch (Exception $e) {
         http_response_code(500);
@@ -2403,6 +2517,15 @@ function ouvrirWizardOTPourMachine(usine, secteur, ligne, zone, equip) {
     if (zone) locPickZone(zone);
     if (equip) locPickEquip(equip);
     goToStepOT(2);
+}
+
+// Ouvre l'assistant de création avec le technicien et la date déjà remplis — utilisé par le choix
+// "Créer un BI" d'une case du Planning (planning.php). On reste à l'étape 1 (la machine reste à
+// choisir, planning.php ne la connaît pas) : le technicien/la date seront déjà là à l'étape 2.
+function ouvrirWizardOTPourPlanning(tech, dateStr) {
+    ouvrirWizardOT();
+    if (tech) cocherIntervenantsPrevus([tech]);
+    if (dateStr) document.getElementById('f-date').value = dateStr;
 }
 
 function initCascade() {
@@ -4699,14 +4822,25 @@ async function saveTask() {
     }
 }
 
-document.getElementById('f-date').value = dateParDefautOT(); initCascade(); loadData();
+document.getElementById('f-date').value = dateParDefautOT(); initCascade();
+const chargementInitialOT = loadData();
 
-// Arrivée depuis le Parc Machine ("Créer BI" sur une machine) : on ouvre l'assistant pré-rempli.
+// Arrivée depuis le Parc Machine ("Créer BI" sur une machine) ou depuis le Planning ("Créer un BI" sur
+// une case) : on ouvre l'assistant pré-rempli.
 (function () {
     const p = new URLSearchParams(window.location.search);
     if (p.get('creer_bi') === '1') {
         ouvrirWizardOTPourMachine(p.get('usine') || '', p.get('secteur') || '', p.get('ligne') || '', p.get('zone') || '', p.get('equip') || '');
         history.replaceState(null, '', 'maintenance.php');
+    } else if (p.get('creer_bi_planning') === '1') {
+        const tech = p.get('tech') || '';
+        const dateStr = p.get('date') || '';
+        history.replaceState(null, '', 'maintenance.php');
+        // Contrairement à ouvrirWizardOTPourMachine (qui ne dépend que de dbMachines, déjà disponible au
+        // chargement de la page), cocherIntervenantsPrevus a besoin que render() ait construit la liste
+        // "Intervenants prévus" au moins une fois — donc on attend le premier chargement des données
+        // plutôt que d'ouvrir l'assistant tout de suite (sinon le technicien ne se coche pas).
+        chargementInitialOT.then(() => ouvrirWizardOTPourPlanning(tech, dateStr));
     }
 })();
 

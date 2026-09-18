@@ -692,6 +692,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .chip .chip-count { background: rgba(0,0,0,0.12); padding: 1px 7px; border-radius: 10px; font-size: 0.7rem; }
         .chip.active .chip-count { background: rgba(255,255,255,0.25); }
 
+        /* Pastilles de filtre "À faire / En cours / Terminées" (#checklistStatutChips) : couleur par
+           statut (comme les badges de Saisie & Historique) mais en teinte douce, façon .badge-f/.badge-
+           impact déjà utilisés plus bas dans cette page — un premier essai en dégradé plein/carré vif
+           s'est révélé trop petit, trop anguleux et trop saturé pour 3 pastilles côte à côte. Sélecteurs
+           ID+attribut pour passer au-dessus de la spécificité de .chip.active ci-dessus (qui ne doit pas
+           réécraser la couleur du statut quand ce filtre est sélectionné) sans y toucher, vu qu'il sert
+           aussi aux pastilles de conformité au-dessus. */
+        #checklistStatutChips .chip { border: none; padding: 6px 12px; border-radius: 8px; font-size: 0.72rem; box-shadow: none; }
+        #checklistStatutChips .chip[data-filter="a_faire"] { background: #fef3c7; color: #92400e; }
+        #checklistStatutChips .chip[data-filter="en_cours"] { background: #dbeafe; color: #1d4ed8; }
+        #checklistStatutChips .chip[data-filter="termine"] { background: #dcfce7; color: #166534; }
+        #checklistStatutChips .chip:hover { border-color: transparent; filter: brightness(0.97); }
+        #checklistStatutChips .chip.active { outline: 2px solid var(--primary); outline-offset: 2px; }
+        #checklistStatutChips .chip .chip-count { background: rgba(0,0,0,0.08); }
+        #checklistStatutChips .chip.active .chip-count { background: rgba(0,0,0,0.14); }
+
         /* --- TABLEAU --- */
         .table-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
         table { width: 100%; border-collapse: collapse; table-layout: fixed; }

@@ -9,6 +9,9 @@ $is_admin = (isset($_SESSION['role']) && $_SESSION['role'] === 'admin');
 // Repli sur les valeurs par défaut si $db n'est pas dispo ou si la table n'existe pas encore.
 $nom_entreprise_nav = "GMAO";
 $logo_path_nav = "img/logo.png";
+// Numéro de version affiché dans l'en-tête (voir aussi login.php et changelog.php) : une seule source,
+// le fichier VERSION à la racine — à incrémenter à chaque lot déployé (voir CLAUDE.md).
+$gmao_version = trim(@file_get_contents(__DIR__ . '/VERSION')) ?: '?';
 if (isset($db)) {
     try {
         $general_nav = $db->query("SELECT cle, valeur FROM parametres_general")->fetchAll(PDO::FETCH_KEY_PAIR);
@@ -33,6 +36,7 @@ if (isset($db)) {
         </div>
         <div style="display:flex; align-items:center; gap:12px;">
             <?php include 'lang_switcher.php'; ?>
+            <span class="user-badge" style="font-size:0.65rem; padding:4px 10px; gap:4px;" title="<?php echo htmlspecialchars(t('nav.version_titre')); ?>">v<?php echo htmlspecialchars($gmao_version); ?></span>
             <div class="user-badge">
                 <div class="status-pulse"></div>
                 <i class="fa-solid fa-user-gear"></i> <span><?php echo htmlspecialchars($_SESSION['user']); ?></span>

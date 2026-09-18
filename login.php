@@ -192,6 +192,7 @@ try {
         .success { background: #d5f5e3; color: #2ecc71; border: 1px solid #2ecc71; }
         .back-link { display: block; margin-top: 20px; font-size: 0.85rem; color: #7f8c8d; text-decoration: none; font-weight: 600; }
         .back-link:hover { color: #2c3e50; text-decoration: underline; }
+        .login-version { margin-top: 22px; font-size: 0.7rem; color: #b0b3b8; }
         .portal-link {
             display: block;
             margin-top: 12px;
@@ -287,6 +288,8 @@ try {
         <?php echo htmlspecialchars(t('login.try_demo')); ?> <i class="fa-solid fa-arrow-right"></i>
     </a>
     <?php endif; ?>
+
+    <div class="login-version">v<?php echo htmlspecialchars(trim(@file_get_contents(__DIR__ . '/VERSION')) ?: '?'); ?></div>
 
 </div>
 

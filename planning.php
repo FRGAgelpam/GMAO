@@ -561,6 +561,15 @@ try {
             border-color: rgba(26, 37, 47, 0.95) transparent transparent transparent;
         }
 
+        /* Colonne de gauche/droite (voir edge-col-first/edge-col-last poses en JS, semaine ET mois) : la
+           tuile de 220px, centree par defaut sous l'etiquette, deborderait du cadre du planning pour un
+           bon d'intervention du premier ou dernier jour affiche — on colle alors la tuile contre le bord
+           interieur de l'etiquette au lieu de la centrer, pour qu'elle grandisse vers l'interieur du cadre. */
+        .edge-col-first .task-tooltip { left: 0; transform: none; }
+        .edge-col-first .task-tooltip::after { left: 20px; margin-left: 0; }
+        .edge-col-last .task-tooltip { left: auto; right: 0; transform: none; }
+        .edge-col-last .task-tooltip::after { left: auto; right: 20px; margin-left: 0; }
+
         .status-afaire { border-left-color: var(--brand-orange) !important; }
         .status-encours { border-left-color: var(--accent) !important; }
         .status-termine { border-left-color: var(--brand-green) !important; opacity: 0.6; }
@@ -707,6 +716,37 @@ try {
         .btn-save:disabled { background: #cbd5e1; cursor: not-allowed; }
         .btn-del { color: var(--danger); cursor: pointer; font-size: 1.2rem; transition: 0.2s; }
         .btn-del:hover { transform: scale(1.2); }
+
+        /* Choix "Planifier les heures / Créer un BI" au clic sur une case (voir #choixCaseModal,
+           ouvrirChoixCase) : deux gros boutons colorés plutôt qu'une liste, pour rester lisible au doigt
+           sur tablette comme à la souris. Vert = planning (couleur d'action de cette page), orange =
+           création de BI (même esprit que .ot-create-tile sur Saisie & Historique) — en teinte douce
+           (fond pastel + texte coloré) plutôt qu'un dégradé plein, un premier essai vif s'étant révélé
+           trop criard pour deux boutons pleine largeur côte à côte. */
+        .choix-case-btn { display: flex; align-items: center; gap: 14px; width: 100%; box-sizing: border-box; padding: 16px 18px; border: none; border-radius: 10px; cursor: pointer; font-size: 0.95rem; font-weight: 700; text-align: left; font-family: inherit; transition: 0.2s; }
+        .choix-case-btn i { font-size: 1.3rem; flex-shrink: 0; width: 24px; text-align: center; }
+        .choix-case-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,0.1); }
+        .choix-case-btn-heures { background: #e8f8ef; color: #1e8449; }
+        .choix-case-btn-bi { background: #fef3c7; color: #92400e; }
+        .choix-case-btn-todo { background: #f3e8ff; color: #6b21a8; }
+
+        /* --- TODO LIST PAR JOUR (voir #todoModal, ouvrirTodoModal) : une tâche non cochée se reporte
+           automatiquement au jour suivant (voir todo_add/get_todo côté maintenance.php) plutôt que de
+           rester bloquée sur un jour passé. --- */
+        .todo-item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; background: #f8fafc; }
+        .todo-item input[type="checkbox"] { width: 17px; height: 17px; flex-shrink: 0; cursor: pointer; accent-color: var(--brand-green); }
+        .todo-item-texte { flex: 1; font-size: 0.88rem; color: var(--primary); word-break: break-word; }
+        .todo-item.is-fait .todo-item-texte { text-decoration: line-through; color: #94a3b8; }
+        .todo-item-del { color: #cbd5e1; cursor: pointer; transition: 0.2s; flex-shrink: 0; }
+        .todo-item-del:hover { color: var(--danger); }
+        .todo-empty-state { text-align: center; color: #94a3b8; font-size: 0.85rem; padding: 14px 0; }
+
+        /* Pastille "todo list" sur une case du planning (voir todoBadgeHtml) : même gabarit que
+           .shift-badge-compact/.shift-note-badge pour rester cohérent avec les autres petites étiquettes
+           de case, en violet pour rester distinct des postes/astreintes/BI. */
+        .todo-cell-badge { width: fit-content; background: #f3e8ff; border: 1px solid #d8b4fe; border-radius: 4px; padding: 1px 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.15); color: #6b21a8; font-size: 0.54rem; font-weight: 800; cursor: pointer; }
+        .todo-cell-badge.tout-fait { opacity: 0.55; }
+        .mois-case .todo-cell-badge { font-size: 0.58rem; }
 
         .shift-section-label { font-size: 0.7rem; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.03em; margin: 14px 0 8px; }
         .shift-modal-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
@@ -1079,6 +1119,9 @@ try {
 <div class="side-nav-btn side-btn-left" onclick="changeWeek(-1)"><i class="fa-solid fa-chevron-left"></i></div>
 <div class="side-nav-btn side-btn-right" onclick="changeWeek(1)"><i class="fa-solid fa-chevron-right"></i></div>
 
+<div id="moisSideLeft" class="side-nav-btn side-nav-btn-mois side-btn-left" style="display:none;" onclick="changerMois(-1)"><i class="fa-solid fa-chevron-left"></i></div>
+<div id="moisSideRight" class="side-nav-btn side-nav-btn-mois side-btn-right" style="display:none;" onclick="changerMois(1)"><i class="fa-solid fa-chevron-right"></i></div>
+
 <div id="edge-left" class="edge-nav edge-left"></div>
 <div id="edge-right" class="edge-nav edge-right"></div>
 
@@ -1244,6 +1287,45 @@ try {
         <div style="display:flex; gap:8px; margin-top:16px;">
             <button type="button" class="btn-shift-clear" onclick="clearShift()"><i class="fa-solid fa-eraser"></i> <?php echo htmlspecialchars(t('planning.btn_effacer')); ?></button>
             <button type="button" class="btn-save" style="margin-top:0;" onclick="saveShift()"><?php echo htmlspecialchars(t('planning.btn_enregistrer_min')); ?></button>
+        </div>
+    </div>
+</div>
+
+<div id="choixCaseModal" class="modal">
+    <div class="modal-content" style="width: min(420px, 92vw); margin: 12vh auto; box-sizing: border-box;">
+        <div class="modal-header">
+            <span><?php echo htmlspecialchars(t('planning.choix_titre')); ?></span>
+            <i class="fa-solid fa-xmark btn-del" onclick="closeChoixCase()" title="<?php echo htmlspecialchars(t('planning.tooltip_fermer')); ?>"></i>
+        </div>
+        <p id="choix-case-sous-titre" style="margin:-10px 0 15px; color:#777; font-size:0.85rem; font-weight:400;"></p>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+            <button type="button" class="choix-case-btn choix-case-btn-heures" onclick="choisirPlanifierHeures()">
+                <i class="fa-solid fa-clock"></i>
+                <span><?php echo htmlspecialchars(t('planning.choix_planifier_heures')); ?></span>
+            </button>
+            <button type="button" class="choix-case-btn choix-case-btn-bi" onclick="choisirCreerBI()">
+                <i class="fa-solid fa-file-circle-plus"></i>
+                <span><?php echo htmlspecialchars(t('planning.choix_creer_bi')); ?></span>
+            </button>
+            <button type="button" class="choix-case-btn choix-case-btn-todo" onclick="choisirTodoList()">
+                <i class="fa-solid fa-list-check"></i>
+                <span><?php echo htmlspecialchars(t('planning.choix_todo_list')); ?></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="todoModal" class="modal">
+    <div class="modal-content" style="width: min(440px, 92vw); max-height: calc(90vh - 40px); margin: 5vh auto; overflow-y: auto; box-sizing: border-box;">
+        <div class="modal-header">
+            <span id="todo-modal-titre"><?php echo htmlspecialchars(t('planning.choix_todo_list')); ?></span>
+            <i class="fa-solid fa-xmark btn-del" onclick="closeTodoModal()" title="<?php echo htmlspecialchars(t('planning.tooltip_fermer')); ?>"></i>
+        </div>
+        <p id="todo-modal-date" style="margin:-10px 0 15px; color:#777; font-size:0.85rem; font-weight:400;"></p>
+        <div id="todo-items-list" style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;"></div>
+        <div style="display:flex; gap:8px;">
+            <input type="text" id="todo-new-texte" maxlength="255" placeholder="<?php echo htmlspecialchars(t('planning.todo_placeholder')); ?>" style="flex:1; box-sizing:border-box; padding:9px 10px; border:1.5px solid #e2e8f0; border-radius:8px; font-family:'Segoe UI'; font-size:0.85rem;" onkeydown="if(event.key==='Enter'){ajouterTodoItem();}">
+            <button type="button" class="choix-case-btn choix-case-btn-todo" style="width:auto; padding:9px 16px;" onclick="ajouterTodoItem()"><i class="fa-solid fa-plus"></i></button>
         </div>
     </div>
 </div>
@@ -1511,6 +1593,9 @@ const I18N_PLANNING = <?php echo json_encode([
     'planning_annuel_tech' => t('planning.planning_annuel_tech'),
     'confirm_suppr_definitive' => t('planning.confirm_suppr_definitive'),
     'confirmation_title' => t('planning.confirmation_title'),
+    'choix_todo_list' => t('planning.choix_todo_list'),
+    'todo_vide' => t('planning.todo_vide'),
+    'todo_confirm_suppr_msg' => t('planning.todo_confirm_suppr_msg'),
     'err_suppr_serveur' => t('planning.err_suppr_serveur'),
     'saving' => t('maint.saving'),
     'success_title' => t('maint.success_title'),
@@ -1538,6 +1623,9 @@ function checkCloseSidebar(event) { if (document.getElementById("mySidebar").sty
 
 let tasks = [];
 let pointages = [];
+// Todo list par technicien/jour (voir #todoModal, ouvrirTodoModal) : un technicien ne reçoit ici que ses
+// propres tâches, un admin les reçoit toutes (filtrage déjà fait côté serveur, voir get_todo).
+let todoParCle = {};
 let currentMonday = getMonday(new Date());
 let lastSwitchTime = 0;
 let draggedTaskId = null;
@@ -1760,10 +1848,23 @@ async function loadData() {
         const resPt = await fetch('maintenance.php?get_pointages=1&t=' + Date.now());
         pointages = await resPt.json();
 
+        const resTodo = await fetch('maintenance.php?get_todo=1&t=' + Date.now());
+        indexerTodoItems(await resTodo.json());
+
         // La vue Mois a sa propre grille (moisGrid), pas la peine de reconstruire la grille Semaine
         // (planningTable, masquee) pendant qu'on la regarde.
         if (typeof modeVue !== 'undefined' && modeVue === 'mois') { renderMoisView(); } else { renderTable(); }
     } catch(e) { console.error("Erreur chargement:", e); }
+}
+
+// Reconstruit todoParCle (clé "tech_date") à partir de la liste plate renvoyée par get_todo.
+function indexerTodoItems(items) {
+    todoParCle = {};
+    (items || []).forEach(item => {
+        const key = `${item.utilisateur}_${item.jour}`;
+        if (!todoParCle[key]) todoParCle[key] = [];
+        todoParCle[key].push(item);
+    });
 }
 
 // Ouvre le rapport d'un bon d'intervention (utilise par la vue Semaine ET la vue Mois, voir renderMoisView)
@@ -1876,68 +1977,77 @@ function renderTable() {
             const dStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
             const cell = document.createElement('div');
-            cell.className = "drop-zone" + (isLastRow ? " tech-row-last" : "");
+            // edge-col-first/edge-col-last (voir .task-tooltip plus haut) : empeche la tuile d'info de
+            // deborder du cadre du planning pour un bon d'intervention du premier ou dernier jour affiche.
+            cell.className = "drop-zone" + (isLastRow ? " tech-row-last" : "") + (idx === 0 ? " edge-col-first" : "") + (idx === days.length - 1 ? " edge-col-last" : "");
             cell.dataset.dayIdx = idx;
             const peutPlanifier = isAdmin || tech === currentUser;
             if (!peutPlanifier) {cell.style.cursor = "default"; }
 
             const shift = shiftsParCle[`${tech}_${dStr}`];
-            if (shift && (shift.poste || shift.astreinte || shift.note || shift.demi_conge || shift.jour_ferie)) {
+            const todoItemsJour = todoParCle[`${tech}_${dStr}`] || [];
+            const aUnShift = shift && (shift.poste || shift.astreinte || shift.note || shift.demi_conge || shift.jour_ferie);
+            if (aUnShift || todoItemsJour.length > 0) {
                 const ligneShift = document.createElement('div');
                 ligneShift.className = "shift-badges-row";
-                if (shift.poste && planningPostes[shift.poste]) {
-                    const bp = document.createElement('span');
-                    const heuresSaisies = shift.heures !== null && shift.heures !== undefined && shift.heures !== '';
-                    bp.className = "shift-badge-compact" + (heuresSaisies ? "" : " shift-badge-nohours");
-                    bp.style.setProperty('--c', planningPostes[shift.poste].couleur);
-                    let libellePoste = planningPostes[shift.poste].label + (shift.demi_conge ? ' ½' : '');
-                    const titreExtra = [];
-                    // Poste + demi-congé et/ou jour férié cumulés le même jour : liserés de chaque côté du
-                    // badge, en plus de la couleur du poste au centre, pour distinguer visuellement le tout.
-                    if (shift.demi_conge && planningPostes.demi_cp) {
-                        bp.style.borderRight = `4px solid ${planningPostes.demi_cp.couleur}`;
-                        titreExtra.push(planningPostes.demi_cp.label);
+                // Todo list du jour (voir #todoModal) : petite pastille avant les badges d'horaires, pour
+                // signaler d'un coup d'œil qu'il y a des tâches sans avoir à ouvrir la case.
+                if (todoItemsJour.length > 0) { ligneShift.insertAdjacentHTML('beforeend', todoBadgeHtml(tech, dStr, todoItemsJour)); }
+                if (aUnShift) {
+                    if (shift.poste && planningPostes[shift.poste]) {
+                        const bp = document.createElement('span');
+                        const heuresSaisies = shift.heures !== null && shift.heures !== undefined && shift.heures !== '';
+                        bp.className = "shift-badge-compact" + (heuresSaisies ? "" : " shift-badge-nohours");
+                        bp.style.setProperty('--c', planningPostes[shift.poste].couleur);
+                        let libellePoste = planningPostes[shift.poste].label + (shift.demi_conge ? ' ½' : '');
+                        const titreExtra = [];
+                        // Poste + demi-congé et/ou jour férié cumulés le même jour : liserés de chaque côté du
+                        // badge, en plus de la couleur du poste au centre, pour distinguer visuellement le tout.
+                        if (shift.demi_conge && planningPostes.demi_cp) {
+                            bp.style.borderRight = `4px solid ${planningPostes.demi_cp.couleur}`;
+                            titreExtra.push(planningPostes.demi_cp.label);
+                        }
+                        if (shift.jour_ferie && planningPostes.jour_ferie) {
+                            bp.style.borderLeft = `4px solid ${planningPostes.jour_ferie.couleur}`;
+                            libellePoste += ' · ' + planningPostes.jour_ferie.label;
+                            titreExtra.push(planningPostes.jour_ferie.label);
+                        }
+                        bp.textContent = heuresSaisies ? `${libellePoste} · ${parseFloat(shift.heures)}h` : libellePoste;
+                        if (titreExtra.length) { bp.title = `${planningPostes[shift.poste].label} + ${titreExtra.join(' + ')}`; }
+                        ligneShift.appendChild(bp);
+                    } else if (shift.demi_conge && planningPostes.demi_cp) {
+                        const bd = document.createElement('span');
+                        bd.className = "shift-badge-compact";
+                        bd.style.setProperty('--c', planningPostes.demi_cp.couleur);
+                        bd.textContent = planningPostes.demi_cp.label;
+                        ligneShift.appendChild(bd);
+                    } else if (shift.jour_ferie && planningPostes.jour_ferie) {
+                        const bf = document.createElement('span');
+                        bf.className = "shift-badge-compact";
+                        bf.style.setProperty('--c', planningPostes.jour_ferie.couleur);
+                        bf.textContent = planningPostes.jour_ferie.label;
+                        ligneShift.appendChild(bf);
                     }
-                    if (shift.jour_ferie && planningPostes.jour_ferie) {
-                        bp.style.borderLeft = `4px solid ${planningPostes.jour_ferie.couleur}`;
-                        libellePoste += ' · ' + planningPostes.jour_ferie.label;
-                        titreExtra.push(planningPostes.jour_ferie.label);
+                    if (shift.astreinte && planningAstreintes[shift.astreinte]) {
+                        const ba = document.createElement('span');
+                        ba.className = "shift-badge-compact";
+                        ba.style.setProperty('--c', planningAstreintes[shift.astreinte].couleur);
+                        ba.textContent = planningAstreintes[shift.astreinte].label;
+                        ligneShift.appendChild(ba);
                     }
-                    bp.textContent = heuresSaisies ? `${libellePoste} · ${parseFloat(shift.heures)}h` : libellePoste;
-                    if (titreExtra.length) { bp.title = `${planningPostes[shift.poste].label} + ${titreExtra.join(' + ')}`; }
-                    ligneShift.appendChild(bp);
-                } else if (shift.demi_conge && planningPostes.demi_cp) {
-                    const bd = document.createElement('span');
-                    bd.className = "shift-badge-compact";
-                    bd.style.setProperty('--c', planningPostes.demi_cp.couleur);
-                    bd.textContent = planningPostes.demi_cp.label;
-                    ligneShift.appendChild(bd);
-                } else if (shift.jour_ferie && planningPostes.jour_ferie) {
-                    const bf = document.createElement('span');
-                    bf.className = "shift-badge-compact";
-                    bf.style.setProperty('--c', planningPostes.jour_ferie.couleur);
-                    bf.textContent = planningPostes.jour_ferie.label;
-                    ligneShift.appendChild(bf);
-                }
-                if (shift.astreinte && planningAstreintes[shift.astreinte]) {
-                    const ba = document.createElement('span');
-                    ba.className = "shift-badge-compact";
-                    ba.style.setProperty('--c', planningAstreintes[shift.astreinte].couleur);
-                    ba.textContent = planningAstreintes[shift.astreinte].label;
-                    ligneShift.appendChild(ba);
-                }
-                // Note personnelle : uniquement visible sur SA PROPRE case, même pour un admin — le
-                // planning journalier/hebdomadaire est une vue de groupe, contrairement au planning
-                // annuel (accessible techincien par technicien) où l'admin peut consulter les notes.
-                if (shift.note && tech === currentUser) {
-                    const bn = document.createElement('span');
-                    bn.className = "shift-note-badge";
-                    bn.innerHTML = '<i class="fa-solid fa-note-sticky"></i>';
-                    const bubble = document.createElement('span');
-                    bubble.className = 'shift-note-bubble';
-                    bubble.textContent = shift.note;
-                    bn.appendChild(bubble);
-                    ligneShift.appendChild(bn);
+                    // Note personnelle : uniquement visible sur SA PROPRE case, même pour un admin — le
+                    // planning journalier/hebdomadaire est une vue de groupe, contrairement au planning
+                    // annuel (accessible techincien par technicien) où l'admin peut consulter les notes.
+                    if (shift.note && tech === currentUser) {
+                        const bn = document.createElement('span');
+                        bn.className = "shift-note-badge";
+                        bn.innerHTML = '<i class="fa-solid fa-note-sticky"></i>';
+                        const bubble = document.createElement('span');
+                        bubble.className = 'shift-note-bubble';
+                        bubble.textContent = shift.note;
+                        bn.appendChild(bubble);
+                        ligneShift.appendChild(bn);
+                    }
                 }
                 cell.appendChild(ligneShift);
             }
@@ -1958,7 +2068,7 @@ function renderTable() {
             cell.addEventListener('click', (e) => {
     // Un admin peut planifier tout le monde ; un technicien uniquement ses propres cases
     if(peutPlanifier && (e.target === cell || e.target.closest('.shift-badges-row'))) {
-        openShiftModal(tech, dStr);
+        ouvrirChoixCase(tech, dStr);
     }
 });
 
@@ -2177,7 +2287,7 @@ function renderPlanningDayCards() {
     wrap.innerHTML = html;
 
     if (aShift && peutPlanifier) {
-        document.getElementById('pdc-shift-card').addEventListener('click', () => openShiftModal(tech, dStr));
+        document.getElementById('pdc-shift-card').addEventListener('click', () => ouvrirChoixCase(tech, dStr));
     }
     wrap.querySelectorAll('.pdc-task').forEach(cardEl => {
         // String(...) des deux côtés : tk.id passe par un attribut data-* (toujours une chaîne) pour
@@ -2280,16 +2390,18 @@ let moisTech = null;
 let moisCourant = null;
 
 // La navigation "semaine" (fleches sur les bords de l'ecran + petit encadre "Semaine XX" en haut, voir
-// .side-nav-btn/.week-nav-center) n'a aucun effet visible sur la vue Mois (qui a sa propre navigation par
-// mois, dans son bandeau). La laisser visible pretait a confusion : jusqu'a 4 fleches sur l'ecran en meme
-// temps, dont 2 qui ne faisaient rien de constatable pendant qu'on regardait un mois. En vue Mois, on
-// affiche a la place #moisNavCenter, un encadre identique (meme classe .week-nav-center, donc meme
-// centrage/style) mais avec les fleches de mois.
+// .side-nav-btn/.week-nav-center) n'a aucun effet visible sur la vue Mois. La laisser visible pretait a
+// confusion : jusqu'a 4 fleches sur l'ecran en meme temps, dont 2 qui ne faisaient rien de constatable
+// pendant qu'on regardait un mois. En vue Mois, on bascule vers leur equivalent mois : #moisNavCenter
+// (meme classe .week-nav-center, donc meme centrage/style que le bandeau semaine) pour l'encadre du haut,
+// et #moisSideLeft/#moisSideRight (memes classes .side-nav-btn/.side-btn-left/.side-btn-right, marquees
+// .side-nav-btn-mois pour echapper au toggle "semaine" ci-dessous) pour les fleches sur les bords.
 function appliquerVisibiliteNavSemaine() {
     const affiche = (modeVue !== 'mois');
-    document.querySelectorAll('.side-nav-btn').forEach(b => b.style.display = affiche ? '' : 'none');
+    document.querySelectorAll('.side-nav-btn:not(.side-nav-btn-mois)').forEach(b => b.style.display = affiche ? '' : 'none');
     document.getElementById('weekNavCenter').style.display = affiche ? '' : 'none';
     document.getElementById('moisNavCenter').style.display = affiche ? 'none' : '';
+    document.querySelectorAll('.side-nav-btn-mois').forEach(b => b.style.display = affiche ? 'none' : '');
 }
 
 function definirModeVue(mode) {
@@ -2411,6 +2523,14 @@ function renderMoisView() {
         const classes = ['mois-case'];
         if (horsMois) classes.push('hors-mois');
         if (dStr === todayStr) classes.push('aujourdhui');
+        // Derniere ligne de la grille (i>=35) : la tuile d'info (.task-tooltip) s'ouvre vers le haut,
+        // meme mecanique de retournement que .tech-row-last en vue Semaine, sinon elle sort en bas de l'ecran.
+        if (i >= 35) classes.push('tech-row-last');
+        // Premiere/derniere colonne (lundi/dimanche) : voir .edge-col-first/.edge-col-last plus haut,
+        // sinon la tuile de 220px centree deborde du cadre du calendrier sur les bords.
+        const colonne = i % 7;
+        if (colonne === 0) classes.push('edge-col-first');
+        if (colonne === 6) classes.push('edge-col-last');
 
         let badge = '';
         if (!horsMois) {
@@ -2429,6 +2549,10 @@ function renderMoisView() {
                 }
                 if (libelle) { badge = `<div class="shift-badge-compact" style="--c:${couleur}">${libelle}</div>`; }
             }
+            // Todo list du jour (voir #todoModal) : même pastille que la vue Semaine, juste à côté du
+            // badge de poste plutôt que dans sa propre ligne (la case du mois est plus étroite).
+            const todoItemsJourMois = todoParCle[`${moisTech}_${dStr}`] || [];
+            if (todoItemsJourMois.length > 0) { badge += todoBadgeHtml(moisTech, dStr, todoItemsJourMois); }
         }
 
         // Bons d'intervention : meme filtre que la vue Semaine (un pointage du technicien ce jour-la sur
@@ -2447,7 +2571,23 @@ function renderMoisView() {
                     const dragAttrs = peutPlanifierMois
                         ? ` draggable="true" ondragstart="draggedTaskId='${tk.id}'; event.dataTransfer.setData('taskId','${tk.id}');${ptgDuJour ? ` event.dataTransfer.setData('pointageId','${ptgDuJour.id}');` : ''}"`
                         : '';
-                    return `<span class="task-badge-compact status-${statusClass}"${dragAttrs} onclick="event.stopPropagation(); ouvrirDetailBIParId('${tk.id}')">${numBadge}</span>`;
+                    // Meme tuile d'info qu'en vue Semaine (voir .task-tooltip plus haut) : temps reel
+                    // pointe (toutes dates confondues sur ce BI) si dispo, sinon temps prevu.
+                    const totalHeuresReelles = pointages.filter(p => p.task_id === tk.id).reduce((acc, p) => acc + parseFloat(p.hours || 0), 0);
+                    const affichageTemps = totalHeuresReelles > 0
+                        ? `<span style="color:#64b5f6; font-weight:900;">${totalHeuresReelles.toFixed(1)}h (R)</span>`
+                        : `<span style="color:#ffb74d; font-weight:900;">${parseFloat(tk.hours || 0).toFixed(1)}h (P)</span>`;
+                    return `<div class="task-badge-compact status-${statusClass}"${dragAttrs} onclick="event.stopPropagation(); ouvrirDetailBIParId('${tk.id}')">
+                        <span style="pointer-events:none;">${numBadge}</span>
+                        <div class="task-tooltip">
+                            <div style="font-family:'Caveat', cursive; font-size:1.4rem; color:var(--brand-orange); margin-bottom:5px; line-height:1;">${tk.equip}</div>
+                            <div style="font-size:0.75rem; color:#e2e8f0; margin-bottom:10px; line-height:1.3; overflow:hidden; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical;">${tk.desc || I18N_PLANNING.aucune_description}</div>
+                            <div style="display:flex; justify-content:space-between; border-top:1px solid rgba(255,255,255,0.1); padding-top:8px; font-size:0.7rem;">
+                                <span>${affichageTemps}</span>
+                                <span style="text-transform:uppercase; font-weight:900; color:${statusClass==='termine'?LIBELLES.termine.couleur:(statusClass==='encours'?LIBELLES.encours.couleur:LIBELLES.afaire.couleur)}">${tk.statut}</span>
+                            </div>
+                        </div>
+                    </div>`;
                 }).join('');
             if (chips) { tachesHtml = `<div class="mois-case-tasks">${chips}</div>`; }
         }
@@ -2456,7 +2596,7 @@ function renderMoisView() {
         const dropAttrs = peutPlanifier
             ? ` ondragover="event.preventDefault();" ondragenter="this.classList.add('drag-over');" ondragleave="this.classList.remove('drag-over');" ondrop="this.classList.remove('drag-over'); handleDrop(event, '${moisTech}', '${dStr}');"`
             : '';
-        html += `<div class="${classes.join(' ')}"${peutPlanifier ? ` onclick="openShiftModal('${moisTech}', '${dStr}')"` : ''}${dropAttrs}>
+        html += `<div class="${classes.join(' ')}"${peutPlanifier ? ` onclick="ouvrirChoixCase('${moisTech}', '${dStr}')"` : ''}${dropAttrs}>
             <div class="mois-case-num">${d.getDate()}</div>
             ${badge}
             ${tachesHtml}
@@ -2605,6 +2745,138 @@ let topModalZ = 10000;
 function bringModalToFront(id) {
     topModalZ += 10;
     document.getElementById(id).style.zIndex = topModalZ;
+}
+
+// --- CHOIX "PLANIFIER LES HEURES / CRÉER UN BI" AU CLIC SUR UNE CASE ---
+// Point d'entrée commun aux vues Jour, Semaine et Mois (voir ouvrirChoixCase dans renderTable,
+// renderPlanningDayCards et renderMoisView) : avant d'ouvrir la modale d'heures, on laisse choisir si le
+// clic concerne la planification (openShiftModal, inchangé) ou la déclaration d'un nouveau BI sur cette
+// case — qui n'existait pas depuis le planning, uniquement depuis Saisie & Historique.
+let choixCaseTech = null;
+let choixCaseDate = null;
+
+function ouvrirChoixCase(tech, dateStr) {
+    choixCaseTech = tech;
+    choixCaseDate = dateStr;
+    const dateLabel = new Date(dateStr + 'T00:00:00').toLocaleDateString(JS_LOCALE, { weekday: 'long', day: 'numeric', month: 'long' });
+    document.getElementById('choix-case-sous-titre').textContent = `${libelleTech(tech)} — ${dateLabel}`;
+    document.getElementById('choixCaseModal').style.display = 'block';
+}
+
+function closeChoixCase() {
+    document.getElementById('choixCaseModal').style.display = 'none';
+}
+
+function choisirPlanifierHeures() {
+    const tech = choixCaseTech, dateStr = choixCaseDate;
+    closeChoixCase();
+    openShiftModal(tech, dateStr);
+}
+
+// Renvoie vers Saisie & Historique, qui ouvre l'assistant de création pré-rempli (technicien + date de
+// la case) — voir ouvrirWizardOTPourPlanning dans maintenance.php, même principe que
+// ouvrirWizardOTPourMachine pour le Parc Machine.
+function choisirCreerBI() {
+    const tech = choixCaseTech, dateStr = choixCaseDate;
+    closeChoixCase();
+    window.location.href = 'maintenance.php?creer_bi_planning=1&tech=' + encodeURIComponent(tech) + '&date=' + encodeURIComponent(dateStr);
+}
+
+// --- TODO LIST PAR JOUR (voir #todoModal) : accessible depuis le choix de case comme les deux options
+// ci-dessus. Une tâche non cochée à la date du jour se reporte automatiquement au lendemain (voir
+// get_todo côté maintenance.php, qui fait ce report avant de répondre) — pas besoin d'y penser ici.
+let todoModalTech = null;
+let todoModalDate = null;
+
+// Pastille "il y a une todo list ce jour-là" apposée sur une case du planning (vues Semaine et Mois,
+// voir renderTable/renderMoisView) : le nombre de tâches restantes, ou une coche si tout est fait. Un
+// clic ouvre directement la liste, sans repasser par le choix de case (stopPropagation pour ne pas
+// aussi déclencher l'ouverture de cette dernière).
+function todoBadgeHtml(tech, dateStr, items) {
+    const nbRestant = items.filter(i => i.fait != 1).length;
+    const contenu = nbRestant > 0 ? `<i class="fa-solid fa-list-check"></i> ${nbRestant}` : `<i class="fa-solid fa-circle-check"></i>`;
+    const titre = items.map(i => `${i.fait == 1 ? '✓' : '•'} ${i.texte}`).join('\n').replace(/"/g, '&quot;');
+    return `<span class="todo-cell-badge${nbRestant === 0 ? ' tout-fait' : ''}" title="${titre}" onclick="event.stopPropagation(); ouvrirTodoModal('${tech}', '${dateStr}')">${contenu}</span>`;
+}
+
+function choisirTodoList() {
+    const tech = choixCaseTech, dateStr = choixCaseDate;
+    closeChoixCase();
+    ouvrirTodoModal(tech, dateStr);
+}
+
+function ouvrirTodoModal(tech, dateStr) {
+    todoModalTech = tech;
+    todoModalDate = dateStr;
+    const dateLabel = new Date(dateStr + 'T00:00:00').toLocaleDateString(JS_LOCALE, { weekday: 'long', day: 'numeric', month: 'long' });
+    document.getElementById('todo-modal-titre').textContent = `${I18N_PLANNING.choix_todo_list} — ${libelleTech(tech)}`;
+    document.getElementById('todo-modal-date').textContent = dateLabel;
+    document.getElementById('todo-new-texte').value = '';
+    renderTodoItems();
+    document.getElementById('todoModal').style.display = 'block';
+}
+
+function closeTodoModal() {
+    document.getElementById('todoModal').style.display = 'none';
+}
+
+function renderTodoItems() {
+    const key = `${todoModalTech}_${todoModalDate}`;
+    const items = (todoParCle[key] || []).slice().sort((a, b) => a.id - b.id);
+    const wrap = document.getElementById('todo-items-list');
+    if (items.length === 0) {
+        wrap.innerHTML = `<div class="todo-empty-state">${I18N_PLANNING.todo_vide}</div>`;
+        return;
+    }
+    wrap.innerHTML = items.map(item => `
+        <div class="todo-item ${(item.fait == 1) ? 'is-fait' : ''}">
+            <input type="checkbox" ${(item.fait == 1) ? 'checked' : ''} onchange="toggleTodoItem(${item.id}, this.checked)">
+            <span class="todo-item-texte">${(item.texte || '').toString().replace(/</g, '&lt;')}</span>
+            <i class="fa-solid fa-trash todo-item-del" onclick="supprimerTodoItem(${item.id})"></i>
+        </div>`).join('');
+}
+
+async function ajouterTodoItem() {
+    const input = document.getElementById('todo-new-texte');
+    const texte = input.value.trim();
+    if (!texte) return;
+    const fd = new FormData();
+    fd.append('action', 'todo_add');
+    fd.append('tech', todoModalTech);
+    fd.append('date', todoModalDate);
+    fd.append('texte', texte);
+    const res = await fetch('maintenance.php', { method: 'POST', body: fd });
+    const data = await res.json().catch(() => null);
+    if (!data || !data.id) return;
+    const key = `${todoModalTech}_${todoModalDate}`;
+    if (!todoParCle[key]) todoParCle[key] = [];
+    todoParCle[key].push({ id: data.id, utilisateur: todoModalTech, jour: todoModalDate, texte: texte, fait: 0 });
+    input.value = '';
+    renderTodoItems();
+}
+
+async function toggleTodoItem(id, coche) {
+    const fd = new FormData();
+    fd.append('action', 'todo_toggle');
+    fd.append('id', id);
+    fd.append('fait', coche ? '1' : '0');
+    await fetch('maintenance.php', { method: 'POST', body: fd });
+    const key = `${todoModalTech}_${todoModalDate}`;
+    const item = (todoParCle[key] || []).find(i => i.id == id);
+    if (item) item.fait = coche ? 1 : 0;
+    renderTodoItems();
+}
+
+async function supprimerTodoItem(id) {
+    const ok = await aspirineConfirm(I18N_PLANNING.confirmation_title, I18N_PLANNING.todo_confirm_suppr_msg);
+    if (!ok) return;
+    const fd = new FormData();
+    fd.append('action', 'todo_delete');
+    fd.append('id', id);
+    await fetch('maintenance.php', { method: 'POST', body: fd });
+    const key = `${todoModalTech}_${todoModalDate}`;
+    todoParCle[key] = (todoParCle[key] || []).filter(i => i.id != id);
+    renderTodoItems();
 }
 
 function openShiftModal(tech, dateStr, depuisAnnuel) {
