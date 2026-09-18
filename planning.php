@@ -1011,15 +1011,15 @@ try {
            pas moyen d'afficher un avatar par ligne dans sa liste). */
         .tech-dropdown { position: relative; }
         .tech-dropdown-trigger { display: flex; align-items: center; gap: 10px; background: #fff; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 6px 14px 6px 6px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.06); transition: 0.15s; font-family: 'Segoe UI'; min-width: 230px; text-align: left; }
-        .tech-dropdown-trigger:hover { border-color: var(--gelpam-green); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
-        .tech-dropdown.open .tech-dropdown-trigger { border-color: var(--gelpam-green); box-shadow: 0 0 0 3px rgba(46,204,113,0.15); }
+        .tech-dropdown-trigger:hover { border-color: var(--brand-green); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+        .tech-dropdown.open .tech-dropdown-trigger { border-color: var(--brand-green); box-shadow: 0 0 0 3px rgba(46,204,113,0.15); }
         .tech-dropdown-avatar { width: 36px; height: 36px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: #dfe6ec; box-shadow: 0 0 0 1px #e2e8f0; }
         .tech-dropdown-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .tech-dropdown-info { display: flex; flex-direction: column; flex: 1; min-width: 0; }
         .tech-dropdown-eyebrow { font-size: 0.6rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
         .tech-dropdown-name { font-size: 0.92rem; font-weight: 700; color: var(--primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .tech-dropdown-chevron { color: #94a3b8; font-size: 0.75rem; transition: transform 0.2s; flex-shrink: 0; margin-right: 2px; }
-        .tech-dropdown.open .tech-dropdown-chevron { transform: rotate(180deg); color: var(--gelpam-green); }
+        .tech-dropdown.open .tech-dropdown-chevron { transform: rotate(180deg); color: var(--brand-green); }
 
         .tech-dropdown-panel { position: absolute; top: calc(100% + 8px); left: 0; min-width: 260px; background: #fff; border-radius: 12px; box-shadow: 0 14px 34px rgba(0,0,0,0.2); border: 1px solid rgba(0,0,0,0.06); padding: 6px; z-index: 500; opacity: 0; visibility: hidden; transform: translateY(-8px); transition: 0.16s ease; max-height: 320px; overflow-y: auto; }
         .tech-dropdown.open .tech-dropdown-panel { opacity: 1; visibility: visible; transform: translateY(0); }
@@ -1030,7 +1030,7 @@ try {
         .tech-dropdown-item-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .tech-dropdown-item-name { flex: 1; font-size: 0.84rem; font-weight: 600; color: var(--primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .tech-dropdown-item.selected .tech-dropdown-item-name { color: #196f3d; font-weight: 700; }
-        .tech-dropdown-item-check { color: var(--gelpam-green); font-size: 0.8rem; opacity: 0; flex-shrink: 0; }
+        .tech-dropdown-item-check { color: var(--brand-green); font-size: 0.8rem; opacity: 0; flex-shrink: 0; }
         .tech-dropdown-item.selected .tech-dropdown-item-check { opacity: 1; }
         .mois-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; padding: 12px 16px 20px; }
         .mois-jour-nom { text-align: center; font-size: 0.7rem; font-weight: 700; color: #8a94a0; padding-bottom: 4px; }
@@ -1038,7 +1038,7 @@ try {
         .mois-case:hover { border-color: #cbd5e1; background: #f1f5f9; }
         .mois-case.hors-mois { background: transparent; border-color: transparent; cursor: default; }
         .mois-case.aujourdhui { border-color: var(--accent); border-width: 2px; }
-        .mois-case.drag-over { background: rgba(46, 204, 113, 0.2) !important; border: 2px dashed var(--gelpam-green); }
+        .mois-case.drag-over { background: rgba(46, 204, 113, 0.2) !important; border: 2px dashed var(--brand-green); }
         /* Bons d'intervention du jour (memes badges/couleurs que la vue Semaine, voir .task-badge-compact) :
            en colonne etroite ici, donc pas question qu'ils s'etirent a 100% comme dans une case de semaine. */
         .mois-case-tasks { display: flex; flex-wrap: wrap; gap: 2px; }
