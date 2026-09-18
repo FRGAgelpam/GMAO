@@ -4,6 +4,16 @@ Ce fichier liste les changements apportés à cette GMAO, version par version. I
 
 Pour la procédure de mise à jour (y compris sans accès Internet sur le serveur), voir la section "Mettre à jour" de [install/README.md](install/README.md).
 
+## 1.2.0 — 2026-09-18
+
+- Planning : les fenêtres du Planning (choix de case, planification des heures, TODO list, remplissage rapide, planning annuel) reprennent un même en-tête soigné avec le technicien concerné et la date ; les boutons de « Planifier les heures » sont resserrés pour éviter de défiler.
+- TODO list : fenêtre remodelée en deux colonnes sur grand écran (liste à gauche, formulaire à droite), avec résumé d'avancement, filtres Toutes / À faire / Faites et tri par priorité.
+- TODO list : une tâche peut maintenant être modifiée après sa création, et renseigner une priorité, une catégorie, une durée estimée, une heure prévue, une machine ou un lieu et un détail. Le suivi (création, report automatique, fin) s'affiche sous chaque tâche.
+- Planning : le survol de la pastille de TODO list d'une case affiche une bulle d'information par tâche, à la place de l'infobulle du navigateur ; le compteur de la pastille se met à jour dès la fermeture de la TODO list.
+- Paramètres : nouvel onglet « TODO list » pour gérer les catégories de tâches (nom, icône, couleur, ordre) et les durées estimées proposées.
+- Pages d'aide du Planning et des Paramètres mises à jour.
+
+Aucune migration de base de données obligatoire : les nouvelles colonnes et tables (`planning_todo`, `todo_categories`) se créent automatiquement au premier usage.
 ## 1.1.0 — 2026-09-18
 
 - Numéro de version affiché dans l'appli : en-tête de chaque page, page de connexion, et Journal des évolutions.

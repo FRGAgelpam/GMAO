@@ -208,6 +208,7 @@ tbody td:first-child { font-weight: 700; color: var(--primary); white-space: now
                 <li><a href="#categories"><i class="fa-solid fa-calendar-check"></i> <?php echo htmlspecialchars(t('aide_parametres.toc_categories')); ?></a></li>
                 <li><a href="#statuts"><i class="fa-solid fa-flag"></i> <?php echo htmlspecialchars(t('aide_parametres.toc_statuts')); ?></a></li>
                 <li><a href="#planning"><i class="fa-solid fa-calendar-days"></i> <?php echo htmlspecialchars(t('aide_parametres.toc_planning')); ?></a></li>
+                <li><a href="#todo"><i class="fa-solid fa-list-check"></i> <?php echo htmlspecialchars(t('aide_parametres.toc_todo')); ?></a></li>
                 <li><a href="#tuiles"><i class="fa-solid fa-palette"></i> <?php echo htmlspecialchars(t('aide_parametres.toc_tuiles')); ?></a></li>
                 <li><a href="#droits"><i class="fa-solid fa-shield-halved"></i> <?php echo htmlspecialchars(t('aide_parametres.toc_droits')); ?></a></li>
                 <li class="toc-sep"></li>
@@ -231,6 +232,7 @@ tbody td:first-child { font-weight: 700; color: var(--primary); white-space: now
                         <span class="tab-pill"><i class="fa-solid fa-calendar-check"></i> <?php echo htmlspecialchars(t('aide_parametres.toc_categories')); ?></span>
                         <span class="tab-pill"><i class="fa-solid fa-flag"></i> <?php echo htmlspecialchars(t('aide_parametres.toc_statuts')); ?></span>
                         <span class="tab-pill"><i class="fa-solid fa-calendar-days"></i> <?php echo htmlspecialchars(t('aide_parametres.toc_planning')); ?></span>
+                        <span class="tab-pill"><i class="fa-solid fa-list-check"></i> <?php echo htmlspecialchars(t('aide_parametres.toc_todo')); ?></span>
                         <span class="tab-pill"><i class="fa-solid fa-palette"></i> <?php echo htmlspecialchars(t('aide_parametres.toc_tuiles')); ?></span>
                     </div>
 
@@ -363,6 +365,18 @@ tbody td:first-child { font-weight: 700; color: var(--primary); white-space: now
                     <div class="callout callout-warn">
                         <i class="fa-solid fa-triangle-exclamation"></i>
                         <div><p><?php echo t('aide_parametres.planning_warn'); ?></p></div>
+                    </div>
+                </section>
+
+                <section id="todo" class="aide-sec">
+                    <div class="sec-eyebrow"><i class="fa-solid fa-list-check"></i><h2><?php echo htmlspecialchars(t('aide_parametres.todo_h2')); ?></h2></div>
+                    <p class="lede"><?php echo htmlspecialchars(t('aide_parametres.todo_lede')); ?></p>
+
+                    <p><?php echo t('aide_parametres.todo_p'); ?></p>
+
+                    <div class="callout callout-warn">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <div><p><?php echo t('aide_parametres.todo_warn'); ?></p></div>
                     </div>
                 </section>
 

@@ -539,6 +539,9 @@ tbody td:first-child { font-weight: 700; color: var(--primary); white-space: now
                         <li><?php echo t('aide_planning.todo_li2'); ?></li>
                         <li><?php echo t('aide_planning.todo_li3'); ?></li>
                         <li><?php echo t('aide_planning.todo_li4'); ?></li>
+                        <li><?php echo t('aide_planning.todo_li5'); ?></li>
+                        <li><?php echo t('aide_planning.todo_li6'); ?></li>
+                        <li><?php echo t('aide_planning.todo_li7'); ?></li>
                     </ul>
 
                     <div class="callout callout-tip">

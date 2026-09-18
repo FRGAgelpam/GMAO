@@ -87,24 +87,42 @@ if (isset($_GET['get_pointages'])) {
 // on fait avancer ici même, à chaque lecture, toute tâche non faite restée sur un jour déjà passé —
 // aucune tâche ne reste donc jamais bloquée sur une date révolue, sans dépendre d'une tâche planifiée
 // côté serveur (utile aussi en local/XAMPP, où rien de tel n'est configuré).
+require_once __DIR__ . '/todo_config.php';
+
+// Lit et valide les champs d'une tâche envoyés par le formulaire (ajout ET modification) : rien n'est
+// pris tel quel, chaque valeur est ramenée à une valeur autorisée ou à NULL.
+function todo_champs_depuis_post($db) {
+    // Catégories autorisées = celles définies dans Paramètres > TODO list.
+    todo_config_assurer($db);
+    $categories = array_column(todo_categories_charger($db), 'cle');
+    $machine = mb_substr(trim($_POST['machine'] ?? ''), 0, 100);
+    $detail = mb_substr(trim($_POST['detail'] ?? ''), 0, 255);
+    $duree = (int)($_POST['duree_min'] ?? 0);
+    return [
+        'texte'     => mb_substr(trim($_POST['texte'] ?? ''), 0, 255),
+        'priorite'  => in_array($_POST['priorite'] ?? '', ['basse', 'haute'], true) ? $_POST['priorite'] : 'normale',
+        'heure'     => preg_match('/^([01]\d|2[0-3]):[0-5]\d$/', $_POST['heure'] ?? '') ? $_POST['heure'] : null,
+        'machine'   => $machine !== '' ? $machine : null,
+        'detail'    => $detail !== '' ? $detail : null,
+        'categorie' => in_array($_POST['categorie'] ?? '', $categories, true) ? $_POST['categorie'] : null,
+        'duree_min' => ($duree >= 1 && $duree <= 1440) ? $duree : null,
+    ];
+}
+
 if (isset($_GET['get_todo'])) {
     ob_clean();
     header('Content-Type: application/json');
     try {
         require_once 'db.php';
-        $db->exec("CREATE TABLE IF NOT EXISTS planning_todo (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            utilisateur VARCHAR(100) NOT NULL,
-            jour DATE NOT NULL,
-            texte VARCHAR(255) NOT NULL,
-            fait TINYINT(1) NOT NULL DEFAULT 0,
-            date_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-        )");
-        $db->exec("UPDATE planning_todo SET jour = CURDATE() WHERE fait = 0 AND jour < CURDATE()");
+        todo_assurer_table($db);
+        // jour_origine est renseigné avant que jour ne change (les affectations d'un UPDATE s'évaluent de
+        // gauche à droite) et conserve le tout premier jour en cas de reports successifs.
+        $db->exec("UPDATE planning_todo SET jour_origine = COALESCE(jour_origine, jour), jour = CURDATE() WHERE fait = 0 AND jour < CURDATE()");
+        $colsTodo = "id, utilisateur, jour, texte, fait, priorite, heure, machine, detail, categorie, duree_min, jour_origine, date_fait, date_creation";
         if ($is_admin) {
-            $rows = $db->query("SELECT id, utilisateur, jour, texte, fait FROM planning_todo ORDER BY id")->fetchAll(PDO::FETCH_ASSOC);
+            $rows = $db->query("SELECT $colsTodo FROM planning_todo ORDER BY id")->fetchAll(PDO::FETCH_ASSOC);
         } else {
-            $stmt = $db->prepare("SELECT id, utilisateur, jour, texte, fait FROM planning_todo WHERE utilisateur = ? ORDER BY id");
+            $stmt = $db->prepare("SELECT $colsTodo FROM planning_todo WHERE utilisateur = ? ORDER BY id");
             $stmt->execute([$_SESSION['user']]);
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
@@ -405,21 +423,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
     try {
         require_once 'db.php';
-        $db->exec("CREATE TABLE IF NOT EXISTS planning_todo (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            utilisateur VARCHAR(100) NOT NULL,
-            jour DATE NOT NULL,
-            texte VARCHAR(255) NOT NULL,
-            fait TINYINT(1) NOT NULL DEFAULT 0,
-            date_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-        )");
-        $texte = mb_substr(trim($_POST['texte'] ?? ''), 0, 255);
-        if ($texte === '') { http_response_code(400); echo t('maint.err_server'); exit(); }
-        $stmt = $db->prepare("INSERT INTO planning_todo (utilisateur, jour, texte) VALUES (?, ?, ?)");
-        $stmt->execute([$tech, $_POST['date'] ?? '', $texte]);
+        todo_assurer_table($db);
+        $c = todo_champs_depuis_post($db);
+        if ($c['texte'] === '') { http_response_code(400); echo t('maint.err_server'); exit(); }
+        $stmt = $db->prepare("INSERT INTO planning_todo (utilisateur, jour, texte, priorite, heure, machine, detail, categorie, duree_min) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$tech, $_POST['date'] ?? '', $c['texte'], $c['priorite'], $c['heure'], $c['machine'], $c['detail'], $c['categorie'], $c['duree_min']]);
+        $idNouveau = (int)$db->lastInsertId();
+        $stmt = $db->prepare("SELECT date_creation FROM planning_todo WHERE id = ?");
+        $stmt->execute([$idNouveau]);
         ob_clean();
         header('Content-Type: application/json');
-        echo json_encode(['id' => (int)$db->lastInsertId()]);
+        echo json_encode(['id' => $idNouveau, 'date_creation' => $stmt->fetchColumn()]);
     } catch (Exception $e) {
         http_response_code(500);
         error_log("maintenance.php: " . $e->getMessage());
@@ -443,8 +457,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             echo t('maint.err_only_own_days_modif');
             exit();
         }
-        $stmt = $db->prepare("UPDATE planning_todo SET fait = ? WHERE id = ?");
-        $stmt->execute([!empty($_POST['fait']) ? 1 : 0, $_POST['id']]);
+        $fait = !empty($_POST['fait']) ? 1 : 0;
+        $stmt = $db->prepare("UPDATE planning_todo SET fait = ?, date_fait = " . ($fait ? "NOW()" : "NULL") . " WHERE id = ?");
+        $stmt->execute([$fait, $_POST['id']]);
+        echo "OK";
+    } catch (Exception $e) {
+        http_response_code(500);
+        error_log("maintenance.php: " . $e->getMessage());
+        echo t('maint.err_server');
+    }
+    exit();
+}
+
+// --- MODIFICATION D'UNE TÂCHE TODO LIST (même vérification de propriétaire que todo_toggle) ---
+// Ne touche ni au jour, ni à l'état coché : seuls les champs saisis dans le formulaire changent.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'todo_update') {
+    try {
+        require_once 'db.php';
+        $stmt = $db->prepare("SELECT utilisateur FROM planning_todo WHERE id = ?");
+        $stmt->execute([$_POST['id'] ?? '']);
+        $proprietaire = $stmt->fetchColumn();
+        if ($proprietaire === false) { http_response_code(404); exit(); }
+        if (!$is_admin && $proprietaire !== $_SESSION['user']) {
+            http_response_code(403);
+            echo t('maint.err_only_own_days_modif');
+            exit();
+        }
+        $c = todo_champs_depuis_post($db);
+        if ($c['texte'] === '') { http_response_code(400); echo t('maint.err_server'); exit(); }
+        $stmt = $db->prepare("UPDATE planning_todo SET texte = ?, priorite = ?, heure = ?, machine = ?, detail = ?, categorie = ?, duree_min = ? WHERE id = ?");
+        $stmt->execute([$c['texte'], $c['priorite'], $c['heure'], $c['machine'], $c['detail'], $c['categorie'], $c['duree_min'], $_POST['id']]);
         echo "OK";
     } catch (Exception $e) {
         http_response_code(500);

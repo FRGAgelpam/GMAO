@@ -365,7 +365,7 @@ function genererCle($label) {
 }
 
 function deplacerElement($db, $table, $id, $direction) {
-    if (!in_array($table, ['types_equipement', 'services', 'preventif_categories', 'composant_types', 'schema_categories_visuelles'], true)) return;
+    if (!in_array($table, ['types_equipement', 'services', 'preventif_categories', 'composant_types', 'schema_categories_visuelles', 'todo_categories'], true)) return;
     $stmt = $db->prepare("SELECT id, ordre FROM $table WHERE id=?");
     $stmt->execute([$id]);
     $cur = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -383,8 +383,12 @@ function deplacerElement($db, $table, $id, $direction) {
     }
 }
 
+// Catégories de tâches et durées de la TODO list du planning (tables/valeurs par défaut créées au besoin).
+require_once __DIR__ . '/todo_config.php';
+try { todo_assurer_table($db); todo_config_assurer($db); } catch (Exception $e) {}
+
 $active_tab = $_POST['tab_actif'] ?? ($_GET['tab'] ?? 'general');
-if (!in_array($active_tab, ['general', 'types', 'materiel', 'services', 'categories', 'workflow', 'planning', 'tuiles', 'schema_categories'], true)) { $active_tab = 'general'; }
+if (!in_array($active_tab, ['general', 'types', 'materiel', 'services', 'categories', 'workflow', 'planning', 'todo', 'tuiles', 'schema_categories'], true)) { $active_tab = 'general'; }
 
 // --- ACTIONS POST ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -734,6 +738,89 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } elseif ($action === 'move_categorie') {
                 deplacerElement($db, 'preventif_categories', (int)$_POST['id'], $_POST['direction']);
 
+            } elseif ($action === 'add_todo_categorie' || $action === 'edit_todo_categorie') {
+                $label = mb_substr(trim($_POST['label'] ?? ''), 0, 100);
+                $icone = in_array($_POST['icone'] ?? '', todo_icones_disponibles(), true) ? $_POST['icone'] : 'fa-ellipsis';
+                $couleur = couleur_est_valide($_POST['couleur'] ?? '') ? $_POST['couleur'] : '#7f8c8d';
+                if ($label === '') {
+                    $message = "<div class='alert danger'>" . t('param.msg_nom_todo_categorie_obligatoire') . "</div>";
+                } elseif ($action === 'add_todo_categorie') {
+                    $base = substr(genererCle($label), 0, 24);
+                    $base = $base !== '' ? $base : 'categorie';
+                    $cle = $base;
+                    $chk = $db->prepare("SELECT COUNT(*) FROM todo_categories WHERE cle=?");
+                    $i = 2;
+                    while (true) {
+                        $chk->execute([$cle]);
+                        if ($chk->fetchColumn() == 0) { break; }
+                        $cle = $base . '_' . $i;
+                        $i++;
+                    }
+                    $maxO = $db->query("SELECT COALESCE(MAX(ordre),-1) FROM todo_categories")->fetchColumn();
+                    $db->prepare("INSERT INTO todo_categories (cle, label, icone, couleur, ordre) VALUES (?, ?, ?, ?, ?)")->execute([$cle, $label, $icone, $couleur, $maxO + 1]);
+                    ajouterLog($db, $_SESSION['user'], "Paramètres", "A ajouté la catégorie de tâche : $label");
+                    $message = "<div class='alert success'>" . t('param.msg_todo_categorie_ajoutee') . "</div>";
+                } else {
+                    $id = (int)$_POST['id'];
+                    $stmt = $db->prepare("SELECT cle FROM todo_categories WHERE id=?");
+                    $stmt->execute([$id]);
+                    $cleActuelle = $stmt->fetchColumn();
+                    // Une catégorie d'origine dont le libellé n'a pas été changé garde son libellé français
+                    // en base : elle continue ainsi de s'afficher dans la langue de chaque utilisateur.
+                    $defauts = todo_categories_defauts();
+                    if ($cleActuelle !== false && isset($defauts[$cleActuelle]) && $label === t('planning.todo_cat_' . $cleActuelle)) {
+                        $label = $defauts[$cleActuelle][0];
+                    }
+                    $db->prepare("UPDATE todo_categories SET label=?, icone=?, couleur=? WHERE id=?")->execute([$label, $icone, $couleur, $id]);
+                    ajouterLog($db, $_SESSION['user'], "Paramètres", "A modifié la catégorie de tâche : $label");
+                    $message = "<div class='alert success'>" . t('param.msg_todo_categorie_modifiee') . "</div>";
+                }
+
+            } elseif ($action === 'delete_todo_categorie') {
+                $id = (int)$_POST['id'];
+                $stmt = $db->prepare("SELECT cle, label FROM todo_categories WHERE id=?");
+                $stmt->execute([$id]);
+                $cat = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($cat) {
+                    $enUsage = $db->prepare("SELECT COUNT(*) FROM planning_todo WHERE categorie=?");
+                    $enUsage->execute([$cat['cle']]);
+                    if ($enUsage->fetchColumn() > 0) {
+                        $message = "<div class='alert danger'>" . t('param.msg_todo_categorie_en_usage') . "</div>";
+                    } else {
+                        $db->prepare("DELETE FROM todo_categories WHERE id=?")->execute([$id]);
+                        ajouterLog($db, $_SESSION['user'], "Paramètres", "A supprimé la catégorie de tâche : " . $cat['label']);
+                        $message = "<div class='alert success'>" . t('param.msg_todo_categorie_supprimee') . "</div>";
+                    }
+                }
+
+            } elseif ($action === 'move_todo_categorie') {
+                deplacerElement($db, 'todo_categories', (int)$_POST['id'], $_POST['direction']);
+
+            } elseif ($action === 'add_todo_duree' || $action === 'delete_todo_duree') {
+                $minutes = (int)($_POST['minutes'] ?? 0);
+                $liste = todo_durees_charger($db);
+                if ($minutes < 1 || $minutes > 1440) {
+                    $message = "<div class='alert danger'>" . t('param.msg_todo_duree_invalide') . "</div>";
+                } else {
+                    if ($action === 'add_todo_duree') {
+                        if (in_array($minutes, $liste, true)) {
+                            $message = "<div class='alert danger'>" . t('param.msg_todo_duree_existe') . "</div>";
+                        } else {
+                            $liste[] = $minutes;
+                            $texteOk = 'param.msg_todo_duree_ajoutee';
+                        }
+                    } else {
+                        $liste = array_values(array_diff($liste, [$minutes]));
+                        $texteOk = 'param.msg_todo_duree_supprimee';
+                    }
+                    if (isset($texteOk)) {
+                        sort($liste);
+                        $db->prepare("INSERT INTO parametres_general (cle, valeur) VALUES ('todo_durees', ?) ON DUPLICATE KEY UPDATE valeur=VALUES(valeur)")->execute([implode(',', $liste)]);
+                        ajouterLog($db, $_SESSION['user'], "Paramètres", "A modifié les durées proposées de la TODO list : " . implode(', ', $liste) . " min");
+                        $message = "<div class='alert success'>" . t($texteOk) . "</div>";
+                    }
+                }
+
             } elseif ($action === 'edit_libelle') {
                 $bucket = $_POST['bucket'] ?? '';
                 $label = trim($_POST['label']);
@@ -868,6 +955,8 @@ foreach ($db->query("SELECT type_equipement_id, composant_type_id FROM type_equi
 }
 $services = $db->query("SELECT * FROM services ORDER BY ordre ASC")->fetchAll(PDO::FETCH_ASSOC);
 $categories = $db->query("SELECT * FROM preventif_categories ORDER BY ordre ASC")->fetchAll(PDO::FETCH_ASSOC);
+$todo_categories = todo_categories_charger($db);
+$todo_durees = todo_durees_charger($db);
 $libelles = $db->query("SELECT * FROM libelles_workflow ORDER BY dimension DESC, ordre ASC")->fetchAll(PDO::FETCH_ASSOC);
 foreach ($libelles as &$lRef) {
     if (($lRef['label'] ?? '') === '') { $lRef['label'] = $LIBELLES_DEFAUTS_TRAD[$lRef['bucket']] ?? $lRef['label']; }
@@ -1057,6 +1146,13 @@ $url_demo = $general_rows['url_demo'] ?? '';
         .field-block textarea { padding: 11px 12px; border-radius: 8px; border: 1.5px solid var(--line-strong); font-family: inherit; font-size: 0.9rem; resize: vertical; }
         .modal-box .field-block { margin-bottom: 16px; }
         .modal-box .field-block label { display: block; margin-bottom: 6px; }
+        /* Durées proposées dans la TODO list (onglet TODO list) */
+        .todo-duree-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+        .todo-duree-chip { display: inline-flex; align-items: center; gap: 7px; padding: 6px 8px 6px 12px; border-radius: 20px; background: #e6f7ee; color: #1e8449; font-size: 0.82rem; font-weight: 700; margin: 0; }
+        .todo-duree-chip button { border: none; background: rgba(0,0,0,0.07); color: inherit; width: 20px; height: 20px; border-radius: 50%; cursor: pointer; font-size: 0.65rem; padding: 0; display: inline-flex; align-items: center; justify-content: center; }
+        .todo-duree-chip button:hover { background: #e74c3c; color: #fff; }
+        .todo-duree-add { display: flex; gap: 8px; align-items: center; margin: 0; }
+        .todo-duree-add input[type="number"] { width: 120px; padding: 9px 11px; border-radius: 8px; border: 1.5px solid var(--line-strong); font-family: inherit; font-size: 0.9rem; }
     </style>
 <?php include 'pwa_head.php'; ?>
 </head>
@@ -1077,6 +1173,7 @@ $url_demo = $general_rows['url_demo'] ?? '';
         <button type="button" class="stab <?php echo $active_tab === 'categories' ? 'active' : ''; ?>" data-tab="categories"><i class="fa-solid fa-calendar-check"></i> <?php echo t('param.tab_categories'); ?></button>
         <button type="button" class="stab <?php echo $active_tab === 'workflow' ? 'active' : ''; ?>" data-tab="workflow"><i class="fa-solid fa-flag"></i> <?php echo t('param.tab_workflow'); ?></button>
         <button type="button" class="stab <?php echo $active_tab === 'planning' ? 'active' : ''; ?>" data-tab="planning"><i class="fa-solid fa-calendar-days"></i> <?php echo t('param.tab_planning'); ?></button>
+        <button type="button" class="stab <?php echo $active_tab === 'todo' ? 'active' : ''; ?>" data-tab="todo"><i class="fa-solid fa-list-check"></i> <?php echo t('param.tab_todo'); ?></button>
         <button type="button" class="stab <?php echo $active_tab === 'tuiles' ? 'active' : ''; ?>" data-tab="tuiles"><i class="fa-solid fa-palette"></i> <?php echo t('param.tab_tuiles'); ?></button>
         <button type="button" class="stab <?php echo $active_tab === 'schema_categories' ? 'active' : ''; ?>" data-tab="schema_categories"><i class="fa-solid fa-draw-polygon"></i> <?php echo t('param.tab_schema_categories'); ?></button>
     </div>
@@ -1259,6 +1356,64 @@ $url_demo = $general_rows['url_demo'] ?? '';
             </div>
         </div>
         <?php endforeach; ?>
+    </div>
+
+    <div class="settings-panel" id="panel-todo" style="display: <?php echo $active_tab === 'todo' ? 'block' : 'none'; ?>;">
+        <p class="field-hint" style="margin-bottom:18px;"><?php echo t('param.todo_hint'); ?></p>
+        <div class="set-toolbar">
+            <span class="set-subtitle"><?php echo t('param.todo_cat_titre'); ?> (<?php echo count($todo_categories); ?>)</span>
+            <button type="button" class="pm-btn primary" onclick="openAddTodoCat()"><i class="fa-solid fa-plus"></i> <?php echo t('param.btn_ajouter_todo_categorie'); ?></button>
+        </div>
+        <?php if (empty($todo_categories)): ?>
+            <p class="set-empty"><?php echo t('param.empty_todo_categories'); ?></p>
+        <?php endif; ?>
+        <?php foreach ($todo_categories as $i => $c): ?>
+        <div class="set-row">
+            <span class="set-icon" style="background:<?php echo htmlspecialchars($c['couleur']); ?>22; color:<?php echo htmlspecialchars($c['couleur']); ?>;"><i class="fa-solid <?php echo htmlspecialchars($c['icone']); ?>"></i></span>
+            <span class="set-name"><?php echo htmlspecialchars($c['label_affiche']); ?><span class="set-key"><?php echo htmlspecialchars($c['cle']); ?></span></span>
+            <div class="set-actions">
+                <?php foreach (['up' => ['fa-arrow-up', 'param.tooltip_monter', $i === 0], 'down' => ['fa-arrow-down', 'param.tooltip_descendre', $i === count($todo_categories) - 1]] as $dir => $b): ?>
+                <form method="POST" style="display:inline">
+                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(csrf_token()); ?>">
+                    <input type="hidden" name="tab_actif" value="todo">
+                    <input type="hidden" name="action" value="move_todo_categorie">
+                    <input type="hidden" name="id" value="<?php echo $c['id']; ?>">
+                    <input type="hidden" name="direction" value="<?php echo $dir; ?>">
+                    <button type="submit" class="row-btn" <?php echo $b[2] ? 'disabled' : ''; ?> title="<?php echo htmlspecialchars(t($b[1])); ?>"><i class="fa-solid <?php echo $b[0]; ?>"></i></button>
+                </form>
+                <?php endforeach; ?>
+                <button type="button" class="row-btn btn-edit-todo-cat" data-id="<?php echo $c['id']; ?>" data-label="<?php echo htmlspecialchars($c['label_affiche']); ?>" data-icone="<?php echo htmlspecialchars($c['icone']); ?>" data-couleur="<?php echo htmlspecialchars($c['couleur']); ?>" title="<?php echo htmlspecialchars(t('pm.tooltip_modifier')); ?>"><i class="fa-solid fa-pen"></i></button>
+                <button type="button" class="row-btn danger" onclick="openConfirmSuppr('delete_todo_categorie', <?php echo $c['id']; ?>, 'todo', <?php echo htmlspecialchars(json_encode(t('param.confirm_suppr_todo_categorie'))); ?>)" title="<?php echo htmlspecialchars(t('pm.tooltip_supprimer')); ?>"><i class="fa-solid fa-trash"></i></button>
+            </div>
+        </div>
+        <?php endforeach; ?>
+
+        <div class="set-toolbar" style="margin-top:28px;">
+            <span class="set-subtitle"><?php echo t('param.todo_durees_titre'); ?></span>
+        </div>
+        <p class="field-hint" style="margin-bottom:12px;"><?php echo t('param.todo_durees_hint'); ?></p>
+        <div class="todo-duree-chips">
+            <?php if (empty($todo_durees)): ?>
+                <span class="set-empty" style="margin:0;"><?php echo t('param.todo_durees_vide'); ?></span>
+            <?php endif; ?>
+            <?php foreach ($todo_durees as $dMin): ?>
+            <form method="POST" class="todo-duree-chip">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(csrf_token()); ?>">
+                <input type="hidden" name="tab_actif" value="todo">
+                <input type="hidden" name="action" value="delete_todo_duree">
+                <input type="hidden" name="minutes" value="<?php echo (int)$dMin; ?>">
+                <i class="fa-solid fa-hourglass-half"></i> <?php echo htmlspecialchars(todo_format_duree($dMin)); ?>
+                <button type="submit" title="<?php echo htmlspecialchars(t('pm.tooltip_supprimer')); ?>"><i class="fa-solid fa-xmark"></i></button>
+            </form>
+            <?php endforeach; ?>
+        </div>
+        <form method="POST" class="todo-duree-add">
+            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(csrf_token()); ?>">
+            <input type="hidden" name="tab_actif" value="todo">
+            <input type="hidden" name="action" value="add_todo_duree">
+            <input type="number" name="minutes" min="1" max="1440" step="1" placeholder="<?php echo htmlspecialchars(t('param.todo_duree_placeholder')); ?>" required>
+            <button type="submit" class="pm-btn primary"><i class="fa-solid fa-plus"></i> <?php echo t('param.btn_ajouter_duree'); ?></button>
+        </form>
     </div>
 
     <div class="settings-panel" id="panel-workflow" style="display: <?php echo $active_tab === 'workflow' ? 'block' : 'none'; ?>;">
@@ -1721,6 +1876,42 @@ $url_demo = $general_rows['url_demo'] ?? '';
             <input type="text" name="label" id="serviceFormLabel" placeholder="<?php echo htmlspecialchars(t('param.placeholder_nom_service')); ?>" required>
             <div class="modal-actions">
                 <button type="button" class="modal-btn-cancel" onclick="closeModal('modalService')"><?php echo t('pm.btn_annuler'); ?></button>
+                <button type="submit" class="modal-btn-ok"><?php echo t('param.btn_enregistrer'); ?></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal-bg" id="modalTodoCat">
+    <div class="modal-box">
+        <h3 id="todoCatModalTitle"><?php echo t('param.modal_ajouter_todo_categorie'); ?></h3>
+        <form method="POST">
+            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(csrf_token()); ?>">
+            <input type="hidden" name="tab_actif" class="tab-actif-field" value="todo">
+            <input type="hidden" name="action" id="todoCatFormAction" value="add_todo_categorie">
+            <input type="hidden" name="id" id="todoCatFormId" value="">
+            <div class="field-block">
+                <label><?php echo t('param.champ_nom'); ?></label>
+                <input type="text" name="label" id="todoCatFormLabel" maxlength="100" placeholder="<?php echo htmlspecialchars(t('param.placeholder_nom_todo_categorie')); ?>" required>
+            </div>
+            <div class="icon-grid" id="todoCatIconGrid">
+                <?php foreach (todo_icones_disponibles() as $ic): ?>
+                <div class="icon-chip" data-value="<?php echo htmlspecialchars($ic); ?>"><i class="fa-solid <?php echo htmlspecialchars($ic); ?>"></i></div>
+                <?php endforeach; ?>
+            </div>
+            <input type="hidden" name="icone" id="todoCatFormIcone" value="fa-ellipsis">
+            <div class="color-grid" id="todoCatColorGrid">
+                <?php foreach ($COULEURS_DISPONIBLES as $col): ?>
+                <div class="color-chip" data-value="<?php echo htmlspecialchars($col); ?>" style="background:<?php echo htmlspecialchars($col); ?>;"></div>
+                <?php endforeach; ?>
+                <label class="color-chip-custom" title="<?php echo htmlspecialchars(t('param.icon_couleur_perso')); ?>">
+                    <input type="color" id="todoCatColorCustom">
+                    <span class="color-chip-custom-label"><i class="fa-solid fa-eye-dropper"></i></span>
+                </label>
+            </div>
+            <input type="hidden" name="couleur" id="todoCatFormCouleur" value="#7f8c8d">
+            <div class="modal-actions">
+                <button type="button" class="modal-btn-cancel" onclick="closeModal('modalTodoCat')"><?php echo t('pm.btn_annuler'); ?></button>
                 <button type="submit" class="modal-btn-ok"><?php echo t('param.btn_enregistrer'); ?></button>
             </div>
         </form>
@@ -2363,6 +2554,53 @@ function openEditService(id, label) {
 }
 document.querySelectorAll('.btn-edit-service').forEach(function (btn) {
     btn.addEventListener('click', function () { openEditService(btn.dataset.id, btn.dataset.label); });
+});
+
+// --- Catégories de tâches de la TODO list ---
+function openAddTodoCat() {
+    document.getElementById('todoCatModalTitle').textContent = I18N_PARAM.modal_ajouter_todo_categorie;
+    document.getElementById('todoCatFormAction').value = 'add_todo_categorie';
+    document.getElementById('todoCatFormId').value = '';
+    document.getElementById('todoCatFormLabel').value = '';
+    setTodoCatIcon('fa-ellipsis');
+    setTodoCatColor('#7f8c8d');
+    document.getElementById('modalTodoCat').classList.add('show');
+}
+function openEditTodoCat(id, label, icone, couleur) {
+    document.getElementById('todoCatModalTitle').textContent = I18N_PARAM.modal_modifier_todo_categorie;
+    document.getElementById('todoCatFormAction').value = 'edit_todo_categorie';
+    document.getElementById('todoCatFormId').value = id;
+    document.getElementById('todoCatFormLabel').value = label;
+    setTodoCatIcon(icone);
+    setTodoCatColor(couleur);
+    document.getElementById('modalTodoCat').classList.add('show');
+}
+function setTodoCatIcon(val) {
+    document.getElementById('todoCatFormIcone').value = val;
+    document.querySelectorAll('#todoCatIconGrid .icon-chip').forEach(function (c) {
+        c.classList.toggle('active', c.dataset.value === val);
+    });
+}
+function setTodoCatColor(val) {
+    document.getElementById('todoCatFormCouleur').value = val;
+    let estPreset = false;
+    document.querySelectorAll('#todoCatColorGrid .color-chip').forEach(function (c) {
+        const actif = c.dataset.value === val;
+        c.classList.toggle('active', actif);
+        if (actif) estPreset = true;
+    });
+    document.getElementById('todoCatColorCustom').value = /^#[0-9a-fA-F]{6}$/.test(val) ? val : '#7f8c8d';
+    document.getElementById('todoCatColorCustom').closest('.color-chip-custom').classList.toggle('active', !estPreset);
+}
+document.querySelectorAll('#todoCatIconGrid .icon-chip').forEach(function (chip) {
+    chip.addEventListener('click', function () { setTodoCatIcon(chip.dataset.value); });
+});
+document.querySelectorAll('#todoCatColorGrid .color-chip').forEach(function (chip) {
+    chip.addEventListener('click', function () { setTodoCatColor(chip.dataset.value); });
+});
+document.getElementById('todoCatColorCustom').addEventListener('input', function () { setTodoCatColor(this.value); });
+document.querySelectorAll('.btn-edit-todo-cat').forEach(function (btn) {
+    btn.addEventListener('click', function () { openEditTodoCat(btn.dataset.id, btn.dataset.label, btn.dataset.icone, btn.dataset.couleur); });
 });
 
 function openAddCategorie() {

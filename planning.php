@@ -26,6 +26,16 @@ try {
     }
 } catch (Exception $e) {}
 
+// --- LISTES DE LA TODO LIST (catégories de tâches + durées estimées), modifiables dans Paramètres > TODO list ---
+require_once __DIR__ . '/todo_config.php';
+$todo_categories = [];
+$todo_durees = TODO_DUREES_DEFAUT;
+try {
+    todo_config_assurer($db);
+    $todo_categories = todo_categories_charger($db);
+    $todo_durees = todo_durees_charger($db);
+} catch (Exception $e) {}
+
 $heures_sql = [];
 try {
     if(isset($db)) {
@@ -730,16 +740,141 @@ try {
         .choix-case-btn-bi { background: #fef3c7; color: #92400e; }
         .choix-case-btn-todo { background: #f3e8ff; color: #6b21a8; }
 
+        /* --- MODALE DE CHOIX AU CLIC SUR UNE CASE (#choixCaseModal) : carte pro avec bandeau anthracite
+           (rappel du technicien + de la date visés), puis trois cartes-options avec pastille d'icône
+           colorée, titre + courte description et flèche qui glisse au survol. Vert = planning, orange =
+           BI, violet = TODO (mêmes teintes qu'avant). --- */
+        #choixCaseModal { align-items: center; justify-content: center; padding: 16px; box-sizing: border-box; }
+        .choix-card { width: min(440px, 100%); background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 24px 60px rgba(15,23,42,0.45), 0 0 0 1px rgba(255,255,255,0.06); animation: choixIn 0.22s cubic-bezier(0.2,0.8,0.3,1); }
+        @keyframes choixIn { from { opacity: 0; transform: translateY(14px) scale(0.97); } to { opacity: 1; transform: none; } }
+        .choix-head { position: relative; padding: 20px 22px 22px; color: #fff; background: radial-gradient(120% 140% at 100% 0%, rgba(46,204,113,0.28) 0%, transparent 55%), linear-gradient(135deg, #2c3e50 0%, #1f2d3a 100%); }
+        .choix-head::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: linear-gradient(90deg, var(--brand-green), var(--brand-orange)); }
+        .choix-head-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+        .choix-head h3 { margin: 0; font-family: 'Caveat', cursive; font-size: 2rem; font-weight: 700; line-height: 1; letter-spacing: 0.3px; }
+        .choix-close { width: 32px; height: 32px; flex-shrink: 0; border: none; border-radius: 50%; background: rgba(255,255,255,0.12); color: #fff; font-size: 0.95rem; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+        .choix-close:hover { background: rgba(255,255,255,0.25); transform: rotate(90deg); }
+        .choix-ctx { display: flex; align-items: center; gap: 12px; padding: 10px 14px 10px 10px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.14); border-radius: 14px; backdrop-filter: blur(4px); }
+        .choix-avatar { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; flex-shrink: 0; background: #fff; border: 2px solid var(--brand-green); box-shadow: 0 0 0 3px rgba(46,204,113,0.25); }
+        .choix-ctx-txt { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; }
+        .choix-tech { font-weight: 700; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .choix-date { font-size: 0.8rem; color: rgba(255,255,255,0.75); text-transform: capitalize; }
+        .choix-list { display: flex; flex-direction: column; gap: 10px; padding: 18px 18px 20px; background: #f8fafc; }
+        .choix-opt { --c: #64748b; --c-soft: #f1f5f9; display: flex; align-items: center; gap: 14px; width: 100%; box-sizing: border-box; padding: 14px 16px; background: #fff; border: 1.5px solid #e8edf3; border-radius: 14px; cursor: pointer; text-align: left; font-family: inherit; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s; }
+        .choix-opt:hover, .choix-opt:focus-visible { transform: translateY(-2px); border-color: var(--c); box-shadow: 0 10px 22px -8px color-mix(in srgb, var(--c) 45%, transparent); outline: none; }
+        .choix-opt:active { transform: translateY(0) scale(0.99); }
+        .choix-opt-heures { --c: #27ae60; --c-soft: #e8f8ef; }
+        .choix-opt-bi { --c: #e67e22; --c-soft: #fef3e2; }
+        .choix-opt-todo { --c: #8e44ad; --c-soft: #f3e8ff; }
+        .choix-ico { width: 48px; height: 48px; flex-shrink: 0; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; color: #fff; background: linear-gradient(140deg, color-mix(in srgb, var(--c) 78%, #fff) 0%, var(--c) 100%); box-shadow: 0 6px 12px -4px color-mix(in srgb, var(--c) 60%, transparent); transition: transform 0.18s; }
+        .choix-opt:hover .choix-ico { transform: scale(1.06) rotate(-4deg); }
+        .choix-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+        .choix-txt b { font-size: 0.97rem; font-weight: 700; color: var(--primary); }
+        .choix-txt small { font-size: 0.78rem; color: #64748b; line-height: 1.35; }
+        .choix-arrow { width: 28px; height: 28px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.72rem; color: var(--c); background: var(--c-soft); transition: transform 0.18s, background 0.18s, color 0.18s; }
+        .choix-opt:hover .choix-arrow { transform: translateX(3px); background: var(--c); color: #fff; }
+        @media (max-width: 420px) { .choix-txt small { display: none; } .choix-head h3 { font-size: 1.7rem; } }
+        @media (prefers-reduced-motion: reduce) { .choix-card { animation: none; } .choix-opt, .choix-ico, .choix-arrow, .choix-close { transition: none; } }
+
         /* --- TODO LIST PAR JOUR (voir #todoModal, ouvrirTodoModal) : une tâche non cochée se reporte
            automatiquement au jour suivant (voir todo_add/get_todo côté maintenance.php) plutôt que de
-           rester bloquée sur un jour passé. --- */
-        .todo-item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; background: #f8fafc; }
-        .todo-item input[type="checkbox"] { width: 17px; height: 17px; flex-shrink: 0; cursor: pointer; accent-color: var(--brand-green); }
-        .todo-item-texte { flex: 1; font-size: 0.88rem; color: var(--primary); word-break: break-word; }
-        .todo-item.is-fait .todo-item-texte { text-decoration: line-through; color: #94a3b8; }
-        .todo-item-del { color: #cbd5e1; cursor: pointer; transition: 0.2s; flex-shrink: 0; }
-        .todo-item-del:hover { color: var(--danger); }
-        .todo-empty-state { text-align: center; color: #94a3b8; font-size: 0.85rem; padding: 14px 0; }
+           rester bloquée sur un jour passé.
+           Mise en page : sur grand écran, deux colonnes — la liste (résumé, filtres, tâches) à gauche et le
+           formulaire d'ajout/modification à droite, jamais superposés ; sur écran étroit, tout s'empile et
+           la fenêtre défile d'un bloc. Palette neutre (anthracite/vert de la GMAO), le violet n'étant plus
+           utilisé que pour la pastille des cases. --- */
+        #todoModal .todo-modal-card { width: min(1180px, 96vw); height: calc(100vh - 40px); height: calc(100dvh - 40px); max-height: 900px; margin: 20px auto; padding: 0; border-radius: 20px; overflow: hidden; box-sizing: border-box; display: flex; flex-direction: column; }
+        .todo-layout { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 400px; }
+        .todo-col-list { min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px; padding: 18px 20px; }
+        .todo-col-form { min-height: 0; overflow-y: auto; padding: 18px 22px 22px; background: #f8fafc; border-left: 1px solid #e8edf3; }
+        @media (max-width: 900px) {
+            .todo-layout { display: block; overflow-y: auto; }
+            .todo-col-list { padding: 14px 14px 6px; }
+            .todo-col-form { overflow: visible; border-left: none; border-top: 1px solid #e8edf3; padding: 16px 14px 20px; }
+            .todo-list-scroll { overflow: visible; }
+        }
+
+        .todo-summary { background: #fff; border: 1px solid #e8edf3; border-radius: 14px; padding: 12px 16px; }
+        .todo-progress-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.8rem; font-weight: 700; color: var(--primary); }
+        .todo-progress-row strong { font-size: 1.1rem; }
+        .todo-progress-track { height: 8px; border-radius: 6px; background: #e8edf3; margin: 8px 0 9px; overflow: hidden; }
+        .todo-progress-fill { height: 100%; width: 0; border-radius: 6px; background: linear-gradient(90deg, #2ecc71, #27ae60); transition: width 0.35s ease; }
+        .todo-stats { display: flex; flex-wrap: wrap; gap: 6px; }
+        .todo-stats:empty { display: none; }
+        .todo-stat { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 20px; background: #f1f5f9; font-size: 0.7rem; font-weight: 700; color: #475569; }
+        .todo-stat.haute { background: #fdecea; color: #c0392b; }
+
+        .todo-filters { display: flex; gap: 4px; padding: 3px; background: #eef2f6; border-radius: 10px; }
+        .todo-filter { flex: 1; padding: 7px 4px; border: none; border-radius: 8px; background: transparent; font-family: inherit; font-size: 0.78rem; font-weight: 700; color: #64748b; cursor: pointer; transition: 0.15s; }
+        .todo-filter span { font-weight: 600; opacity: 0.75; }
+        .todo-filter:hover { color: var(--primary); }
+        .todo-filter.actif { background: #fff; color: var(--primary); box-shadow: 0 1px 4px rgba(0,0,0,0.12); }
+
+        .todo-list-scroll { flex: 1; min-height: 90px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 2px 6px 2px 2px; margin-right: -6px; }
+        .todo-item { --p: #cbd5e1; display: flex; align-items: flex-start; gap: 12px; padding: 11px 12px; border-radius: 12px; background: #fff; border: 1px solid #e8edf3; border-left: 4px solid var(--p); transition: box-shadow 0.15s, border-color 0.15s; }
+        .todo-item:hover { box-shadow: 0 4px 12px -6px rgba(15,23,42,0.25); }
+        .todo-item.prio-haute { --p: #e74c3c; }
+        .todo-item.prio-basse { --p: #60a5fa; }
+        .todo-item input[type="checkbox"] { width: 18px; height: 18px; flex-shrink: 0; cursor: pointer; accent-color: var(--brand-green); margin-top: 1px; }
+        .todo-item-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+        .todo-item-texte { font-size: 0.92rem; font-weight: 600; color: var(--primary); word-break: break-word; }
+        .todo-item.is-fait { background: #fafbfc; }
+        .todo-item.is-fait .todo-item-texte { text-decoration: line-through; color: #94a3b8; font-weight: 500; }
+        .todo-item.is-fait .todo-item-meta, .todo-item.is-fait .todo-item-detail { opacity: 0.6; }
+        .todo-item.en-edition { border-color: var(--brand-orange); border-left-color: var(--brand-orange); background: #fffaf0; box-shadow: 0 0 0 3px rgba(243,156,18,0.18); }
+        .todo-item-meta { display: flex; flex-wrap: wrap; gap: 5px; }
+        .todo-chip { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 20px; font-size: 0.68rem; font-weight: 700; background: #eef2f6; color: #64748b; }
+        .todo-chip.prio-haute { background: #fdecea; color: #c0392b; }
+        .todo-chip.prio-basse { background: #e8f1fd; color: #2563eb; }
+        .todo-chip.heure { background: #fff4e0; color: #b9770e; }
+        .todo-chip.duree { background: #e6f7ee; color: #1e8449; }
+        .todo-chip.cat { --cc: #7f8c8d; background: color-mix(in srgb, var(--cc) 14%, #fff); color: color-mix(in srgb, var(--cc) 82%, #000); }
+        .todo-item-detail { font-size: 0.78rem; color: #64748b; word-break: break-word; }
+        .todo-item-suivi { display: flex; flex-wrap: wrap; gap: 3px 14px; font-size: 0.68rem; color: #94a3b8; }
+        .todo-item-suivi .report { color: #b9770e; }
+        .todo-item-suivi .fini { color: #27ae60; }
+        .todo-item-actions { display: flex; gap: 4px; flex-shrink: 0; }
+        .todo-item-actions i { width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; color: #94a3b8; cursor: pointer; transition: 0.15s; font-size: 0.85rem; }
+        .todo-item-actions .todo-item-edit:hover { background: #fff4e0; color: #d68910; }
+        .todo-item-actions .todo-item-del:hover { background: #fdecea; color: var(--danger); }
+        .todo-empty-state { text-align: center; color: #94a3b8; font-size: 0.88rem; padding: 40px 0; }
+
+        /* Formulaire (colonne de droite) */
+        .todo-form-titre { display: flex; align-items: center; gap: 9px; font-size: 1rem; font-weight: 800; color: var(--primary); margin-bottom: 16px; }
+        .todo-form-titre i { width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 10px; background: #e6f7ee; color: #1e8449; font-size: 0.9rem; }
+        .todo-col-form.edition .todo-form-titre i { background: #fff4e0; color: #d68910; }
+        .todo-col-form.edition { background: #fffaf0; border-left-color: #f5deb3; }
+        .todo-field { margin-bottom: 14px; }
+        .todo-extra-label { display: block; font-size: 0.68rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 5px; }
+        .todo-input { box-sizing: border-box; width: 100%; padding: 9px 11px; border: 1.5px solid #e2e8f0; border-radius: 9px; font-family: 'Segoe UI'; font-size: 0.88rem; background: #fff; min-width: 0; color: var(--primary); }
+        textarea.todo-input { resize: vertical; min-height: 64px; line-height: 1.35; }
+        .todo-input:focus { outline: none; border-color: var(--brand-green); box-shadow: 0 0 0 3px rgba(46,204,113,0.2); }
+        .todo-col-form.edition .todo-input:focus { border-color: var(--brand-orange); box-shadow: 0 0 0 3px rgba(243,156,18,0.2); }
+        .todo-prio-group { display: flex; gap: 6px; }
+        .todo-prio-btn { flex: 1; padding: 8px 4px; border: 1.5px solid #e2e8f0; border-radius: 9px; background: #fff; font-family: inherit; font-size: 0.8rem; font-weight: 600; color: #64748b; cursor: pointer; transition: 0.15s; }
+        .todo-prio-btn:hover { border-color: #cbd5e1; }
+        .todo-prio-btn.actif[data-prio="basse"] { background: #e8f1fd; border-color: #60a5fa; color: #2563eb; }
+        .todo-prio-btn.actif[data-prio="normale"] { background: #eef2f6; border-color: #94a3b8; color: #475569; }
+        .todo-prio-btn.actif[data-prio="haute"] { background: #fdecea; border-color: #e74c3c; color: #c0392b; }
+        .todo-extra-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+        .todo-extra-row .todo-field { margin-bottom: 0; }
+        .todo-form-actions { display: flex; gap: 8px; margin-top: 4px; }
+        .todo-submit-btn { flex: 1; padding: 11px 14px; border: none; border-radius: 10px; background: linear-gradient(140deg, #2ecc71, #27ae60); color: #fff; font-family: inherit; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: 0.15s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .todo-submit-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 16px -6px rgba(39,174,96,0.6); }
+        .todo-col-form.edition .todo-submit-btn { background: linear-gradient(140deg, #f5b041, #e67e22); }
+        .todo-col-form.edition .todo-submit-btn:hover { box-shadow: 0 8px 16px -6px rgba(230,126,34,0.6); }
+        .todo-cancel-btn { padding: 11px 16px; border: 1.5px solid #e2e8f0; border-radius: 10px; background: #fff; color: #64748b; font-family: inherit; font-size: 0.88rem; font-weight: 600; cursor: pointer; }
+        .todo-cancel-btn:hover { border-color: #cbd5e1; color: var(--primary); }
+        @media (max-width: 420px) { .todo-extra-row { grid-template-columns: 1fr; } }
+
+        /* En-tête commun aux fenêtres du planning (même bandeau anthracite que #choixCaseModal) en version
+           plus basse, pour ne pas manger de place sur les fenêtres longues. */
+        .choix-head--compact { padding: 14px 22px 16px; }
+        .choix-head--compact .choix-head-top { margin-bottom: 10px; }
+        .choix-head--compact h3 { font-size: 1.75rem; }
+        .choix-head--compact .choix-ctx { padding: 7px 14px 7px 8px; }
+        .choix-head--compact .choix-avatar { width: 34px; height: 34px; }
+        .choix-date:empty { display: none; }
+        .choix-modal-body { padding: 16px 22px 20px; }
 
         /* Pastille "todo list" sur une case du planning (voir todoBadgeHtml) : même gabarit que
            .shift-badge-compact/.shift-note-badge pour rester cohérent avec les autres petites étiquettes
@@ -747,6 +882,27 @@ try {
         .todo-cell-badge { width: fit-content; background: #f3e8ff; border: 1px solid #d8b4fe; border-radius: 4px; padding: 1px 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.15); color: #6b21a8; font-size: 0.54rem; font-weight: 800; cursor: pointer; }
         .todo-cell-badge.tout-fait { opacity: 0.55; }
         .mois-case .todo-cell-badge { font-size: 0.58rem; }
+
+        /* Bulles d'info au survol de la pastille (voir afficherTodoPop) : une bulle par tâche, réparties
+           en grille autour de la pastille, plus une petite bulle d'en-tête avec l'avancement. Position
+           "fixed" calculée en JS pour ne jamais être coupée par une case (overflow) ni sortir de l'écran. */
+        #todoPop { position: fixed; z-index: 20000; display: none; pointer-events: none; max-width: calc(100vw - 16px); }
+        .todo-pop-grid { display: grid; gap: 8px; grid-template-columns: repeat(var(--cols, 1), minmax(170px, 230px)); }
+        .todo-pop-head { grid-column: 1 / -1; justify-self: start; display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 20px; background: linear-gradient(135deg, #2c3e50, #1f2d3a); color: #fff; font-size: 0.72rem; font-weight: 700; box-shadow: 0 8px 20px -6px rgba(15,23,42,0.5); animation: todoPopIn 0.18s both; }
+        .todo-pop-head b { color: #7dffb3; }
+        .todo-pop-head .sep { opacity: 0.4; }
+        .todo-bubble { --p: #94a3b8; position: relative; background: #fff; border-radius: 14px; padding: 9px 12px 10px; border-top: 3px solid var(--p); box-shadow: 0 12px 26px -8px rgba(15,23,42,0.4), 0 0 0 1px rgba(15,23,42,0.06); animation: todoPopIn 0.2s both; animation-delay: calc(var(--i, 0) * 40ms); }
+        .todo-bubble.prio-haute { --p: #e74c3c; }
+        .todo-bubble.prio-basse { --p: #60a5fa; }
+        .todo-bubble.is-fait { --p: #2ecc71; background: #f6fdf9; }
+        .todo-bubble-titre { display: flex; align-items: flex-start; gap: 7px; font-size: 0.8rem; font-weight: 700; color: var(--primary); line-height: 1.25; }
+        .todo-bubble-titre i { margin-top: 2px; font-size: 0.85rem; color: #cbd5e1; flex-shrink: 0; }
+        .todo-bubble.is-fait .todo-bubble-titre i { color: #2ecc71; }
+        .todo-bubble.is-fait .todo-bubble-titre span { text-decoration: line-through; color: #94a3b8; }
+        .todo-bubble .todo-item-meta { margin-top: 6px; }
+        .todo-bubble-detail { margin-top: 5px; font-size: 0.7rem; color: #64748b; font-style: italic; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        @keyframes todoPopIn { from { opacity: 0; transform: translateY(6px) scale(0.94); } to { opacity: 1; transform: none; } }
+        @media (prefers-reduced-motion: reduce) { .todo-bubble, .todo-pop-head { animation: none; } }
 
         .shift-section-label { font-size: 0.7rem; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.03em; margin: 14px 0 8px; }
         .shift-modal-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
@@ -1017,7 +1173,22 @@ try {
            100vh ne tient pas toujours compte de cette barre. env(safe-area-inset-bottom) (voir aussi
            viewport-fit=cover dans la balise viewport) ajoute la marge réelle laissée par le système ; le
            max(20px, ...) garantit un minimum même sur les navigateurs qui ignorent cette variable. */
-        #shiftModal .modal-content { padding-bottom: max(20px, env(safe-area-inset-bottom, 20px)); }
+        #shiftModal .shift-body { padding: 12px 22px max(16px, env(safe-area-inset-bottom, 16px)); }
+        /* Version resserrée des boutons/espacements de "Planifier les heures" pour éviter le défilement. */
+        #shiftModal .shift-section-label { margin: 9px 0 5px; }
+        #shiftModal .shift-modal-columns { gap: 20px; }
+        #shiftModal .shift-chip-group { gap: 5px; }
+        #shiftModal .shift-chip { padding: 5px 6px; font-size: 0.76rem; }
+        #shiftModal .shift-hours-btn { width: 30px; height: 30px; font-size: 1rem; }
+        #shiftModal #shift-heures { padding: 4px 8px; font-size: 0.9rem; }
+        #shiftModal .shift-objectif-box { padding: 9px 14px; margin-top: 10px; }
+        #shiftModal .shift-objectif-header { margin-bottom: 6px; }
+        #shiftModal .shift-objectif-legend { margin-top: 6px; }
+        #shiftModal .btn-save, #shiftModal .btn-shift-clear { padding: 8px; font-size: 0.8rem; }
+        #shiftModal .shift-bi-row { padding: 5px 10px; }
+        #shiftModal .shift-bi-empty { padding: 4px 0 8px; }
+        .shift-link-btn { width: 100%; margin-top: 6px; background: none; border: 1.5px dashed #cbd5e1; color: var(--primary); border-radius: 8px; padding: 5px; font-weight: 600; font-size: 0.74rem; cursor: pointer; font-family: inherit; }
+        .shift-link-btn:hover { border-color: var(--primary); }
 
         .shift-bi-row { display: flex; align-items: center; gap: 10px; background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid var(--accent); border-radius: 8px; padding: 8px 10px; cursor: pointer; transition: 0.15s; text-align: left; font-family: 'Segoe UI'; }
         .shift-bi-row:hover { background: #f1f5f9; transform: translateX(2px); }
@@ -1223,18 +1394,27 @@ try {
 </div>
 
 <div id="shiftModal" class="modal">
-    <div class="modal-content" style="width: min(820px, 95vw); max-height: calc(100vh - 40px); max-height: calc(100dvh - 40px); margin: 20px auto; overflow-y: auto; box-sizing: border-box;">
-        <div class="modal-header">
-            <span id="shift-modal-title"><?php echo htmlspecialchars(t('planning.modal_planifier_default')); ?></span>
-            <i class="fa-solid fa-xmark btn-del" onclick="closeShiftModal()" title="<?php echo htmlspecialchars(t('planning.tooltip_fermer')); ?>"></i>
+    <div class="modal-content" style="width: min(820px, 95vw); max-height: calc(100vh - 40px); max-height: calc(100dvh - 40px); margin: 20px auto; padding: 0; border-radius: 20px; overflow-y: auto; box-sizing: border-box;">
+        <div class="choix-head choix-head--compact">
+            <div class="choix-head-top">
+                <h3><?php echo htmlspecialchars(t('planning.choix_planifier_heures')); ?></h3>
+                <button type="button" class="choix-close" onclick="closeShiftModal()" title="<?php echo htmlspecialchars(t('planning.tooltip_fermer')); ?>" aria-label="<?php echo htmlspecialchars(t('planning.tooltip_fermer')); ?>"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="choix-ctx">
+                <img id="shift-avatar" class="choix-avatar" src="img/user.png" alt="">
+                <div class="choix-ctx-txt">
+                    <span id="shift-tech-nom" class="choix-tech"></span>
+                    <span id="shift-modal-date" class="choix-date"></span>
+                </div>
+            </div>
         </div>
-        <p id="shift-modal-date" style="margin:-10px 0 15px; color:#777; font-size:0.85rem; font-weight:400;"></p>
+        <div class="shift-body">
 
         <div class="shift-modal-columns">
             <div class="shift-modal-col">
                 <div id="shift-bi-section">
                     <div class="shift-section-label"><?php echo htmlspecialchars(t('planning.label_bi_du_jour')); ?></div>
-                    <div id="shift-bi-list" style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px; max-height:180px; overflow-y:auto;"></div>
+                    <div id="shift-bi-list" style="display:flex; flex-direction:column; gap:6px; margin-bottom:8px; max-height:130px; overflow-y:auto;"></div>
                 </div>
 
                 <div class="shift-section-label"><?php echo htmlspecialchars(t('planning.label_poste')); ?></div>
@@ -1281,63 +1461,176 @@ try {
             </div>
         </div>
 
-        <button type="button" id="btn-voir-planning-annuel" onclick="openAnnualModal(shiftTech)" style="width:100%; margin-top:10px; background:none; border:1.5px dashed #cbd5e1; color:var(--primary); border-radius:8px; padding:9px; font-weight:600; font-size:0.78rem; cursor:pointer; font-family:inherit;"><i class="fa-solid fa-calendar-days"></i> <?php echo htmlspecialchars(t('planning.btn_voir_planning_annuel')); ?></button>
-        <button type="button" onclick="openBulkModal()" style="width:100%; margin-top:8px; background:none; border:1.5px dashed #cbd5e1; color:var(--primary); border-radius:8px; padding:9px; font-weight:600; font-size:0.78rem; cursor:pointer; font-family:inherit;"><i class="fa-solid fa-layer-group"></i> <?php echo htmlspecialchars(t('planning.btn_remplir_plusieurs_jours')); ?></button>
+        <button type="button" id="btn-voir-planning-annuel" class="shift-link-btn" onclick="openAnnualModal(shiftTech)"><i class="fa-solid fa-calendar-days"></i> <?php echo htmlspecialchars(t('planning.btn_voir_planning_annuel')); ?></button>
+        <button type="button" class="shift-link-btn" onclick="openBulkModal()"><i class="fa-solid fa-layer-group"></i> <?php echo htmlspecialchars(t('planning.btn_remplir_plusieurs_jours')); ?></button>
 
-        <div style="display:flex; gap:8px; margin-top:16px;">
+        <div style="display:flex; gap:8px; margin-top:10px;">
             <button type="button" class="btn-shift-clear" onclick="clearShift()"><i class="fa-solid fa-eraser"></i> <?php echo htmlspecialchars(t('planning.btn_effacer')); ?></button>
             <button type="button" class="btn-save" style="margin-top:0;" onclick="saveShift()"><?php echo htmlspecialchars(t('planning.btn_enregistrer_min')); ?></button>
         </div>
+        </div>
     </div>
 </div>
 
-<div id="choixCaseModal" class="modal">
-    <div class="modal-content" style="width: min(420px, 92vw); margin: 12vh auto; box-sizing: border-box;">
-        <div class="modal-header">
-            <span><?php echo htmlspecialchars(t('planning.choix_titre')); ?></span>
-            <i class="fa-solid fa-xmark btn-del" onclick="closeChoixCase()" title="<?php echo htmlspecialchars(t('planning.tooltip_fermer')); ?>"></i>
+<div id="choixCaseModal" class="modal" onclick="if(event.target===this)closeChoixCase()">
+    <div class="choix-card" role="dialog" aria-modal="true" aria-labelledby="choix-titre">
+        <div class="choix-head">
+            <div class="choix-head-top">
+                <h3 id="choix-titre"><?php echo htmlspecialchars(t('planning.choix_titre')); ?></h3>
+                <button type="button" class="choix-close" onclick="closeChoixCase()" title="<?php echo htmlspecialchars(t('planning.tooltip_fermer')); ?>" aria-label="<?php echo htmlspecialchars(t('planning.tooltip_fermer')); ?>"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="choix-ctx">
+                <img id="choix-avatar" class="choix-avatar" src="img/user.png" alt="">
+                <div class="choix-ctx-txt">
+                    <span id="choix-tech" class="choix-tech"></span>
+                    <span id="choix-date" class="choix-date"></span>
+                </div>
+            </div>
         </div>
-        <p id="choix-case-sous-titre" style="margin:-10px 0 15px; color:#777; font-size:0.85rem; font-weight:400;"></p>
-        <div style="display:flex; flex-direction:column; gap:12px;">
-            <button type="button" class="choix-case-btn choix-case-btn-heures" onclick="choisirPlanifierHeures()">
-                <i class="fa-solid fa-clock"></i>
-                <span><?php echo htmlspecialchars(t('planning.choix_planifier_heures')); ?></span>
+        <div class="choix-list">
+            <button type="button" class="choix-opt choix-opt-heures" onclick="choisirPlanifierHeures()">
+                <span class="choix-ico"><i class="fa-solid fa-clock"></i></span>
+                <span class="choix-txt">
+                    <b><?php echo htmlspecialchars(t('planning.choix_planifier_heures')); ?></b>
+                    <small><?php echo htmlspecialchars(t('planning.choix_planifier_heures_desc')); ?></small>
+                </span>
+                <i class="fa-solid fa-chevron-right choix-arrow"></i>
             </button>
-            <button type="button" class="choix-case-btn choix-case-btn-bi" onclick="choisirCreerBI()">
-                <i class="fa-solid fa-file-circle-plus"></i>
-                <span><?php echo htmlspecialchars(t('planning.choix_creer_bi')); ?></span>
+            <button type="button" class="choix-opt choix-opt-bi" onclick="choisirCreerBI()">
+                <span class="choix-ico"><i class="fa-solid fa-file-circle-plus"></i></span>
+                <span class="choix-txt">
+                    <b><?php echo htmlspecialchars(t('planning.choix_creer_bi')); ?></b>
+                    <small><?php echo htmlspecialchars(t('planning.choix_creer_bi_desc')); ?></small>
+                </span>
+                <i class="fa-solid fa-chevron-right choix-arrow"></i>
             </button>
-            <button type="button" class="choix-case-btn choix-case-btn-todo" onclick="choisirTodoList()">
-                <i class="fa-solid fa-list-check"></i>
-                <span><?php echo htmlspecialchars(t('planning.choix_todo_list')); ?></span>
+            <button type="button" class="choix-opt choix-opt-todo" onclick="choisirTodoList()">
+                <span class="choix-ico"><i class="fa-solid fa-list-check"></i></span>
+                <span class="choix-txt">
+                    <b><?php echo htmlspecialchars(t('planning.choix_todo_list')); ?></b>
+                    <small><?php echo htmlspecialchars(t('planning.choix_todo_list_desc')); ?></small>
+                </span>
+                <i class="fa-solid fa-chevron-right choix-arrow"></i>
             </button>
         </div>
     </div>
 </div>
+
+<div id="todoPop" aria-hidden="true"></div>
 
 <div id="todoModal" class="modal">
-    <div class="modal-content" style="width: min(440px, 92vw); max-height: calc(90vh - 40px); margin: 5vh auto; overflow-y: auto; box-sizing: border-box;">
-        <div class="modal-header">
-            <span id="todo-modal-titre"><?php echo htmlspecialchars(t('planning.choix_todo_list')); ?></span>
-            <i class="fa-solid fa-xmark btn-del" onclick="closeTodoModal()" title="<?php echo htmlspecialchars(t('planning.tooltip_fermer')); ?>"></i>
+    <div class="modal-content todo-modal-card">
+        <div class="choix-head choix-head--compact">
+            <div class="choix-head-top">
+                <h3><?php echo htmlspecialchars(t('planning.choix_todo_list')); ?></h3>
+                <button type="button" class="choix-close" onclick="closeTodoModal()" title="<?php echo htmlspecialchars(t('planning.tooltip_fermer')); ?>" aria-label="<?php echo htmlspecialchars(t('planning.tooltip_fermer')); ?>"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="choix-ctx">
+                <img id="todo-avatar" class="choix-avatar" src="img/user.png" alt="">
+                <div class="choix-ctx-txt">
+                    <span id="todo-tech-nom" class="choix-tech"></span>
+                    <span id="todo-modal-date" class="choix-date"></span>
+                </div>
+            </div>
         </div>
-        <p id="todo-modal-date" style="margin:-10px 0 15px; color:#777; font-size:0.85rem; font-weight:400;"></p>
-        <div id="todo-items-list" style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;"></div>
-        <div style="display:flex; gap:8px;">
-            <input type="text" id="todo-new-texte" maxlength="255" placeholder="<?php echo htmlspecialchars(t('planning.todo_placeholder')); ?>" style="flex:1; box-sizing:border-box; padding:9px 10px; border:1.5px solid #e2e8f0; border-radius:8px; font-family:'Segoe UI'; font-size:0.85rem;" onkeydown="if(event.key==='Enter'){ajouterTodoItem();}">
-            <button type="button" class="choix-case-btn choix-case-btn-todo" style="width:auto; padding:9px 16px;" onclick="ajouterTodoItem()"><i class="fa-solid fa-plus"></i></button>
+        <div class="todo-layout">
+            <div class="todo-col-list">
+                <div class="todo-summary">
+                    <div class="todo-progress-row">
+                        <span id="todo-resume-txt"></span>
+                        <strong id="todo-resume-pct"></strong>
+                    </div>
+                    <div class="todo-progress-track"><div id="todo-progress-fill" class="todo-progress-fill"></div></div>
+                    <div id="todo-stats" class="todo-stats"></div>
+                </div>
+                <div class="todo-filters" role="tablist">
+                    <button type="button" class="todo-filter actif" data-filtre="toutes" onclick="choisirTodoFiltre('toutes')"><?php echo htmlspecialchars(t('planning.todo_filtre_toutes')); ?> <span id="todo-count-toutes"></span></button>
+                    <button type="button" class="todo-filter" data-filtre="afaire" onclick="choisirTodoFiltre('afaire')"><?php echo htmlspecialchars(t('planning.todo_filtre_afaire')); ?> <span id="todo-count-afaire"></span></button>
+                    <button type="button" class="todo-filter" data-filtre="faites" onclick="choisirTodoFiltre('faites')"><?php echo htmlspecialchars(t('planning.todo_filtre_faites')); ?> <span id="todo-count-faites"></span></button>
+                </div>
+                <div id="todo-items-list" class="todo-list-scroll"></div>
+            </div>
+
+            <div class="todo-col-form" id="todo-form-card">
+                <div class="todo-form-titre"><i id="todo-form-icone" class="fa-solid fa-circle-plus"></i> <span id="todo-form-titre-txt"><?php echo htmlspecialchars(t('planning.todo_form_nouvelle')); ?></span></div>
+
+                <div class="todo-field">
+                    <label class="todo-extra-label" for="todo-new-texte"><?php echo htmlspecialchars(t('planning.todo_label_tache')); ?></label>
+                    <input type="text" id="todo-new-texte" class="todo-input" maxlength="255" placeholder="<?php echo htmlspecialchars(t('planning.todo_placeholder')); ?>" onkeydown="if(event.key==='Enter'){enregistrerTodoItem();}">
+                </div>
+
+                <div class="todo-field">
+                    <span class="todo-extra-label"><?php echo htmlspecialchars(t('planning.todo_prio_label')); ?></span>
+                    <div class="todo-prio-group">
+                        <button type="button" class="todo-prio-btn" data-prio="basse" onclick="choisirTodoPrio('basse')"><?php echo htmlspecialchars(t('planning.todo_prio_basse')); ?></button>
+                        <button type="button" class="todo-prio-btn actif" data-prio="normale" onclick="choisirTodoPrio('normale')"><?php echo htmlspecialchars(t('planning.todo_prio_normale')); ?></button>
+                        <button type="button" class="todo-prio-btn" data-prio="haute" onclick="choisirTodoPrio('haute')"><?php echo htmlspecialchars(t('planning.todo_prio_haute')); ?></button>
+                    </div>
+                </div>
+
+                <div class="todo-extra-row">
+                    <div class="todo-field">
+                        <label class="todo-extra-label" for="todo-new-categorie"><?php echo htmlspecialchars(t('planning.todo_cat_label')); ?></label>
+                        <select id="todo-new-categorie" class="todo-input">
+                            <option value=""><?php echo htmlspecialchars(t('planning.todo_cat_aucune')); ?></option>
+                            <?php foreach ($todo_categories as $cat): ?>
+                            <option value="<?php echo htmlspecialchars($cat['cle']); ?>"><?php echo htmlspecialchars($cat['label_affiche']); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="todo-field">
+                        <label class="todo-extra-label" for="todo-new-duree"><?php echo htmlspecialchars(t('planning.todo_duree_label')); ?></label>
+                        <select id="todo-new-duree" class="todo-input">
+                            <option value=""><?php echo htmlspecialchars(t('planning.todo_duree_aucune')); ?></option>
+                            <?php foreach ($todo_durees as $dMin): ?>
+                            <option value="<?php echo (int)$dMin; ?>"><?php echo htmlspecialchars(todo_format_duree($dMin)); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="todo-extra-row">
+                    <div class="todo-field">
+                        <label class="todo-extra-label" for="todo-new-heure"><?php echo htmlspecialchars(t('planning.todo_heure_label')); ?></label>
+                        <input type="time" id="todo-new-heure" class="todo-input">
+                    </div>
+                    <div class="todo-field">
+                        <label class="todo-extra-label" for="todo-new-machine"><?php echo htmlspecialchars(t('planning.todo_machine_label')); ?></label>
+                        <input type="text" id="todo-new-machine" class="todo-input" maxlength="100" placeholder="<?php echo htmlspecialchars(t('planning.todo_machine_placeholder')); ?>">
+                    </div>
+                </div>
+
+                <div class="todo-field">
+                    <label class="todo-extra-label" for="todo-new-detail"><?php echo htmlspecialchars(t('planning.todo_detail_label')); ?></label>
+                    <textarea id="todo-new-detail" class="todo-input" rows="3" maxlength="255" placeholder="<?php echo htmlspecialchars(t('planning.todo_detail_placeholder')); ?>"></textarea>
+                </div>
+
+                <div class="todo-form-actions">
+                    <button type="button" id="todo-cancel-btn" class="todo-cancel-btn" onclick="reinitialiserFormTodo()" style="display:none;"><?php echo htmlspecialchars(t('planning.todo_btn_annuler')); ?></button>
+                    <button type="button" id="todo-submit-btn" class="todo-submit-btn" onclick="enregistrerTodoItem()"><i class="fa-solid fa-plus"></i> <span><?php echo htmlspecialchars(t('planning.todo_btn_ajouter')); ?></span></button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <div id="bulkModal" class="modal" style="z-index: 10600;">
-    <div class="modal-content" style="width: min(480px, 92vw); max-height: calc(96vh - 40px); margin: 3vh auto; overflow-y: auto; box-sizing: border-box;">
-        <div class="modal-header">
-            <span id="bulk-modal-title"><?php echo htmlspecialchars(t('planning.modal_remplissage_rapide')); ?></span>
-            <i class="fa-solid fa-xmark btn-del" onclick="closeBulkModal()" title="<?php echo htmlspecialchars(t('planning.tooltip_fermer')); ?>"></i>
+    <div class="modal-content" style="width: min(480px, 92vw); max-height: calc(100vh - 40px); max-height: calc(100dvh - 40px); margin: 20px auto; padding: 0; border-radius: 20px; overflow-y: auto; box-sizing: border-box;">
+        <div class="choix-head choix-head--compact">
+            <div class="choix-head-top">
+                <h3><?php echo htmlspecialchars(t('planning.modal_remplissage_rapide')); ?></h3>
+                <button type="button" class="choix-close" onclick="closeBulkModal()" title="<?php echo htmlspecialchars(t('planning.tooltip_fermer')); ?>" aria-label="<?php echo htmlspecialchars(t('planning.tooltip_fermer')); ?>"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="choix-ctx">
+                <img id="bulk-avatar" class="choix-avatar" src="img/user.png" alt="">
+                <div class="choix-ctx-txt">
+                    <span id="bulk-tech-nom" class="choix-tech"></span>
+                </div>
+            </div>
         </div>
+        <div class="choix-modal-body">
 
-        <div class="shift-section-label"><?php echo htmlspecialchars(t('planning.label_periode')); ?></div>
+        <div class="shift-section-label" style="margin-top:0;"><?php echo htmlspecialchars(t('planning.label_periode')); ?></div>
         <div class="bulk-date-row">
             <input type="date" id="bulk-date-debut">
             <span><?php echo htmlspecialchars(t('planning.au_connector')); ?></span>
@@ -1370,15 +1663,26 @@ try {
             <button type="button" class="btn-shift-clear" onclick="closeBulkModal()"><?php echo htmlspecialchars(t('planning.btn_annuler')); ?></button>
             <button type="button" id="bulk-apply-btn" class="btn-save" style="margin-top:0;" onclick="applyBulkFill()" disabled><?php echo htmlspecialchars(t('planning.btn_appliquer')); ?></button>
         </div>
+        </div>
     </div>
 </div>
 
 <div id="annualModal" class="modal" style="z-index: 10500;">
-    <div class="modal-content" style="width: min(1200px, 95vw); max-height: calc(96vh - 50px); margin: 1.5vh auto; overflow-y: auto;">
-        <div class="modal-header">
-            <span id="annual-modal-title"><?php echo htmlspecialchars(t('planning.modal_planning_annuel')); ?></span>
-            <i class="fa-solid fa-xmark btn-del" onclick="closeAnnualModal()" title="<?php echo htmlspecialchars(t('planning.tooltip_fermer')); ?>"></i>
+    <div class="modal-content" style="width: min(1200px, 95vw); max-height: calc(96vh - 50px); margin: 1.5vh auto; padding: 0; border-radius: 20px; overflow-y: auto;">
+        <div class="choix-head choix-head--compact">
+            <div class="choix-head-top">
+                <h3><?php echo htmlspecialchars(t('planning.modal_planning_annuel')); ?></h3>
+                <button type="button" class="choix-close" onclick="closeAnnualModal()" title="<?php echo htmlspecialchars(t('planning.tooltip_fermer')); ?>" aria-label="<?php echo htmlspecialchars(t('planning.tooltip_fermer')); ?>"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="choix-ctx">
+                <img id="annual-avatar" class="choix-avatar" src="img/user.png" alt="">
+                <div class="choix-ctx-txt">
+                    <span id="annual-tech-nom" class="choix-tech"></span>
+                    <span id="annual-periode-label" class="choix-date"></span>
+                </div>
+            </div>
         </div>
+        <div class="choix-modal-body">
         <div class="annual-top-row">
             <div id="annual-legend" class="annual-legend">
                 <div id="annual-legend-postes" class="annual-legend-grid"></div>
@@ -1445,6 +1749,7 @@ try {
             <div id="annual-grid" class="annual-grid"></div>
         </div>
         <div id="annual-months-adjust-note" class="atc-adjust-note" style="margin-top:8px;"></div>
+        </div>
     </div>
 </div>
 
@@ -1595,6 +1900,22 @@ const I18N_PLANNING = <?php echo json_encode([
     'confirmation_title' => t('planning.confirmation_title'),
     'choix_todo_list' => t('planning.choix_todo_list'),
     'todo_vide' => t('planning.todo_vide'),
+    'todo_btn_ajouter' => t('planning.todo_btn_ajouter'),
+    'todo_btn_enregistrer' => t('planning.todo_btn_enregistrer'),
+    'todo_prio_basse' => t('planning.todo_prio_basse'),
+    'todo_prio_haute' => t('planning.todo_prio_haute'),
+    'todo_form_nouvelle' => t('planning.todo_form_nouvelle'),
+    'todo_form_modifier' => t('planning.todo_form_modifier'),
+    'todo_tooltip_modifier' => t('planning.todo_tooltip_modifier'),
+    'todo_tooltip_supprimer' => t('planning.todo_tooltip_supprimer'),
+    'todo_resume_faites' => t('planning.todo_resume_faites'),
+    'todo_stat_haute' => t('planning.todo_stat_haute'),
+    'todo_stat_restant' => t('planning.todo_stat_restant'),
+    'todo_stat_reportees' => t('planning.todo_stat_reportees'),
+    'todo_vide_filtre' => t('planning.todo_vide_filtre'),
+    'todo_meta_creee' => t('planning.todo_meta_creee'),
+    'todo_meta_reportee' => t('planning.todo_meta_reportee'),
+    'todo_meta_faite' => t('planning.todo_meta_faite'),
     'todo_confirm_suppr_msg' => t('planning.todo_confirm_suppr_msg'),
     'err_suppr_serveur' => t('planning.err_suppr_serveur'),
     'saving' => t('maint.saving'),
@@ -2759,13 +3080,19 @@ function ouvrirChoixCase(tech, dateStr) {
     choixCaseTech = tech;
     choixCaseDate = dateStr;
     const dateLabel = new Date(dateStr + 'T00:00:00').toLocaleDateString(JS_LOCALE, { weekday: 'long', day: 'numeric', month: 'long' });
-    document.getElementById('choix-case-sous-titre').textContent = `${libelleTech(tech)} — ${dateLabel}`;
-    document.getElementById('choixCaseModal').style.display = 'block';
+    document.getElementById('choix-tech').textContent = libelleTech(tech);
+    document.getElementById('choix-date').textContent = dateLabel;
+    document.getElementById('choix-avatar').src = urlAvatarTech(tech);
+    document.getElementById('choixCaseModal').style.display = 'flex';
 }
 
 function closeChoixCase() {
     document.getElementById('choixCaseModal').style.display = 'none';
 }
+
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && document.getElementById('choixCaseModal').style.display === 'flex') closeChoixCase();
+});
 
 function choisirPlanifierHeures() {
     const tech = choixCaseTech, dateStr = choixCaseDate;
@@ -2791,12 +3118,13 @@ let todoModalDate = null;
 // Pastille "il y a une todo list ce jour-là" apposée sur une case du planning (vues Semaine et Mois,
 // voir renderTable/renderMoisView) : le nombre de tâches restantes, ou une coche si tout est fait. Un
 // clic ouvre directement la liste, sans repasser par le choix de case (stopPropagation pour ne pas
-// aussi déclencher l'ouverture de cette dernière).
+// aussi déclencher l'ouverture de cette dernière). Le survol affiche les bulles d'info (voir
+// afficherTodoPop), à la place de l'infobulle native du navigateur.
 function todoBadgeHtml(tech, dateStr, items) {
     const nbRestant = items.filter(i => i.fait != 1).length;
     const contenu = nbRestant > 0 ? `<i class="fa-solid fa-list-check"></i> ${nbRestant}` : `<i class="fa-solid fa-circle-check"></i>`;
-    const titre = items.map(i => `${i.fait == 1 ? '✓' : '•'} ${i.texte}`).join('\n').replace(/"/g, '&quot;');
-    return `<span class="todo-cell-badge${nbRestant === 0 ? ' tout-fait' : ''}" title="${titre}" onclick="event.stopPropagation(); ouvrirTodoModal('${tech}', '${dateStr}')">${contenu}</span>`;
+    const techAttr = String(tech).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+    return `<span class="todo-cell-badge${nbRestant === 0 ? ' tout-fait' : ''}" data-todo-tech="${techAttr}" data-todo-date="${dateStr}" onclick="event.stopPropagation(); cacherTodoPop(); ouvrirTodoModal('${tech}', '${dateStr}')">${contenu}</span>`;
 }
 
 function choisirTodoList() {
@@ -2805,53 +3133,317 @@ function choisirTodoList() {
     ouvrirTodoModal(tech, dateStr);
 }
 
+// --- Aides communes à la fenêtre TODO et aux bulles de survol ---
+// Catégories définies dans Paramètres > TODO list : { clé: { label, icone, couleur } }
+const TODO_CATEGORIES = <?php
+    $__todoCatsJs = [];
+    foreach ($todo_categories as $c) { $__todoCatsJs[$c['cle']] = ['label' => $c['label_affiche'], 'icone' => $c['icone'], 'couleur' => $c['couleur']]; }
+    echo json_encode($__todoCatsJs, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?: '{}';
+?>;
+const todoEsc = s => (s == null ? '' : s).toString().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const todoPrio = item => (item.priorite === 'haute' || item.priorite === 'basse') ? item.priorite : 'normale';
+
+function todoFmtDuree(min) {
+    min = parseInt(min, 10) || 0;
+    if (min < 60) return `${min} min`;
+    const h = Math.floor(min / 60), m = min % 60;
+    return m ? `${h} h ${String(m).padStart(2, '0')}` : `${h} h`;
+}
+
+function todoFmtDate(s, avecHeure) {
+    if (!s) return '';
+    const d = new Date(String(s).replace(' ', 'T'));
+    if (isNaN(d)) return '';
+    const opts = avecHeure ? { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' } : { day: 'numeric', month: 'short' };
+    return d.toLocaleDateString(JS_LOCALE, opts);
+}
+
+// Ordre d'affichage : à faire d'abord (priorité haute → basse, puis heure prévue, puis ordre de création),
+// tâches faites ensuite.
+function todoTrier(items) {
+    const ordrePrio = { haute: 0, normale: 1, basse: 2 };
+    return items.slice().sort((a, b) => {
+        if ((a.fait == 1) !== (b.fait == 1)) return (a.fait == 1) ? 1 : -1;
+        if (a.fait != 1) {
+            const dp = ordrePrio[todoPrio(a)] - ordrePrio[todoPrio(b)];
+            if (dp) return dp;
+            const ha = a.heure ? a.heure.toString().substring(0, 5) : '99:99', hb = b.heure ? b.heure.toString().substring(0, 5) : '99:99';
+            if (ha !== hb) return ha < hb ? -1 : 1;
+        }
+        return a.id - b.id;
+    });
+}
+
+// Pastilles d'une tâche (priorité, catégorie, heure, durée, machine) — les mêmes dans la liste et dans les bulles.
+function todoChipsHtml(item) {
+    const prio = todoPrio(item);
+    let chips = '';
+    if (prio === 'haute') chips += `<span class="todo-chip prio-haute"><i class="fa-solid fa-arrow-up"></i> ${todoEsc(I18N_PLANNING.todo_prio_haute)}</span>`;
+    if (prio === 'basse') chips += `<span class="todo-chip prio-basse"><i class="fa-solid fa-arrow-down"></i> ${todoEsc(I18N_PLANNING.todo_prio_basse)}</span>`;
+    const cat = item.categorie ? TODO_CATEGORIES[item.categorie] : null;
+    if (cat) chips += `<span class="todo-chip cat" style="--cc:${todoEsc(cat.couleur)}"><i class="fa-solid ${todoEsc(cat.icone)}"></i> ${todoEsc(cat.label)}</span>`;
+    if (item.heure) chips += `<span class="todo-chip heure"><i class="fa-solid fa-clock"></i> ${todoEsc(item.heure.toString().substring(0, 5))}</span>`;
+    if (item.duree_min) chips += `<span class="todo-chip duree"><i class="fa-solid fa-hourglass-half"></i> ${todoEsc(todoFmtDuree(item.duree_min))}</span>`;
+    if (item.machine) chips += `<span class="todo-chip"><i class="fa-solid fa-gears"></i> ${todoEsc(item.machine)}</span>`;
+    return chips;
+}
+
+// --- BULLES D'INFO AU SURVOL DE LA PASTILLE ---
+// Une bulle par tâche, réparties en grille (1 colonne jusqu'à 2 tâches, 2 jusqu'à 6, 3 au-delà), plus une
+// bulle d'en-tête. Ne capte jamais la souris (pointer-events: none) : quitter la pastille suffit à tout fermer.
+function afficherTodoPop(badge) {
+    const key = `${badge.dataset.todoTech}_${badge.dataset.todoDate}`;
+    const items = todoTrier(todoParCle[key] || []);
+    if (!items.length) return;
+    const pop = document.getElementById('todoPop');
+    const nbFait = items.filter(i => i.fait == 1).length;
+    let cols = items.length <= 2 ? 1 : (items.length <= 6 ? 2 : 3);
+    cols = Math.max(1, Math.min(cols, Math.floor((window.innerWidth - 16) / 178)));
+    const dateLabel = new Date(badge.dataset.todoDate + 'T00:00:00').toLocaleDateString(JS_LOCALE, { weekday: 'short', day: 'numeric', month: 'short' });
+    pop.innerHTML = `<div class="todo-pop-grid" style="--cols:${cols}">
+        <div class="todo-pop-head"><i class="fa-solid fa-list-check"></i> ${todoEsc(libelleTech(badge.dataset.todoTech))} <span class="sep">•</span> ${todoEsc(dateLabel)} <span class="sep">•</span> <b>${todoEsc(I18N_PLANNING.todo_resume_faites.replace('{fait}', nbFait).replace('{total}', items.length))}</b></div>
+        ${items.map((item, i) => {
+            const chips = todoChipsHtml(item);
+            return `<div class="todo-bubble prio-${todoPrio(item)} ${item.fait == 1 ? 'is-fait' : ''}" style="--i:${i + 1}">
+                <div class="todo-bubble-titre"><i class="fa-solid ${item.fait == 1 ? 'fa-circle-check' : 'fa-circle'}"></i><span>${todoEsc(item.texte)}</span></div>
+                ${chips ? `<div class="todo-item-meta">${chips}</div>` : ''}
+                ${item.detail ? `<div class="todo-bubble-detail">${todoEsc(item.detail)}</div>` : ''}
+            </div>`;
+        }).join('')}
+    </div>`;
+    pop.style.visibility = 'hidden';
+    pop.style.display = 'block';
+    const r = badge.getBoundingClientRect();
+    const w = pop.offsetWidth, h = pop.offsetHeight, marge = 8;
+    const left = Math.min(Math.max(marge, r.left + r.width / 2 - w / 2), window.innerWidth - w - marge);
+    let top = r.bottom + 10;
+    if (top + h > window.innerHeight - marge) top = r.top - h - 10;
+    top = Math.min(Math.max(marge, top), Math.max(marge, window.innerHeight - h - marge));
+    pop.style.left = left + 'px';
+    pop.style.top = top + 'px';
+    pop.style.visibility = 'visible';
+}
+
+function cacherTodoPop() {
+    const pop = document.getElementById('todoPop');
+    if (pop) pop.style.display = 'none';
+}
+
+// Délégation : les cases du planning sont reconstruites à chaque affichage, on ne pose donc pas
+// d'écouteur sur chaque pastille.
+document.addEventListener('mouseover', e => {
+    const badge = e.target.closest && e.target.closest('.todo-cell-badge');
+    if (badge) afficherTodoPop(badge);
+});
+document.addEventListener('mouseout', e => {
+    const badge = e.target.closest && e.target.closest('.todo-cell-badge');
+    if (badge && !badge.contains(e.relatedTarget)) cacherTodoPop();
+});
+window.addEventListener('scroll', cacherTodoPop, true);
+window.addEventListener('resize', cacherTodoPop);
+
+// --- FENÊTRE TODO LIST ---
+let todoFiltre = 'toutes';
+let todoEditId = null;
+let todoNewPrio = 'normale';
+let todoModifie = false; // vrai dès qu'une tâche change : la vue du planning est redessinée à la fermeture
+
 function ouvrirTodoModal(tech, dateStr) {
     todoModalTech = tech;
     todoModalDate = dateStr;
+    todoModifie = false;
+    todoFiltre = 'toutes';
     const dateLabel = new Date(dateStr + 'T00:00:00').toLocaleDateString(JS_LOCALE, { weekday: 'long', day: 'numeric', month: 'long' });
-    document.getElementById('todo-modal-titre').textContent = `${I18N_PLANNING.choix_todo_list} — ${libelleTech(tech)}`;
+    document.getElementById('todo-tech-nom').textContent = libelleTech(tech);
+    document.getElementById('todo-avatar').src = urlAvatarTech(tech);
     document.getElementById('todo-modal-date').textContent = dateLabel;
-    document.getElementById('todo-new-texte').value = '';
+    reinitialiserFormTodo();
     renderTodoItems();
     document.getElementById('todoModal').style.display = 'block';
 }
 
 function closeTodoModal() {
     document.getElementById('todoModal').style.display = 'none';
+    // Les pastilles des cases affichent le nombre de tâches restantes : on les remet à jour.
+    if (todoModifie) {
+        todoModifie = false;
+        if (typeof modeVue !== 'undefined' && modeVue === 'mois') { renderMoisView(); } else { renderTable(); }
+    }
+}
+
+function choisirTodoFiltre(f) {
+    todoFiltre = f;
+    renderTodoItems();
 }
 
 function renderTodoItems() {
     const key = `${todoModalTech}_${todoModalDate}`;
-    const items = (todoParCle[key] || []).slice().sort((a, b) => a.id - b.id);
+    const tous = todoTrier(todoParCle[key] || []);
+    const faites = tous.filter(i => i.fait == 1);
+    const aFaire = tous.filter(i => i.fait != 1);
+
+    // Résumé d'avancement
+    const pct = tous.length ? Math.round(faites.length / tous.length * 100) : 0;
+    document.getElementById('todo-resume-txt').textContent = I18N_PLANNING.todo_resume_faites.replace('{fait}', faites.length).replace('{total}', tous.length);
+    document.getElementById('todo-resume-pct').textContent = `${pct}%`;
+    document.getElementById('todo-progress-fill').style.width = pct + '%';
+    const nbHaute = aFaire.filter(i => todoPrio(i) === 'haute').length;
+    const minRestant = aFaire.reduce((s, i) => s + (parseInt(i.duree_min, 10) || 0), 0);
+    const nbReportees = aFaire.filter(i => i.jour_origine).length;
+    let stats = '';
+    if (nbHaute) stats += `<span class="todo-stat haute"><i class="fa-solid fa-arrow-up"></i> ${todoEsc(I18N_PLANNING.todo_stat_haute.replace('{n}', nbHaute))}</span>`;
+    if (minRestant) stats += `<span class="todo-stat"><i class="fa-solid fa-hourglass-half"></i> ${todoEsc(I18N_PLANNING.todo_stat_restant.replace('{duree}', todoFmtDuree(minRestant)))}</span>`;
+    if (nbReportees) stats += `<span class="todo-stat"><i class="fa-solid fa-rotate-right"></i> ${todoEsc(I18N_PLANNING.todo_stat_reportees.replace('{n}', nbReportees))}</span>`;
+    document.getElementById('todo-stats').innerHTML = stats;
+
+    // Filtres
+    document.getElementById('todo-count-toutes').textContent = `(${tous.length})`;
+    document.getElementById('todo-count-afaire').textContent = `(${aFaire.length})`;
+    document.getElementById('todo-count-faites').textContent = `(${faites.length})`;
+    document.querySelectorAll('.todo-filter').forEach(b => b.classList.toggle('actif', b.dataset.filtre === todoFiltre));
+
     const wrap = document.getElementById('todo-items-list');
-    if (items.length === 0) {
-        wrap.innerHTML = `<div class="todo-empty-state">${I18N_PLANNING.todo_vide}</div>`;
+    const affiches = todoFiltre === 'afaire' ? aFaire : (todoFiltre === 'faites' ? faites : tous);
+    if (affiches.length === 0) {
+        wrap.innerHTML = `<div class="todo-empty-state">${todoEsc(tous.length === 0 ? I18N_PLANNING.todo_vide : I18N_PLANNING.todo_vide_filtre)}</div>`;
         return;
     }
-    wrap.innerHTML = items.map(item => `
-        <div class="todo-item ${(item.fait == 1) ? 'is-fait' : ''}">
-            <input type="checkbox" ${(item.fait == 1) ? 'checked' : ''} onchange="toggleTodoItem(${item.id}, this.checked)">
-            <span class="todo-item-texte">${(item.texte || '').toString().replace(/</g, '&lt;')}</span>
-            <i class="fa-solid fa-trash todo-item-del" onclick="supprimerTodoItem(${item.id})"></i>
-        </div>`).join('');
+    wrap.innerHTML = affiches.map(item => {
+        const chips = todoChipsHtml(item);
+        let suivi = '';
+        if (item.date_creation) suivi += `<span><i class="fa-regular fa-calendar-plus"></i> ${todoEsc(I18N_PLANNING.todo_meta_creee.replace('{date}', todoFmtDate(item.date_creation, false)))}</span>`;
+        if (item.jour_origine && item.fait != 1) suivi += `<span class="report"><i class="fa-solid fa-rotate-right"></i> ${todoEsc(I18N_PLANNING.todo_meta_reportee.replace('{date}', todoFmtDate(item.jour_origine + 'T00:00:00', false)))}</span>`;
+        if (item.fait == 1 && item.date_fait) suivi += `<span class="fini"><i class="fa-solid fa-circle-check"></i> ${todoEsc(I18N_PLANNING.todo_meta_faite.replace('{date}', todoFmtDate(item.date_fait, true)))}</span>`;
+        return `
+        <div class="todo-item prio-${todoPrio(item)} ${item.fait == 1 ? 'is-fait' : ''} ${todoEditId == item.id ? 'en-edition' : ''}">
+            <input type="checkbox" ${item.fait == 1 ? 'checked' : ''} onchange="toggleTodoItem(${item.id}, this.checked)">
+            <div class="todo-item-main">
+                <span class="todo-item-texte">${todoEsc(item.texte)}</span>
+                ${chips ? `<div class="todo-item-meta">${chips}</div>` : ''}
+                ${item.detail ? `<div class="todo-item-detail">${todoEsc(item.detail)}</div>` : ''}
+                ${suivi ? `<div class="todo-item-suivi">${suivi}</div>` : ''}
+            </div>
+            <div class="todo-item-actions">
+                <i class="fa-solid fa-pen todo-item-edit" title="${todoEsc(I18N_PLANNING.todo_tooltip_modifier)}" onclick="demarrerEditionTodo(${item.id})"></i>
+                <i class="fa-solid fa-trash todo-item-del" title="${todoEsc(I18N_PLANNING.todo_tooltip_supprimer)}" onclick="supprimerTodoItem(${item.id})"></i>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function choisirTodoPrio(prio) {
+    todoNewPrio = prio;
+    document.querySelectorAll('.todo-prio-btn').forEach(b => b.classList.toggle('actif', b.dataset.prio === prio));
+}
+
+// Remet le formulaire en mode "nouvelle tâche" (aussi utilisé pour annuler une modification).
+function reinitialiserFormTodo() {
+    todoEditId = null;
+    // Retire l'option de durée ajoutée temporairement pour une tâche dont la durée n'est plus proposée.
+    document.querySelectorAll('#todo-new-duree option[data-temp]').forEach(o => o.remove());
+    ['todo-new-texte', 'todo-new-heure', 'todo-new-machine', 'todo-new-detail', 'todo-new-categorie', 'todo-new-duree'].forEach(id => { document.getElementById(id).value = ''; });
+    choisirTodoPrio('normale');
+    majModeFormTodo();
+    if (document.getElementById('todoModal').style.display === 'block') renderTodoItems();
+}
+
+function majModeFormTodo() {
+    const edition = todoEditId !== null;
+    document.getElementById('todo-form-card').classList.toggle('edition', edition);
+    document.getElementById('todo-form-titre-txt').textContent = edition ? I18N_PLANNING.todo_form_modifier : I18N_PLANNING.todo_form_nouvelle;
+    document.getElementById('todo-form-icone').className = edition ? 'fa-solid fa-pen-to-square' : 'fa-solid fa-circle-plus';
+    document.getElementById('todo-submit-btn').innerHTML = `<i class="fa-solid ${edition ? 'fa-check' : 'fa-plus'}"></i> <span>${todoEsc(edition ? I18N_PLANNING.todo_btn_enregistrer : I18N_PLANNING.todo_btn_ajouter)}</span>`;
+    document.getElementById('todo-cancel-btn').style.display = edition ? '' : 'none';
+}
+
+function demarrerEditionTodo(id) {
+    const key = `${todoModalTech}_${todoModalDate}`;
+    const item = (todoParCle[key] || []).find(i => i.id == id);
+    if (!item) return;
+    todoEditId = item.id;
+    document.getElementById('todo-new-texte').value = item.texte || '';
+    document.getElementById('todo-new-heure').value = item.heure ? item.heure.toString().substring(0, 5) : '';
+    document.getElementById('todo-new-machine').value = item.machine || '';
+    document.getElementById('todo-new-detail').value = item.detail || '';
+    document.getElementById('todo-new-categorie').value = item.categorie || '';
+    // Une durée retirée des choix (Paramètres > TODO list) reste sélectionnable pour cette tâche, afin
+    // qu'enregistrer une modification ne la fasse pas disparaître sans prévenir.
+    const selDuree = document.getElementById('todo-new-duree');
+    selDuree.querySelectorAll('option[data-temp]').forEach(o => o.remove());
+    if (item.duree_min && ![...selDuree.options].some(o => o.value === String(item.duree_min))) {
+        const o = document.createElement('option');
+        o.value = String(item.duree_min);
+        o.textContent = todoFmtDuree(item.duree_min);
+        o.dataset.temp = '1';
+        selDuree.appendChild(o);
+    }
+    selDuree.value = item.duree_min ? String(item.duree_min) : '';
+    choisirTodoPrio(todoPrio(item));
+    majModeFormTodo();
+    renderTodoItems();
+    document.getElementById('todo-form-card').scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    const champ = document.getElementById('todo-new-texte');
+    champ.focus();
+    champ.setSelectionRange(champ.value.length, champ.value.length);
+}
+
+function champsFormTodo() {
+    return {
+        texte: document.getElementById('todo-new-texte').value.trim(),
+        priorite: todoNewPrio,
+        heure: document.getElementById('todo-new-heure').value,
+        machine: document.getElementById('todo-new-machine').value.trim(),
+        detail: document.getElementById('todo-new-detail').value.trim(),
+        categorie: document.getElementById('todo-new-categorie').value,
+        duree_min: document.getElementById('todo-new-duree').value
+    };
+}
+
+function enregistrerTodoItem() {
+    if (todoEditId !== null) { return modifierTodoItem(); }
+    return ajouterTodoItem();
 }
 
 async function ajouterTodoItem() {
-    const input = document.getElementById('todo-new-texte');
-    const texte = input.value.trim();
-    if (!texte) return;
+    const c = champsFormTodo();
+    if (!c.texte) return;
     const fd = new FormData();
     fd.append('action', 'todo_add');
     fd.append('tech', todoModalTech);
     fd.append('date', todoModalDate);
-    fd.append('texte', texte);
+    Object.keys(c).forEach(k => fd.append(k, c[k]));
     const res = await fetch('maintenance.php', { method: 'POST', body: fd });
     const data = await res.json().catch(() => null);
     if (!data || !data.id) return;
     const key = `${todoModalTech}_${todoModalDate}`;
     if (!todoParCle[key]) todoParCle[key] = [];
-    todoParCle[key].push({ id: data.id, utilisateur: todoModalTech, jour: todoModalDate, texte: texte, fait: 0 });
-    input.value = '';
+    todoParCle[key].push({ id: data.id, utilisateur: todoModalTech, jour: todoModalDate, texte: c.texte, fait: 0,
+        priorite: c.priorite, heure: c.heure || null, machine: c.machine || null, detail: c.detail || null,
+        categorie: c.categorie || null, duree_min: c.duree_min ? parseInt(c.duree_min, 10) : null,
+        jour_origine: null, date_fait: null, date_creation: data.date_creation || null });
+    todoModifie = true;
+    reinitialiserFormTodo();
+    renderTodoItems();
+}
+
+async function modifierTodoItem() {
+    const c = champsFormTodo();
+    if (!c.texte) return;
+    const id = todoEditId;
+    const fd = new FormData();
+    fd.append('action', 'todo_update');
+    fd.append('id', id);
+    Object.keys(c).forEach(k => fd.append(k, c[k]));
+    const res = await fetch('maintenance.php', { method: 'POST', body: fd });
+    if (!res.ok) return;
+    const key = `${todoModalTech}_${todoModalDate}`;
+    const item = (todoParCle[key] || []).find(i => i.id == id);
+    if (item) {
+        Object.assign(item, { texte: c.texte, priorite: c.priorite, heure: c.heure || null, machine: c.machine || null,
+            detail: c.detail || null, categorie: c.categorie || null, duree_min: c.duree_min ? parseInt(c.duree_min, 10) : null });
+    }
+    todoModifie = true;
+    reinitialiserFormTodo();
     renderTodoItems();
 }
 
@@ -2863,7 +3455,11 @@ async function toggleTodoItem(id, coche) {
     await fetch('maintenance.php', { method: 'POST', body: fd });
     const key = `${todoModalTech}_${todoModalDate}`;
     const item = (todoParCle[key] || []).find(i => i.id == id);
-    if (item) item.fait = coche ? 1 : 0;
+    if (item) {
+        item.fait = coche ? 1 : 0;
+        item.date_fait = coche ? new Date().toISOString().slice(0, 19).replace('T', ' ') : null;
+    }
+    todoModifie = true;
     renderTodoItems();
 }
 
@@ -2876,6 +3472,8 @@ async function supprimerTodoItem(id) {
     await fetch('maintenance.php', { method: 'POST', body: fd });
     const key = `${todoModalTech}_${todoModalDate}`;
     todoParCle[key] = (todoParCle[key] || []).filter(i => i.id != id);
+    todoModifie = true;
+    if (todoEditId == id) { reinitialiserFormTodo(); }
     renderTodoItems();
 }
 
@@ -2894,7 +3492,8 @@ function openShiftModal(tech, dateStr, depuisAnnuel) {
     // jour férié travaillé sans le signaler.
     shiftJourFerie = ligneVide(existingRecord) ? estJourFerieFrance(dateStr) : !!existing.jour_ferie;
 
-    document.getElementById('shift-modal-title').textContent = I18N_PLANNING.planifier_tech.replace('{tech}', tech);
+    document.getElementById('shift-tech-nom').textContent = libelleTech(tech);
+    document.getElementById('shift-avatar').src = urlAvatarTech(tech);
     const dObj = new Date(dateStr + 'T00:00:00');
     document.getElementById('shift-modal-date').textContent = dObj.toLocaleDateString(JS_LOCALE, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
     document.getElementById('shift-heures').value = (existing.heures !== undefined && existing.heures !== null) ? existing.heures : '';
@@ -3121,7 +3720,8 @@ function updateBulkPreview() {
 
 function openBulkModal() {
     if (!shiftTech) return;
-    document.getElementById('bulk-modal-title').textContent = `${I18N_PLANNING.modal_remplissage_rapide} — ${shiftTech}`;
+    document.getElementById('bulk-tech-nom').textContent = libelleTech(shiftTech);
+    document.getElementById('bulk-avatar').src = urlAvatarTech(shiftTech);
     document.getElementById('bulk-date-debut').value = shiftDate;
     document.getElementById('bulk-date-fin').value = shiftDate;
     document.getElementById('bulk-exclure-weekend').checked = true;
@@ -4010,7 +4610,10 @@ function openAnnualModal(tech) {
     // classique sur desktop — recalculé à chaque ouverture, pas mémorisé d'une fois sur l'autre.
     annualViewMode = ecranEtroit() ? 'mensuel' : 'global';
     annualActiveMonthIndex = null;
-    document.getElementById('annual-modal-title').textContent = I18N_PLANNING.planning_annuel_tech.replace('{tech}', tech);
+    document.getElementById('annual-tech-nom').textContent = libelleTech(tech);
+    document.getElementById('annual-avatar').src = urlAvatarTech(tech);
+    document.getElementById('annual-periode-label').textContent =
+        `${new Date(periodeAnnualisationDebut + 'T00:00:00').toLocaleDateString(JS_LOCALE)} → ${new Date(periodeAnnualisationFin + 'T00:00:00').toLocaleDateString(JS_LOCALE)}`;
     // Un technicien ne peut modifier que son propre objectif et son propre fractionnement, l'admin peut
     // modifier ceux de n'importe qui (même règle que les backends maintenance.php?action=save_objectif et
     // save_fractionnement) — chacun gère ses propres heures. Champ toujours visible (plus de crayon à
