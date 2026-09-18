@@ -236,6 +236,7 @@ tbody td:first-child { font-weight: 700; color: var(--primary); white-space: now
             </label>
             <ul class="toc-list">
                 <li><a href="#vue-ensemble"><i class="fa-solid fa-circle-info"></i> <?php echo htmlspecialchars(t('aide_planning.toc_vue_ensemble')); ?></a></li>
+                <li><a href="#vues-affichage"><i class="fa-solid fa-table-cells"></i> <?php echo htmlspecialchars(t('aide_planning.toc_vues_affichage')); ?></a></li>
                 <li><a href="#naviguer"><i class="fa-solid fa-arrows-left-right"></i> <?php echo htmlspecialchars(t('aide_planning.toc_naviguer')); ?></a></li>
                 <li><a href="#remplir-case"><i class="fa-solid fa-hand-pointer"></i> <?php echo htmlspecialchars(t('aide_planning.toc_remplir_case')); ?></a></li>
                 <li><a href="#cases-evenements"><i class="fa-solid fa-table-list"></i> <?php echo htmlspecialchars(t('aide_planning.toc_cases_evenements')); ?></a></li>
@@ -274,6 +275,31 @@ tbody td:first-child { font-weight: 700; color: var(--primary); white-space: now
                     <div class="callout callout-tip">
                         <i class="fa-solid fa-circle-info"></i>
                         <div><p><?php echo t('aide_planning.callout_annuel'); ?></p></div>
+                    </div>
+                </section>
+
+                <section id="vues-affichage" class="aide-sec">
+                    <div class="sec-eyebrow"><i class="fa-solid fa-table-cells"></i><h2><?php echo htmlspecialchars(t('aide_planning.toc_vues_affichage')); ?></h2></div>
+                    <p class="lede"><?php echo htmlspecialchars(t('aide_planning.vues_affichage_lede')); ?></p>
+
+                    <div class="cases">
+                        <div class="case-card">
+                            <h4><i class="fa-solid fa-sun" style="color:#f1c40f;"></i> <?php echo htmlspecialchars(t('aide_planning.vue_jour_titre')); ?></h4>
+                            <p><?php echo htmlspecialchars(t('aide_planning.vue_jour_desc')); ?></p>
+                        </div>
+                        <div class="case-card">
+                            <h4><i class="fa-solid fa-calendar-week"></i> <?php echo htmlspecialchars(t('aide_planning.vue_semaine_titre')); ?></h4>
+                            <p><?php echo htmlspecialchars(t('aide_planning.vue_semaine_desc')); ?></p>
+                        </div>
+                        <div class="case-card">
+                            <h4><i class="fa-solid fa-calendar"></i> <?php echo htmlspecialchars(t('aide_planning.vue_mois_titre')); ?></h4>
+                            <p><?php echo htmlspecialchars(t('aide_planning.vue_mois_desc')); ?></p>
+                        </div>
+                    </div>
+
+                    <div class="callout callout-tip">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <div><p><?php echo htmlspecialchars(t('aide_planning.callout_vues_affichage')); ?></p></div>
                     </div>
                 </section>
 

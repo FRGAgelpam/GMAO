@@ -161,6 +161,13 @@ tbody td:first-child { font-weight: 700; color: var(--primary); white-space: now
 .tab-pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 6px; }
 .tab-pill { display: inline-flex; align-items: center; gap: 7px; background: #f1f4f6; color: #5a6b7a; font-weight: 700; font-size: 0.78rem; padding: 6px 13px; border-radius: 999px; border: 1px solid #e6e9ec; }
 .tab-pill i { color: var(--accent); }
+
+.shot { margin: 16px 0; border-radius: 12px; overflow: hidden; border: 1px solid #e6e9ec; box-shadow: 0 10px 24px -12px rgba(0,0,0,0.28); background: #fff; }
+.shot img { display: block; width: 100%; height: auto; }
+.shot-cap { padding: 8px 14px; font-size: 0.78rem; color: #7f8c9a; background: #f7f9fb; border-top: 1px solid #e6e9ec; display: flex; align-items: center; gap: 8px; }
+.shot-cap i { color: var(--accent); }
+.shot-row { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media (min-width: 780px) { .shot-row.two { grid-template-columns: 1fr 1fr; } }
 </style>
 <?php include 'pwa_head.php'; ?>
 </head>

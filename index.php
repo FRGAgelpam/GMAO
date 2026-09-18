@@ -76,6 +76,7 @@ $tuiles = [
     ['href' => 'idees_admin.php',     'icon' => 'fa-lightbulb',     'titre' => t('tuile.idees.titre'),      'desc' => t('tuile.idees.desc'), 'couleur' => '#f1c40f', 'admin_only' => true, 'hidden_for_others' => true, 'badge' => $nb_idees_nouvelles],
     ['href' => 'parametres.php',      'icon' => 'fa-sliders',       'titre' => t('tuile.parametres.titre'), 'desc' => t('tuile.parametres.desc'), 'couleur' => '#1abc9c', 'admin_only' => true],
     ['href' => 'logs.php',            'icon' => 'fa-clock-rotate-left', 'titre' => t('tuile.logs.titre'),   'desc' => t('tuile.logs.desc'), 'couleur' => '#607d8b', 'admin_only' => true],
+    ['href' => 'changelog.php',       'icon' => 'fa-rocket',        'titre' => t('tuile.changelog.titre'), 'desc' => t('tuile.changelog.desc'), 'couleur' => '#34495e', 'admin_only' => true],
     ['href' => 'accueil.php',         'icon' => 'fa-right-left',    'titre' => t('tuile.portail.titre'),    'desc' => t('tuile.portail.desc'), 'couleur' => '#8e44ad', 'admin_only' => true, 'hidden_for_others' => true],
 ];
 
@@ -102,6 +103,7 @@ $__tuile_i18n_keys = [
     'idees_admin.php' => ['titre' => 'tuile.idees.titre', 'desc' => ['tuile.idees.desc']],
     'parametres.php' => ['titre' => 'tuile.parametres.titre', 'desc' => ['tuile.parametres.desc']],
     'logs.php' => ['titre' => 'tuile.logs.titre', 'desc' => ['tuile.logs.desc']],
+    'changelog.php' => ['titre' => 'tuile.changelog.titre', 'desc' => ['tuile.changelog.desc']],
     'accueil.php' => ['titre' => 'tuile.portail.titre', 'desc' => ['tuile.portail.desc']],
     'aide.php' => ['titre' => 'tuile.aide.titre', 'desc' => ['tuile.aide.desc']],
 ];
@@ -160,7 +162,7 @@ $ICONES_DOSSIER = [
     'fa-hourglass-half' => t('icone.suivi_temps'), 'fa-calendar-check' => t('icone.planification'), 'fa-user-clock' => t('icone.suivi_horaire'),
     'fa-chart-line' => t('icone.performance'), 'fa-gears' => t('icone.mecanique'), 'fa-user-shield' => t('icone.securite_utilisateur'),
     'fa-lightbulb' => t('icone.idee'), 'fa-sliders' => t('icone.parametres'), 'fa-clock-rotate-left' => t('icone.historique'),
-    'fa-right-left' => t('icone.echange'), 'fa-circle-question' => t('icone.aide'),
+    'fa-right-left' => t('icone.echange'), 'fa-circle-question' => t('icone.aide'), 'fa-rocket' => t('icone.nouveautes'),
 ];
 // Même palette élargie que Paramètres, dupliquée ici pour le sélecteur de couleur des dossiers.
 $COULEURS_DOSSIER = [
@@ -203,7 +205,7 @@ try {
 // Pas de mise en page enregistrée : on construit la disposition par défaut. Pour un admin, les tuiles
 // de gestion sont regroupées dans un dossier "Administration" prêt à l'emploi.
 if (!$layout_sauvegarde_existe) {
-    $hrefs_dossier_defaut = ['logs.php', 'parametres.php', 'idees_admin.php', 'admin_reset.php', 'accueil.php'];
+    $hrefs_dossier_defaut = ['logs.php', 'changelog.php', 'parametres.php', 'idees_admin.php', 'admin_reset.php', 'accueil.php'];
     $layout = [];
     foreach ($tuiles_disponibles as $t) {
         if ($is_admin && in_array($t['href'], $hrefs_dossier_defaut, true)) { continue; }

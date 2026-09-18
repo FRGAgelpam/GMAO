@@ -309,6 +309,7 @@ $TUILES_ACCUEIL = [
     ['href' => 'idees_admin.php',    'icon' => 'fa-lightbulb',          'titre' => 'Idées reçues',          'desc' => 'Suggestions d\'amélioration envoyées par les services', 'defaut' => '#f1c40f'],
     ['href' => 'parametres.php',     'icon' => 'fa-sliders',            'titre' => 'Paramètres',            'desc' => 'Configurer les listes, catégories et réglages généraux', 'defaut' => '#1abc9c'],
     ['href' => 'logs.php',           'icon' => 'fa-clock-rotate-left',  'titre' => "Journal d'activité",    'desc' => 'Consulter l\'historique des actions effectuées', 'defaut' => '#607d8b'],
+    ['href' => 'changelog.php',      'icon' => 'fa-rocket',             'titre' => "Journal des évolutions", 'desc' => 'Voir l\'historique des nouveautés et correctifs de la GMAO', 'defaut' => '#34495e'],
     ['href' => 'accueil.php',        'icon' => 'fa-right-left',         'titre' => 'Portail Services',      'desc' => 'Aperçu de l\'espace demandeur (Production, Qualité...)', 'defaut' => '#8e44ad'],
     ['href' => 'aide.php',           'icon' => 'fa-circle-question',    'titre' => 'Aide',                  'desc' => 'Consulter le mode opératoire', 'defaut' => '#16a085'],
 ];
@@ -328,7 +329,7 @@ $ICONES_DOSSIER = [
     'fa-hourglass-half' => t('param.icon_suivi_temps'), 'fa-calendar-check' => t('param.icon_planification'), 'fa-user-clock' => t('param.icon_suivi_horaire'),
     'fa-chart-line' => t('param.icon_performance'), 'fa-gears' => t('param.icon_mecanique'), 'fa-user-shield' => t('param.icon_securite_utilisateur'),
     'fa-lightbulb' => t('param.icon_idee'), 'fa-sliders' => t('param.icon_parametres'), 'fa-clock-rotate-left' => t('param.icon_historique'),
-    'fa-right-left' => t('param.icon_echange'), 'fa-circle-question' => t('param.icon_aide'),
+    'fa-right-left' => t('param.icon_echange'), 'fa-circle-question' => t('param.icon_aide'), 'fa-rocket' => t('param.icon_nouveautes'),
 ];
 
 // Charge/sauvegarde les dossiers personnalisés de L'UTILISATEUR COURANT (stockés dans tuiles_ordre,
