@@ -12,6 +12,9 @@
 // nouvelle entrée, écrire les 3 langues (changelog.php se replie sur 'fr' si une langue manque).
 return [
     ['date' => '2026-09-18', 'items' => [
+        ['fr' => "Traduction des libellés de poste du Planning (Matin, Après-midi, Nuit, Journée, Jour férié, Congé payé, Maladie, RTT, Repos, Astreinte) en anglais/néerlandais, sauf s'ils ont été personnalisés dans Paramètres.",
+         'en' => "Translated the Schedule's shift labels (Morning, Afternoon, Night, Full day, Public holiday, Paid leave, Sick leave, RTT, Rest, On-call) into English/Dutch, unless customized in Settings.",
+         'nl' => "De diensten-labels van de Planning (Ochtend, Middag, Nacht, Volledige dag, Feestdag, Betaald verlof, Ziekte, ADV, Rust, Wachtdienst) vertaald naar het Engels/Nederlands, tenzij aangepast in Instellingen."],
         ['fr' => "Ajout d'une page « Journal des évolutions », visible depuis l'accueil (admin), qui liste l'historique de toutes les modifications de la GMAO par date.",
          'en' => "Added a \"Changelog\" page, visible from the home screen (admin), listing the history of every change made to the CMMS by date.",
          'nl' => "Een pagina \"Wijzigingslogboek\" toegevoegd, zichtbaar vanaf het startscherm (admin), met de geschiedenis van alle wijzigingen aan de GOB per datum."],

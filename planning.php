@@ -112,6 +112,27 @@ try {
 
             $planning_postes = $db->query("SELECT cle, label, couleur, categorie FROM planning_postes ORDER BY ordre")->fetchAll(PDO::FETCH_ASSOC);
             $planning_astreintes = $db->query("SELECT cle, label, couleur FROM planning_astreintes ORDER BY ordre")->fetchAll(PDO::FETCH_ASSOC);
+            // Un libellé de poste/astreinte identique au défaut français d'origine (jamais personnalisé
+            // par David) se retraduit selon la langue courante — même principe que maintenance.php
+            // $SNAPSHOTS_FR_LIBELLES : seul un libellé vraiment renommé reste figé tel quel.
+            $SNAPSHOTS_FR_POSTES = [
+                'matin' => 'Matin', 'apres_midi' => 'Après-midi', 'nuit' => 'Nuit', 'journee' => 'Journée',
+                'jour_ferie' => 'Jour férié', 'cp' => 'Congé payé', 'demi_cp' => 'Demi-congé payé',
+                'maladie' => 'Maladie', 'rtt' => 'RTT', 'repos' => 'Repos',
+            ];
+            $SNAPSHOTS_FR_ASTREINTES = ['classique' => 'Astreinte', 'froid' => 'Astreinte froid'];
+            foreach ($planning_postes as &$pp) {
+                if (($pp['label'] ?? '') === '' || $pp['label'] === ($SNAPSHOTS_FR_POSTES[$pp['cle']] ?? null)) {
+                    $pp['label'] = t('planning.poste_defaut_' . $pp['cle']);
+                }
+            }
+            unset($pp);
+            foreach ($planning_astreintes as &$pa) {
+                if (($pa['label'] ?? '') === '' || $pa['label'] === ($SNAPSHOTS_FR_ASTREINTES[$pa['cle']] ?? null)) {
+                    $pa['label'] = t('planning.astreinte_defaut_' . $pa['cle']);
+                }
+            }
+            unset($pa);
             $planning_shifts = $db->query("SELECT utilisateur, jour, poste, astreinte, heures, note, demi_conge, jour_ferie FROM planning_shifts")->fetchAll(PDO::FETCH_ASSOC);
             // Confidentialité des notes : un technicien ne voit que ses propres notes, pas celles de ses collègues (réservé aux admins)
             if (!$is_admin) {
@@ -1420,6 +1441,11 @@ const I18N_PLANNING = <?php echo json_encode([
     'select_secteur' => t('st.select_secteur'),
     'select_zone' => t('st.select_zone'),
     'select_machine' => t('st.select_machine'),
+    'poste_abbr_matin' => t('planning.poste_abbr_matin'), 'poste_abbr_apres_midi' => t('planning.poste_abbr_apres_midi'),
+    'poste_abbr_nuit' => t('planning.poste_abbr_nuit'), 'poste_abbr_journee' => t('planning.poste_abbr_journee'),
+    'poste_abbr_jour_ferie' => t('planning.poste_abbr_jour_ferie'), 'poste_abbr_cp' => t('planning.poste_abbr_cp'),
+    'poste_abbr_demi_cp' => t('planning.poste_abbr_demi_cp'), 'poste_abbr_maladie' => t('planning.poste_abbr_maladie'),
+    'poste_abbr_rtt' => t('planning.poste_abbr_rtt'), 'poste_abbr_repos' => t('planning.poste_abbr_repos'),
     'jour_lundi' => t('jour.lundi'), 'jour_mardi' => t('jour.mardi'), 'jour_mercredi' => t('jour.mercredi'),
     'jour_jeudi' => t('jour.jeudi'), 'jour_vendredi' => t('jour.vendredi'), 'jour_samedi' => t('jour.samedi'), 'jour_dimanche' => t('jour.dimanche'),
     'non_assigne' => t('stats.non_assigne'),
@@ -3193,7 +3219,13 @@ document.getElementById('shift-heures').addEventListener('input', function () {
 // --- PLANNING ANNUEL (vue calendrier complète, ouverte depuis la fenêtre de planification) ---
 const MOIS_LABELS_ANNUEL = I18N_PLANNING.mois_complet;
 const JOURS_ABBR_ANNUEL = I18N_PLANNING.jour_lettre;
-const POSTE_ABBR_ANNUEL = { matin: 'Matin', apres_midi: 'AM', nuit: 'Nuit', journee: 'J', jour_ferie: 'JF', cp: 'CP', demi_cp: '½CP', maladie: 'MAL', rtt: 'RTT', repos: 'Repos' };
+const POSTE_ABBR_ANNUEL = {
+    matin: I18N_PLANNING.poste_abbr_matin, apres_midi: I18N_PLANNING.poste_abbr_apres_midi,
+    nuit: I18N_PLANNING.poste_abbr_nuit, journee: I18N_PLANNING.poste_abbr_journee,
+    jour_ferie: I18N_PLANNING.poste_abbr_jour_ferie, cp: I18N_PLANNING.poste_abbr_cp,
+    demi_cp: I18N_PLANNING.poste_abbr_demi_cp, maladie: I18N_PLANNING.poste_abbr_maladie,
+    rtt: I18N_PLANNING.poste_abbr_rtt, repos: I18N_PLANNING.poste_abbr_repos,
+};
 
 function closeAnnualModal() {
     document.getElementById('annualModal').style.display = 'none';
