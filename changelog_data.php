@@ -432,8 +432,8 @@ return [
          'nl' => "De berekening van de jaarurenregeling gecorrigeerd (verlof/RTT/feestdagen/ziekte) en de wettelijke regels gedocumenteerd."],
     ]],
     ['date' => '2026-08-17', 'items' => [
-        ['fr' => "Mise en ligne de la toute première version de la GMAO Gel'pam.",
-         'en' => "Launched the very first version of the Gel'pam CMMS.",
-         'nl' => "De allereerste versie van de Gel'pam GOB online gezet."],
+        ['fr' => "Mise en ligne de la toute première version de la GMAO.",
+         'en' => "Launched the very first version of the CMMS.",
+         'nl' => "De allereerste versie van de GOB online gezet."],
     ]],
 ];
