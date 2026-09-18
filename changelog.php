@@ -9,7 +9,13 @@ if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
 
 $is_admin = true;
 
-$MOIS_FR = [1 => 'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+$MOIS = [
+    'fr' => [1 => 'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
+    'en' => [1 => 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    'nl' => [1 => 'januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'],
+];
+$lang_changelog = langue_actuelle();
+$mois_actuels = $MOIS[$lang_changelog] ?? $MOIS['fr'];
 
 $journal = require __DIR__ . '/changelog_data.php';
 $nb_total = 0;
@@ -114,12 +120,16 @@ foreach ($journal as $jour) { $nb_total += count($jour['items']); }
         <?php else: ?>
             <?php foreach ($journal as $jour):
                 $ts = strtotime($jour['date']);
-                $libelle_date = date('j', $ts) . ' ' . $MOIS_FR[(int)date('n', $ts)] . ' ' . date('Y', $ts);
+                $libelle_date = ($lang_changelog === 'en')
+                    ? $mois_actuels[(int)date('n', $ts)] . ' ' . date('j', $ts) . ', ' . date('Y', $ts)
+                    : date('j', $ts) . ' ' . $mois_actuels[(int)date('n', $ts)] . ' ' . date('Y', $ts);
             ?>
             <div class="jour-bloc" data-jour>
                 <div class="jour-date"><i class="fa-solid fa-calendar-day"></i> <?php echo htmlspecialchars($libelle_date); ?></div>
                 <ul class="jour-items">
-                    <?php foreach ($jour['items'] as $texte): ?>
+                    <?php foreach ($jour['items'] as $item):
+                        $texte = $item[$lang_changelog] ?? $item['fr'];
+                    ?>
                     <li data-texte="<?php echo htmlspecialchars(mb_strtolower($texte)); ?>"><?php echo htmlspecialchars($texte); ?></li>
                     <?php endforeach; ?>
                 </ul>
