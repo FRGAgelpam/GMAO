@@ -4,6 +4,14 @@ Ce fichier liste les changements apportés à cette GMAO, version par version. I
 
 Pour la procédure de mise à jour (y compris sans accès Internet sur le serveur), voir la section "Mettre à jour" de [install/README.md](install/README.md).
 
+## 1.2.1 — 2026-09-19
+
+- Accueil : nouveau design des tuiles (verre sombre, lueur de la couleur de chaque tuile, icône en anneau lumineux qui se remplit au survol), avec plus d'espace entre les rangées et des icônes toujours alignées à la même hauteur.
+- Portail services : les quatre tuiles et le bandeau du haut adoptent le même design ; le logo s'affiche directement sur le bandeau, sans fond, avec une douce lueur.
+- Pages Suivi des demandes, Idées et Aide du portail : même charte sombre ; les tuiles des bons d'intervention et les cadres des idées gardent un fond clair pour bien se distinguer.
+
+Aucune migration de base de données : changements d'affichage uniquement.
+
 ## 1.2.0 — 2026-09-18
 
 - Planning : les fenêtres du Planning (choix de case, planification des heures, TODO list, remplissage rapide, planning annuel) reprennent un même en-tête soigné avec le technicien concerné et la date ; les boutons de « Planifier les heures » sont resserrés pour éviter de défiler.

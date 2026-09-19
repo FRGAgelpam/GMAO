@@ -370,27 +370,31 @@ $tuiles_masquees = array_values(array_filter(array_map(function($h) use ($tuiles
 
         /* padding-top : sans lui, le survol d'une tuile de la 1re ligne (qui remonte de 8px + halo) se
            fait couper par le overflow-y:auto ci-dessous (nécessaire si jamais il y a plus de 16 tuiles). */
-        .tuiles-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(0, 1fr); gap: clamp(6px, 1vh, 10px); flex: 1 1 auto; min-height: 0; padding: 24px 0; overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; }
+        .tuiles-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(0, 1fr); gap: clamp(12px, 2vh, 20px); flex: 1 1 auto; min-height: 0; padding: 24px 0; overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; }
         .tuiles-grid::-webkit-scrollbar { width: 6px; }
         .tuiles-grid::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25); border-radius: 3px; }
         .tuiles-grid::-webkit-scrollbar-track { background: transparent; }
+        /* --- DESIGN DES TUILES « Sombre premium » (choisi sur maquette, 19/09/2026) : carte en verre sombre
+           avec une lueur de la couleur de la tuile en haut à gauche, icône en anneau lumineux qui se remplit
+           au survol. Style uniquement : le glisser-déposer, les dossiers, le badge et les croix de masquage
+           n'ont pas changé. --tuile-base est surchargé dans la modale d'un dossier (voile clair). --- */
         .tuile {
-            background: rgba(255, 255, 255, 0.025);
-            backdrop-filter: blur(7px) brightness(1.2);
-            -webkit-backdrop-filter: blur(7px) brightness(1.2);
-            border-radius: 16px;
-            padding: clamp(6px, 1vh, 10px) clamp(9px, 1.2vw, 14px);
+            --tuile-base: rgba(13, 19, 27, 0.66);
+            background: radial-gradient(120% 90% at 0% 0%, rgba(var(--tuile-rgb, 52, 152, 219), 0.26), transparent 58%), var(--tuile-base);
+            backdrop-filter: blur(16px) saturate(130%);
+            -webkit-backdrop-filter: blur(16px) saturate(130%);
+            border-radius: 22px;
+            padding: clamp(8px, 1.2vh, 14px) clamp(9px, 1.2vw, 14px);
             text-decoration: none;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            gap: clamp(3px, 0.6vh, 6px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            border: 1px solid rgba(255,255,255,0.35);
-            border-top: 5px solid var(--tuile-color, var(--accent));
-            transition: transform 0.3s, box-shadow 0.3s;
+            gap: clamp(4px, 0.9vh, 9px);
+            box-shadow: 0 14px 34px -10px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.10);
+            transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s, border-color 0.35s;
             height: 100%;
             min-height: 0;
             overflow: hidden;
@@ -399,12 +403,14 @@ $tuiles_masquees = array_values(array_filter(array_map(function($h) use ($tuiles
         .tuile { position: relative; z-index: 1; }
         .tuile:hover {
             z-index: 2;
-            transform: translateY(-8px);
+            transform: translateY(-6px);
+            border-color: rgba(var(--tuile-rgb, 52, 152, 219), 0.65);
             box-shadow:
-                0 -10px 22px -9px rgba(var(--tuile-rgb, 52, 152, 219), 0.5),
-                0 20px 32px -8px rgba(var(--tuile-rgb, 52, 152, 219), 0.58),
-                0 7px 16px rgba(0,0,0,0.21);
+                0 22px 44px -12px rgba(var(--tuile-rgb, 52, 152, 219), 0.55),
+                0 0 0 1px rgba(var(--tuile-rgb, 52, 152, 219), 0.35);
         }
+        .tuile::before { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--tuile-color, var(--accent)), transparent); opacity: 0; transition: opacity 0.35s; pointer-events: none; }
+        .tuile:hover::before { opacity: 1; }
         .tuile-locked { cursor: not-allowed; filter: grayscale(75%); opacity: 0.55; }
         .tuile-locked:hover { transform: none; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .tuile-lock {
@@ -429,8 +435,21 @@ $tuiles_masquees = array_values(array_filter(array_map(function($h) use ($tuiles
             color: white; display: flex; align-items: center; justify-content: center;
             font-size: clamp(0.85rem, 1.7vh, 1.15rem); box-shadow: 0 6px 15px -3px rgba(0,0,0,0.4);
         }
-        .tuile-titre { font-family: 'Caveat', cursive; font-size: clamp(1.1rem, 2.1vh, 1.4rem); color: white; font-weight: 700; text-shadow: 0 1px 5px rgba(0,0,0,0.5); }
-        .tuile-desc { font-size: clamp(0.68rem, 1.15vh, 0.82rem); color: rgba(255,255,255,0.88); line-height: 1.25; text-shadow: 0 1px 4px rgba(0,0,0,0.45); }
+        .tuile-titre { font-family: 'Segoe UI', sans-serif; font-size: clamp(0.86rem, 1.85vh, 1.02rem); color: #fff; font-weight: 600; letter-spacing: 0.2px; line-height: 1.2; }
+        .tuile-desc { font-size: clamp(0.66rem, 1.15vh, 0.76rem); color: rgba(255,255,255,0.62); line-height: 1.35; max-width: 92%; }
+        /* Emplacement de 2 lignes réservé : sans lui, une description sur 2 lignes pousse l'icône vers le haut par rapport aux tuiles voisines à 1 ligne (le contenu est centré verticalement). */
+        .tuiles-grid > .tuile:not(.tuile-aide) .tuile-desc, .tuiles-grid > .tuile-dossier .tuile-dossier-header .tuile-desc { min-height: 2.7em; }
+        .tuile-aide .tuile-desc { min-height: 0; }
+        .tuile .tuile-icon {
+            width: clamp(32px, 5.2vh, 50px); height: clamp(32px, 5.2vh, 50px);
+            background: rgba(var(--tuile-rgb, 52, 152, 219), 0.16);
+            color: color-mix(in srgb, var(--tuile-color, var(--accent)) 50%, #fff);
+            font-size: clamp(0.9rem, 1.9vh, 1.2rem);
+            box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--tuile-color, var(--accent)) 72%, #fff), 0 0 24px -4px rgba(var(--tuile-rgb, 52, 152, 219), 0.55);
+            transition: background 0.35s, color 0.35s, box-shadow 0.35s;
+            flex-shrink: 0;
+        }
+        .tuile:hover .tuile-icon { background: var(--tuile-color, var(--accent)); color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.4), 0 0 30px -2px rgba(var(--tuile-rgb, 52, 152, 219), 0.9); }
         .tuile-aide { grid-column: 1 / -1; width: clamp(180px, 26%, 240px); margin: 0 auto; cursor: pointer; align-self: center; height: auto; }
 
         .btn-reorganiser, .btn-plus { display:flex; align-items:center; gap:8px; background: rgba(255,255,255,0.12); backdrop-filter: blur(14px) brightness(1.15); -webkit-backdrop-filter: blur(14px) brightness(1.15); border: 1px solid rgba(255,255,255,0.4); color: white; padding: 7px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 500; cursor: pointer; box-shadow: 0 6px 16px rgba(0,0,0,0.2); transition: 0.2s; font-family: inherit; }
@@ -515,7 +534,7 @@ $tuiles_masquees = array_values(array_filter(array_map(function($h) use ($tuiles
         .voir-dossier-corps .tuile-dossier-body { display: grid !important; margin-top: 0; }
         /* Le voile de la modale est clair : on redonne aux tuiles un fond sombre translucide pour
            que leur texte blanc reste lisible (comme sur l'accueil, où c'est la photo assombrie qui joue ce rôle). */
-        .voir-dossier-corps .tuile { min-height: 120px; background: rgba(20, 26, 34, 0.55); }
+        .voir-dossier-corps .tuile { min-height: 120px; --tuile-base: rgba(13, 19, 27, 0.82); }
         .voir-dossier-corps .tuile-dossier-empty { background: rgba(20, 26, 34, 0.4); }
         @media screen and (max-width: 700px) { .voir-dossier-corps .tuile-dossier-body { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
         .modal-box input[type=text] { width: 100%; box-sizing: border-box; padding: 11px; margin-bottom: 16px; border: 2px solid var(--accent); border-radius: 7px; font-weight: 600; outline: none; font-family: inherit; }
@@ -546,8 +565,8 @@ $tuiles_masquees = array_values(array_filter(array_map(function($h) use ($tuiles
         @media screen and (max-width: 820px) {
             .tuiles-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(8, minmax(0, 1fr)); gap: clamp(7px, 1.1vh, 14px); }
             .tuile { padding: clamp(8px, 1.2vh, 15px) clamp(9px, 2.6vw, 14px); gap: clamp(3px, 0.6vh, 7px); }
-            .tuile-icon { width: clamp(30px, 4vh, 48px); height: clamp(30px, 4vh, 48px); font-size: clamp(0.9rem, 1.6vh, 1.2rem); }
-            .tuile-titre { font-size: clamp(1.15rem, 1.9vh, 1.45rem); }
+            .tuile .tuile-icon { width: clamp(30px, 4vh, 48px); height: clamp(30px, 4vh, 48px); font-size: clamp(0.9rem, 1.6vh, 1.2rem); }
+            .tuile-titre { font-size: clamp(0.9rem, 1.7vh, 1.05rem); }
             .tuile-desc { display: none; }
             .tuile-aide { width: clamp(160px, 50%, 220px); }
             .accueil-hero { margin-bottom: clamp(6px, 1.1vh, 14px); }
@@ -569,8 +588,8 @@ $tuiles_masquees = array_values(array_filter(array_map(function($h) use ($tuiles
            classique plutôt qu'un tableau de bord figé à l'écran. */
         @media screen and (max-width: 480px) {
             .tuiles-grid { grid-template-rows: none; grid-auto-rows: auto; align-content: start; }
-            .tuile { min-height: 82px; }
-            .tuile-titre { font-size: 0.98rem; line-height: 1.2; }
+            .tuile { min-height: 98px; }
+            .tuile-titre { font-size: 0.92rem; line-height: 1.2; }
         }
 
         /* --- PAYSAGE TÉLÉPHONE (écran large mais peu haut, < 480px de hauteur) ---
@@ -584,7 +603,7 @@ $tuiles_masquees = array_values(array_filter(array_map(function($h) use ($tuiles
             .tuiles-grid { grid-template-rows: none; grid-auto-rows: auto; align-content: start; }
             .tuile { min-height: 56px; padding: 6px 10px; }
             .tuile-desc { display: none; }
-            .tuile-icon { width: 26px; height: 26px; font-size: 0.8rem; }
+            .tuile .tuile-icon { width: 26px; height: 26px; font-size: 0.8rem; }
             .accueil-hero { padding: 2px clamp(16px, 4vw, 30px); margin-bottom: 4px; }
             .accueil-icon { display: none; }
         }

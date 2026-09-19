@@ -71,15 +71,24 @@ $json_ticket_ids = safe_json($mes_ticket_ids);
         .crumb-sep { color: rgba(255,255,255,0.55); font-weight: 400; }
         .crumb-current { color: rgba(255,255,255,0.75); font-weight: 400; }
 
+        /* Bandeau du haut : même charte que les tuiles (verre sombre, lueurs de couleur, fin trait
+           vert/orange en bas). Le logo est affiché directement (sans fond), légèrement agrandi : les
+           marges négatives compensent l'agrandissement pour que le bandeau garde sa hauteur d'origine. */
         .topbar {
-            background: rgba(255,255,255,0.97); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            position: relative; overflow: hidden;
+            background: radial-gradient(90% 170% at 0% 0%, rgba(46, 204, 113, 0.20), transparent 60%), radial-gradient(70% 170% at 100% 100%, rgba(52, 152, 219, 0.16), transparent 60%), rgba(13, 19, 27, 0.66);
+            backdrop-filter: blur(16px) saturate(130%);
+            -webkit-backdrop-filter: blur(16px) saturate(130%);
+            border: 1px solid rgba(255,255,255,0.10); border-radius: 22px; box-shadow: 0 14px 34px -10px rgba(0,0,0,0.6);
             padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px;
         }
-        .brand { display:flex; align-items:center; gap: 12px; }
-        .brand img { height: 38px; }
-        .brand h1 { font-family: 'Caveat', cursive; color: var(--primary); font-size: 1.6rem; margin: 0; line-height: 1; }
+        .topbar::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--brand-green), var(--brand-orange), transparent); opacity: 0.75; pointer-events: none; }
+        .brand { display:flex; align-items:center; gap: 14px; }
+        .brand img { height: 56px; margin: -9px 0 -9px -6px; filter: drop-shadow(0 0 10px rgba(255,255,255,0.28)) drop-shadow(0 4px 8px rgba(0,0,0,0.45)); }
+        .brand h1 { font-family: 'Caveat', cursive; color: #fff; font-size: 1.7rem; margin: 0; line-height: 1; letter-spacing: 0.3px; }
         .who { display:flex; align-items:center; gap: 16px; }
-        .who-badge { background:#f1f5f9; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: var(--primary); }
+        .who-badge { background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.18); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: #fff; display: inline-flex; align-items: center; gap: 7px; }
+        .who-badge i { color: #7dffb3; }
 
         .hero { text-align:center; margin-bottom: 30px; color: #fff; }
         .hero h2 { font-family: 'Caveat', cursive; font-size: 2.3rem; margin: 0 0 4px; text-shadow: 0 2px 10px rgba(0,0,0,0.4); }
@@ -87,42 +96,48 @@ $json_ticket_ids = safe_json($mes_ticket_ids);
 
         .tiles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; }
 
+        /* --- DESIGN « Sombre premium » (même style que les tuiles de l'accueil principal, index.php) :
+           carte en verre sombre, lueur de la couleur de la tuile en haut à gauche, icône en anneau lumineux
+           qui se remplit au survol. Tailles, disposition et textes inchangés. --- */
         .tile {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(10px) brightness(1.15);
-            -webkit-backdrop-filter: blur(10px) brightness(1.15);
-            border-radius: 16px; padding: 24px 22px 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.25); text-decoration:none; color: #fff;
+            background: radial-gradient(120% 90% at 0% 0%, rgba(var(--tile-rgb, 52, 152, 219), 0.26), transparent 58%), rgba(13, 19, 27, 0.66);
+            backdrop-filter: blur(16px) saturate(130%);
+            -webkit-backdrop-filter: blur(16px) saturate(130%);
+            border-radius: 22px; padding: 27px 22px 20px; /* 27 = 24 d'origine + 3 : l'ancien liseré de couleur du haut (4px) n'existe plus, la tuile garde sa hauteur */
+            box-shadow: 0 14px 34px -10px rgba(0,0,0,0.6); text-decoration:none; color: #fff;
             display:flex; flex-direction:column; gap: 10px; position: relative; overflow:hidden;
-            border: 1px solid rgba(255,255,255,0.35);
-            border-top: 4px solid var(--tile-accent, var(--accent));
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.10);
+            transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s, border-color 0.35s;
         }
         .tile:hover {
-            transform: translateY(-8px);
+            transform: translateY(-6px);
+            border-color: rgba(var(--tile-rgb, 52, 152, 219), 0.65);
             box-shadow:
-                0 -12px 26px -10px rgba(var(--tile-rgb, 52, 152, 219), 0.5),
-                0 24px 40px -8px rgba(var(--tile-rgb, 52, 152, 219), 0.6),
-                0 8px 18px rgba(0,0,0,0.22);
+                0 22px 44px -12px rgba(var(--tile-rgb, 52, 152, 219), 0.55),
+                0 0 0 1px rgba(var(--tile-rgb, 52, 152, 219), 0.35);
         }
+        .tile::before { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--tile-accent, var(--accent)), transparent); opacity: 0; transition: opacity 0.35s; pointer-events: none; }
+        .tile:hover::before { opacity: 1; }
 
         .tile-top { display:flex; align-items:center; justify-content:center; }
         .tile-icon {
             width: 48px; height: 48px; border-radius: 50%; display:flex; align-items:center; justify-content:center;
-            background: var(--tile-accent, var(--accent));
-            color: #fff; font-size: 1.3rem; flex-shrink:0;
-            box-shadow: 0 6px 15px -3px rgba(0,0,0,0.4);
+            background: rgba(var(--tile-rgb, 52, 152, 219), 0.16);
+            color: color-mix(in srgb, var(--tile-accent, var(--accent)) 50%, #fff); font-size: 1.3rem; flex-shrink:0;
+            box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--tile-accent, var(--accent)) 72%, #fff), 0 0 24px -4px rgba(var(--tile-rgb, 52, 152, 219), 0.55);
+            transition: background 0.35s, color 0.35s, box-shadow 0.35s;
         }
+        .tile:hover .tile-icon { background: var(--tile-accent, var(--accent)); color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.4), 0 0 30px -2px rgba(var(--tile-rgb, 52, 152, 219), 0.9); }
         .tile-badge {
             position: absolute; top: 14px; right: 14px;
             font-size: 0.68rem; font-weight: 700; padding: 3px 9px; border-radius: 20px;
             background: var(--danger); color: #fff; white-space: nowrap; display:none;
         }
-        .tile-title { font-size: 1.08rem; font-weight: 700; margin: 2px 0 0; color: #fff; text-shadow: 0 1px 5px rgba(0,0,0,0.5); }
-        .tile-desc { font-size: 0.82rem; color: rgba(255,255,255,0.88); line-height: 1.45; margin: 0; text-shadow: 0 1px 4px rgba(0,0,0,0.45); }
+        .tile-title { font-size: 1.08rem; font-weight: 600; letter-spacing: 0.2px; margin: 2px 0 0; color: #fff; }
+        .tile-desc { font-size: 0.82rem; color: rgba(255,255,255,0.62); line-height: 1.45; margin: 0; }
         .tile-cta {
             margin-top: auto; padding-top: 8px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 0.03em; color: var(--tile-accent, var(--accent)); display:flex; align-items:center; gap:6px;
+            letter-spacing: 0.03em; color: color-mix(in srgb, var(--tile-accent, var(--accent)) 62%, #fff); display:flex; align-items:center; gap:6px;
         }
         .tile-cta i { transition: transform 0.2s ease; }
         .tile:hover .tile-cta i { transform: translateX(3px); }

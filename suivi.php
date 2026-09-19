@@ -202,65 +202,86 @@ $stats_total = count($historique_demandes);
         .crumb-current { color: rgba(255,255,255,0.75); font-weight: 400; }
         @media (max-width: 600px) { .crumb-bar { display: none; } }
 
-        /* ============ EN-TÊTE ============ */
+        /* ============ EN-TÊTE ============
+           Charte « Sombre premium » (même style que l'accueil principal et le portail) : verre sombre,
+           lueurs de couleur, fin trait vert/orange. Tailles et disposition inchangées. */
         .topbar {
-            background: rgba(255,255,255,0.97); border-radius: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            position: relative; overflow: hidden;
+            background: radial-gradient(90% 170% at 0% 0%, rgba(46, 204, 113, 0.20), transparent 60%), radial-gradient(70% 170% at 100% 100%, rgba(52, 152, 219, 0.16), transparent 60%), rgba(13, 19, 27, 0.66);
+            backdrop-filter: blur(16px) saturate(130%); -webkit-backdrop-filter: blur(16px) saturate(130%);
+            border: 1px solid rgba(255,255,255,0.10); border-radius: 22px; box-shadow: 0 14px 34px -10px rgba(0,0,0,0.6);
             padding: 12px 20px; display:flex; align-items:center; justify-content:space-between; flex-wrap: wrap; gap: 10px;
         }
+        .topbar::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--brand-green), var(--brand-orange), transparent); opacity: 0.75; pointer-events: none; }
         .topbar-links { display:flex; align-items:center; gap: 18px; }
-        .topbar-links a { color:#94a3b8; text-decoration:none; font-size: 0.8rem; display:flex; align-items:center; gap:6px; font-weight:600; transition: 0.15s; }
-        .topbar-links a:hover { color: var(--accent); }
-        .who-badge { background:#f1f5f9; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: var(--primary); display:flex; align-items:center; gap:8px; }
+        .topbar-links a { color: rgba(255,255,255,0.85); text-decoration:none; font-size: 0.8rem; display:flex; align-items:center; gap:6px; font-weight:600; padding: 6px 13px; border-radius: 20px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); transition: 0.25s; }
+        .topbar-links a:hover { color: #fff; background: rgba(46, 204, 113, 0.25); border-color: rgba(46, 204, 113, 0.6); transform: translateY(-1px); }
+        .who-badge { background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.18); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: #fff; display:flex; align-items:center; gap:8px; }
+        .who-badge i { color: #7dffb3; }
 
         .hero-suivi {
-            background: rgba(255,255,255,0.09); backdrop-filter: blur(16px) brightness(1.15); -webkit-backdrop-filter: blur(16px) brightness(1.15);
-            border: 1px solid rgba(255,255,255,0.35); border-radius: 18px; padding: 22px 26px; color: #fff;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.25); text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+            background: radial-gradient(120% 90% at 0% 0%, rgba(52, 152, 219, 0.24), transparent 58%), rgba(13, 19, 27, 0.66);
+            backdrop-filter: blur(16px) saturate(130%); -webkit-backdrop-filter: blur(16px) saturate(130%);
+            border: 1px solid rgba(255,255,255,0.10); border-radius: 22px; padding: 22px 26px; color: #fff;
+            box-shadow: 0 14px 34px -10px rgba(0,0,0,0.6);
         }
         .hero-suivi-top { display:flex; align-items:center; gap: 14px; flex-wrap: wrap; justify-content: space-between; }
         .hero-suivi h1 { font-family: 'Caveat', cursive; font-size: 2rem; margin: 0; font-weight: 700; display:flex; align-items:center; gap:12px; }
-        .hero-suivi p { margin: 4px 0 0; font-size: 0.88rem; color: rgba(255,255,255,0.85); }
+        .hero-suivi h1 i { font-size: 0.7em; color: color-mix(in srgb, var(--accent) 50%, #fff); }
+        .hero-suivi p { margin: 4px 0 0; font-size: 0.88rem; color: rgba(255,255,255,0.7); }
         #pastille-notification { display:none; background:var(--danger); color:white; border-radius:20px; padding:6px 14px; font-size:0.72rem; font-weight:600; box-shadow: 0 2px 8px rgba(231,76,60,0.5); text-transform:uppercase; white-space: nowrap; }
 
-        /* ============ VIGNETTES STATISTIQUES ============ */
+        /* ============ VIGNETTES STATISTIQUES ============
+           --st = couleur du statut : sert à la lueur, au contour au survol et à l'état actif. */
         .stats-row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-top: 18px; }
         @media (max-width: 780px) { .stats-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
         .stat-card {
-            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 12px;
-            padding: 12px 10px; text-align: center; cursor: pointer; transition: 0.2s; color: #fff;
+            --st: #95a5a6;
+            background: radial-gradient(120% 110% at 0% 0%, color-mix(in srgb, var(--st) 24%, transparent), transparent 60%), rgba(13, 19, 27, 0.5);
+            border: 1px solid rgba(255,255,255,0.10); border-radius: 16px;
+            padding: 12px 10px; text-align: center; cursor: pointer; color: #fff;
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s, border-color 0.3s;
         }
-        .stat-card:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
-        .stat-card.is-active { background: rgba(255,255,255,0.28); border-color: #fff; }
+        .stat-card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--st) 65%, transparent); box-shadow: 0 14px 30px -10px color-mix(in srgb, var(--st) 55%, transparent); }
+        .stat-card.is-active { border-color: var(--st); background: radial-gradient(120% 110% at 0% 0%, color-mix(in srgb, var(--st) 40%, transparent), transparent 65%), rgba(13, 19, 27, 0.55); box-shadow: 0 0 0 1px var(--st), 0 14px 30px -10px color-mix(in srgb, var(--st) 60%, transparent); }
         .stat-card .stat-num { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.6rem; line-height: 1; }
-        .stat-card .stat-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; color: rgba(255,255,255,0.85); margin-top: 4px; }
+        .stat-card .stat-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; color: rgba(255,255,255,0.7); margin-top: 4px; }
+        .stat-card.stat-attente { --st: #f1c40f; }
+        .stat-card.stat-afaire { --st: #f39c12; }
+        .stat-card.stat-encours { --st: #3498db; }
+        .stat-card.stat-termine { --st: #2ecc71; }
+        .stat-card.stat-refuse { --st: #e57373; }
         .stat-card.stat-attente .stat-num { color: #f1c40f; }
         .stat-card.stat-afaire .stat-num { color: var(--brand-orange); }
         .stat-card.stat-encours .stat-num { color: #5dade2; }
         .stat-card.stat-termine .stat-num { color: var(--brand-green); }
         .stat-card.stat-refuse .stat-num { color: #e57373; }
-
         /* ============ CARTE SUIVI / FILTRES ============ */
-        .tracking-card { background: rgba(255, 255, 255, 0.97); padding: 22px 26px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); display: flex; flex-direction: column; border-top: 4px solid var(--accent); }
-        .tracking-title { font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--primary); font-size: 1.05rem; margin: 0; text-transform: uppercase; letter-spacing: 0.03em; display:flex; align-items:center; gap:10px; }
+        .tracking-card { background: radial-gradient(90% 55% at 0% 0%, rgba(52, 152, 219, 0.14), transparent 60%), rgba(13, 19, 27, 0.66); backdrop-filter: blur(16px) saturate(130%); -webkit-backdrop-filter: blur(16px) saturate(130%); border: 1px solid rgba(255,255,255,0.10); padding: 22px 26px; border-radius: 22px; box-shadow: 0 14px 34px -10px rgba(0,0,0,0.6); display: flex; flex-direction: column; }
+        .tracking-head { border-bottom: 1px solid rgba(255,255,255,0.10); padding-bottom: 10px; margin-bottom: 16px; }
+        .tracking-title { font-family: 'Montserrat', sans-serif; font-weight: 700; color: #fff; font-size: 1.05rem; margin: 0; text-transform: uppercase; letter-spacing: 0.03em; display:flex; align-items:center; gap:10px; }
+        .tracking-title i { color: color-mix(in srgb, var(--accent) 50%, #fff); }
 
-        .filter-controls { margin-bottom: 16px; padding: 12px 16px; background: #f8fafc; border-radius: 10px; border: 1px solid #e2e8f0; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-        .filter-controls .fc-label { font-size: 0.8rem; font-weight: 600; color: #64748b; display:flex; align-items:center; gap:6px; }
+        .filter-controls { margin-bottom: 16px; padding: 12px 16px; background: rgba(255,255,255,0.05); border-radius: 14px; border: 1px solid rgba(255,255,255,0.10); display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+        .filter-controls .fc-label { font-size: 0.8rem; font-weight: 600; color: rgba(255,255,255,0.7); display:flex; align-items:center; gap:6px; }
         .filter-controls input[type="text"], .filter-controls select {
-            padding: 8px 10px; font-size: 0.82rem; border: 1px solid #cbd5e1; border-radius: 6px; font-family: inherit; background: #fff;
+            padding: 8px 10px; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.18); border-radius: 8px; font-family: inherit; background: rgba(255,255,255,0.07); color: #fff; color-scheme: dark; transition: border-color 0.2s, box-shadow 0.2s;
         }
+        .filter-controls input[type="text"]::placeholder { color: rgba(255,255,255,0.45); }
+        .filter-controls input[type="text"]:focus, .filter-controls select:focus { outline: none; border-color: var(--brand-green); box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2); }
         #filterSearch { flex: 1.4; min-width: 180px; }
         #filterDemandeur { flex: 1; min-width: 160px; max-width: 250px; }
         #filterStatut { flex: 1; min-width: 150px; max-width: 200px; }
-        .btn-reset-filters { background: #eef2f6; border: 1px solid #cbd5e1; color: #64748b; border-radius: 6px; padding: 8px 12px; font-size: 0.78rem; font-weight: 600; cursor: pointer; display:flex; align-items:center; gap:6px; }
-        .btn-reset-filters:hover { background: #e2e8f0; color: var(--primary); }
-
+        .btn-reset-filters { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.75); border-radius: 8px; padding: 8px 12px; font-size: 0.78rem; font-weight: 600; cursor: pointer; display:flex; align-items:center; gap:6px; transition: 0.2s; }
+        .btn-reset-filters:hover { background: rgba(255,255,255,0.16); color: #fff; }
         .tickets-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         @media (max-width: 860px) { .tickets-grid { grid-template-columns: 1fr; } }
 
         /* ============ CARTE TICKET (enrichie) ============ */
-        .ticket-card { position: relative; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px 16px 14px 18px; cursor: pointer; transition: 0.15s; overflow: hidden; }
-        .ticket-card:hover { background: #f8fafc; transform: translateY(-2px); box-shadow: 0 8px 18px -6px rgba(0,0,0,0.18); }
-        .tc-accent { position: absolute; left: 0; top: 0; bottom: 0; width: 5px; }
+        /* Tuiles de bons d'intervention : fond clair (pour les distinguer du reste de la page, sombre), avec la même lueur de la couleur du statut, le même survol et les mêmes coins que les autres tuiles. */
+        .ticket-card { --tc-color: var(--accent); position: relative; background: radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, var(--tc-color) 16%, transparent), transparent 58%), rgba(255, 255, 255, 0.94); border: 1px solid rgba(255,255,255,0.65); border-radius: 16px; padding: 14px 16px 14px 20px; cursor: pointer; box-shadow: 0 10px 24px -12px rgba(0,0,0,0.5); transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s, border-color 0.3s; overflow: hidden; }
+        .ticket-card:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--tc-color) 70%, #fff); box-shadow: 0 18px 36px -12px color-mix(in srgb, var(--tc-color) 65%, transparent), 0 0 0 1px color-mix(in srgb, var(--tc-color) 40%, transparent); }
+        .tc-accent { position: absolute; left: 0; top: 12px; bottom: 12px; width: 4px; border-radius: 0 4px 4px 0; }
         .tc-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
         .tc-bi { font-size: 0.82rem; font-weight: 700; display:flex; align-items:center; gap:6px; }
         .tc-flags { display: flex; gap: 5px; }
@@ -282,18 +303,19 @@ $stats_total = count($historique_demandes);
 
         .tc-meta { display: flex; flex-wrap: wrap; gap: 8px 14px; font-size: 0.68rem; color: #64748b; margin-bottom: 8px; }
         .tc-meta span { display: flex; align-items: center; gap: 5px; }
-        .tc-meta i { color: var(--accent); }
+        .tc-meta i { color: color-mix(in srgb, var(--tc-color) 72%, #1f2d3a); }
 
-        .tc-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.68rem; color: #94a3b8; border-top: 1px dashed #eef1f3; padding-top: 8px; }
+        .tc-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.68rem; color: #94a3b8; border-top: 1px dashed #dfe5eb; padding-top: 8px; }
         .tc-bottom span { display: flex; align-items: center; gap: 5px; }
 
-        .empty-state { text-align:center; padding: 40px 20px; color:#94a3b8; font-style:italic; grid-column: 1 / -1; }
-        .empty-state i { font-size: 2.2rem; margin-bottom: 12px; color: #cbd5e1; display:block; }
+        .empty-state { text-align:center; padding: 40px 20px; color: rgba(255,255,255,0.6); font-style:italic; grid-column: 1 / -1; }
+        .empty-state i { font-size: 2.2rem; margin-bottom: 12px; color: rgba(255,255,255,0.3); display:block; }
 
-        .pagination-row { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding-top: 14px; border-top: 1px solid #e2e8f0; }
-        .pagination-row button { padding: 8px 14px; border: 1px solid #cbd5e1; background: #fff; border-radius: 6px; cursor: pointer; color: var(--primary); font-weight: 600; font-size: 0.82rem; transition: 0.15s; }
-        .pagination-row button:hover:not(:disabled) { background: #f1f5f9; }
-        #pageInfo { font-size: 0.85rem; font-weight: 600; color: #64748b; }
+        .pagination-row { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.10); }
+        .pagination-row button { padding: 8px 14px; border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.08); border-radius: 8px; cursor: pointer; color: #fff; font-weight: 600; font-size: 0.82rem; transition: 0.2s; }
+        .pagination-row button:hover:not(:disabled) { background: rgba(255,255,255,0.18); }
+        .pagination-row button:disabled { opacity: 0.4; cursor: not-allowed; }
+        #pageInfo { font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.7); }
 
         /* ============ MODALE DE DÉTAIL (design pro, police Inter) ============ */
         .modal-overlay { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.72); backdrop-filter: blur(5px); align-items: center; justify-content: center; padding: 20px; }
@@ -303,10 +325,12 @@ $stats_total = count($historique_demandes);
             box-shadow: 0 30px 60px -12px rgba(15, 23, 42, 0.5), 0 0 0 1px rgba(15, 23, 42, 0.04);
             font-family: 'Inter', 'Segoe UI', sans-serif;
         }
-        .detail-header { position: sticky; top:0; z-index:2; background: rgba(255,255,255,0.98); backdrop-filter: blur(6px); padding: 22px 32px; border-bottom: 1px solid #eef1f5; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
-        .detail-header-bi { font-size: 1.05rem; font-weight: 500; letter-spacing: -0.005em; color: var(--brand-orange); }
-        .btn-close { font-size: 22px; font-weight: 300; cursor: pointer; color: #94a3b8; line-height: 1; transition: 0.2s;}
-        .btn-close:hover { color: var(--danger); }
+        /* Fenêtre de détail : corps blanc conservé pour la lisibilité, en-tête aux couleurs des fenêtres du planning (anthracite, lueur verte, trait vert/orange). */
+        .detail-header { position: sticky; top:0; z-index:2; color: #fff; background: radial-gradient(120% 140% at 100% 0%, rgba(46, 204, 113, 0.28) 0%, transparent 55%), linear-gradient(135deg, #2c3e50 0%, #1f2d3a 100%); padding: 22px 32px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .detail-header::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: linear-gradient(90deg, var(--brand-green), var(--brand-orange)); }
+        .detail-header-bi { font-size: 1.05rem; font-weight: 500; letter-spacing: -0.005em; color: #ffc266; }
+        .btn-close { font-size: 22px; font-weight: 300; cursor: pointer; color: rgba(255,255,255,0.7); line-height: 1; transition: 0.2s;}
+        .btn-close:hover { color: #ff8a80; }
         .detail-body { padding: 28px 32px 34px; }
 
         .status-tracker { display: flex; align-items: flex-start; margin-bottom: 28px; }
@@ -406,7 +430,7 @@ $stats_total = count($historique_demandes);
     </div>
 
     <div class="tracking-card">
-        <div style="border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 16px;">
+        <div class="tracking-head">
             <h2 class="tracking-title"><i class="fa-solid fa-list-check"></i> <?php echo htmlspecialchars(t('suivi.details_title')); ?></h2>
         </div>
 
@@ -542,7 +566,7 @@ $stats_total = count($historique_demandes);
                         'sousTraite' => $estSousTraite, 'entreprise' => $nomEntreprise
                     ]), ENT_QUOTES, 'UTF-8');
                 ?>
-                <div class="ticket-card" onclick="ouvrirDetailTicket(<?php echo $jsonTicket; ?>)">
+                <div class="ticket-card" style="--tc-color: <?php echo $accentColor; ?>;" onclick="ouvrirDetailTicket(<?php echo $jsonTicket; ?>)">
                     <div class="tc-accent" style="background:<?php echo $accentColor; ?>"></div>
 
                     <div class="ticket-demandeur" style="display:none;"><?php echo htmlspecialchars($t['description']); ?></div>

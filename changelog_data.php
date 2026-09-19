@@ -11,6 +11,17 @@
 // Traduit en FR/EN/NL (David, 18/09/2026) : chaque item est ['fr'=>, 'en'=>, 'nl'=>] — à chaque
 // nouvelle entrée, écrire les 3 langues (changelog.php se replie sur 'fr' si une langue manque).
 return [
+    ['date' => '2026-09-19', 'items' => [
+        ['fr' => "Accueil : nouveau design des tuiles (verre sombre, lueur de la couleur de chaque tuile, icône en anneau lumineux qui se remplit au survol), avec plus d'espace entre les rangées et des icônes toujours alignées à la même hauteur.",
+         'en' => "Home: new tile design (dark glass, glow in each tile's colour, glowing ring icon that fills on hover), with more space between rows and icons always aligned at the same height.",
+         'nl' => "Startpagina: nieuw tegelontwerp (donker glas, gloed in de kleur van elke tegel, lichtgevend icoon in een ring dat zich bij hover vult), met meer ruimte tussen de rijen en iconen die altijd op dezelfde hoogte staan."],
+        ['fr' => "Portail services : les quatre tuiles et le bandeau du haut adoptent le même design ; le logo s'affiche directement sur le bandeau, sans fond, avec une douce lueur.",
+         'en' => "Services portal: the four tiles and the top banner adopt the same design; the logo is shown directly on the banner, without background, with a soft glow.",
+         'nl' => "Dienstenportaal: de vier tegels en de bovenbalk krijgen hetzelfde ontwerp; het logo wordt rechtstreeks op de balk getoond, zonder achtergrond, met een zachte gloed."],
+        ['fr' => "Pages Suivi des demandes, Idées et Aide du portail : même charte sombre ; les tuiles des bons d'intervention et les cadres des idées gardent un fond clair pour bien se distinguer.",
+         'en' => "Request tracking, Ideas and Portal help pages: same dark theme; the work-order tiles and the idea panels keep a light background to stand out clearly.",
+         'nl' => "Pagina's Opvolging van aanvragen, Ideeën en Help van het portaal: hetzelfde donkere thema; de tegels van de werkbonnen en de kaders van de ideeën behouden een lichte achtergrond om duidelijk op te vallen."],
+    ]],
     ['date' => '2026-09-18', 'items' => [
         ['fr' => "Planning : les fenêtres du Planning (choix de case, planification des heures, TODO list, remplissage rapide, planning annuel) partagent désormais un même en-tête soigné avec le technicien concerné et la date ; les boutons de « Planifier les heures » sont resserrés pour éviter de défiler.",
          'en' => "Schedule: the Schedule windows (cell choice, hours planning, TODO list, quick fill, annual schedule) now share the same polished header showing the technician and date; the buttons of \"Schedule hours\" are tighter to avoid scrolling.",
